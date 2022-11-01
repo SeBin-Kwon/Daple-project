@@ -10,8 +10,11 @@
   {% block css %}{% endblock css %}
 </head>
 <body>
-  {% block content %}{% endblock content %}
-  {% bootstrap_javascript %}
+
+  <div class="container my-5">
+    {% block content %}{% endblock content %}
+    {% bootstrap_javascript %}
+  </div>
 
 </body>
 </html>
