@@ -2,24 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4641825b-3417-4d9d-87b4-84b135cdd87d" name="변경" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/Daple.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dbnavigator.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/python-terminal.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/stores/migrations/0001_initial.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/stores/templates/stores/detail.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/stores/templates/stores/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/stores/urls.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accounts/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/accounts/models.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stores/forms.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stores/migrations/0002_alter_store_store_image.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stores/templates/stores/create.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stores/templates/stores/edit.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/daple/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/daple/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stores/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/stores/migrations/0001_initial.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/stores/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/stores/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stores/tests.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stores/templates/stores/detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/stores/templates/stores/detail.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stores/templates/stores/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/stores/templates/stores/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stores/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/stores/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/stores/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/stores/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -33,8 +26,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="HTML File" />
         <option value="Python Script" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
@@ -42,6 +35,11 @@
     <option name="BRANCH" value="origin/develop" />
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="stores" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -106,7 +104,8 @@
       <workItem from="1667263352304" duration="110000" />
       <workItem from="1667263473725" duration="10227000" />
       <workItem from="1667276194418" duration="6631000" />
-      <workItem from="1667287757618" duration="5011000" />
+      <workItem from="1667287757618" duration="7080000" />
+      <workItem from="1667299627196" duration="8315000" />
     </task>
     <servers />
   </component>
@@ -118,7 +117,19 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="develop" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>

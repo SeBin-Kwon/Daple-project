@@ -1,15 +1,69 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 import urllib
 import json
 from urllib import parse
 from urllib import request
 from .models import Store
+from .forms import StoreForm
+from django.contrib.auth.decorators import login_required
+
 
 def index(request):
-    data = Store.objects.order_by('-pk')
-    print(data)
+    data = Store.objects.all()
+    context = {
+        'stores': data
+    }
 
-    return render(request,'stores/index.html', {'store_data': data})
+    return render(request,'stores/index.html', context)
+
+def detail(request,pk):
+    data = Store.objects.get(pk=pk)
+    context ={
+        'store_data':data
+    }
+    return render(request,'stores/detail.html',context)
+
+@login_required
+def create(request):
+    if request.method == 'POST':
+        form = StoreForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('stores:index')
+    else:
+        form = StoreForm()
+    context = {
+        'form':form
+    }
+    return render(request, 'stores/create.html',context)
+
+@login_required
+def edit(request,pk):
+    data = Store.objects.get(pk=pk)
+    if request.user == data.user:
+        if request.method == 'POST':
+            store_form = StoreForm(request.POST, request.FILES, instance=data)
+            if store_form.is_valid():
+                store_form.save()
+                return redirect('stores:detail',data.pk)
+        else:
+            store_form = StoreForm(instance=data)
+
+        context = {
+           'store_form':store_form
+        }
+
+        return render(request,'stores/edit.html',context)
+    else:
+
+        return redirect("stores:detail",data.pk)
+
+@login_required
+def delete(request,pk):
+    if request.method == 'POST':
+        data = Store.objects.get(pk=pk)
+        data.delete()
+        return redirect('stores:index')
 
 
 def test():

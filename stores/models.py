@@ -1,6 +1,7 @@
 from djongo import models
 from imagekit.models import ProcessedImageField
 from imagekit.processors import ResizeToFill
+from django.conf import settings
 
 
 # Create your models here.
@@ -10,7 +11,8 @@ class Store(models.Model):
     store_grade = models.IntegerField()
     store_tel = models.IntegerField()
     store_liked = models.IntegerField(default=0)
-    store_image = models.ImageField(upload_to='stores')
+    store_image = models.ImageField(upload_to='stores',blank=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     store_x = models.IntegerField(default=0)
     store_y = models.IntegerField(default=0)
     image = ProcessedImageField(
@@ -20,5 +22,3 @@ class Store(models.Model):
         format="JPEG",
         options={"quality": 90},
     )
-    # foodtag_id = models.ForeignKey(Foodtag, on_delete=models.CASCADE)
-    # thematag_id = models.ForeignKey(Thematag, on_delete=models.CASCADE)

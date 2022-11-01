@@ -7,15 +7,11 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-            {{ store_data }}
-                {% for item in store_data %}
-                    <p>
-                    가게정보 : {{ item.title }}
-                    </p>
-                    가게주소 : {{ item.address }}
+                {% for item in stores %}
+                <h1><a href="{% url 'stores:detail' item.pk %}">{{ item.store_name }}</a></h1>
 
-                {% endfor %}
 
+                {%  endfor %}
             </div>
         </div>
     </div>
