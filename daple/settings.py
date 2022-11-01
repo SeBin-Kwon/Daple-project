@@ -31,6 +31,9 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'stores',
     'accounts',
+    'django_bootstrap5',
+    'django_extensions',
+    'imagekit',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -78,11 +81,11 @@ DATABASES = {
         'ENFORCE_SCHEMA': False,
         "NAME": "test",  # name of your DB which you want to access
         "CLIENT": {
-            'host': 'mongodb+srv://<username>:<userpassword>4@model.qbltslw.mongodb.net/?retryWrites=true&w=majority',
+            'host': 'mongodb+srv://wnsn8546 :!Trio85464@model.qbltslw.mongodb.net/?retryWrites=true&w=majority',
             # your db_url if not hosted then localhost
             'port': 27017,  # port e.g. 27017
-            'username': '<username>',
-            'password': '<userpassword>',
+            'username': 'wnsn8546',
+            'password': '!Trio8546',
             'authSource': 'admin',  # set your db auth_source if you know
             'authMechanism': 'SCRAM-SHA-1'  # set your auth_mechanism if you know
             # add other settings as per your requirements
