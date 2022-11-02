@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% load django_bootstrap5 %}
+
+{% block css %}
+{% endblock %}
+
+{% block content %}
+
+<form action="" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    {% bootstrap_button button_type="submit" content="회원정보 수정하기" %}
+</form>
+
+{% endblock %}

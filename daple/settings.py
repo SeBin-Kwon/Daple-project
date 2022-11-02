@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
 
     #provider
+    'allauth.socialaccount.providers.auth0',
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.naver',
     'allauth.socialaccount.providers.kakao'
@@ -146,6 +147,8 @@ AUTHENTICATION_BACKENDS = (
 
     'allauth.account.auth_backends.AuthenticationBackend'
 )
+
+ACCOUNT_LOGOUT_ON_GET = True
 
 SITE_ID = 1
 LOGIN_REDIRECT_URL = '/'
