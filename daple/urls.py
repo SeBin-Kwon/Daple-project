@@ -21,7 +21,8 @@ from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('accounts/', include('accounts.urls')),
+    path('accounts/', include('allauth.urls')),
+    path('daple-accounts/', include('accounts.urls')),
     path('reviews/', include('reviews.urls')),
     path('stores/', include('stores.urls')),
     path('', views.index, name='index'),
