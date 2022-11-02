@@ -23,6 +23,25 @@ def create(request):
     }
     return render(request, 'reviews/form.html', context)
 
+def delete(request, pk):
+    Review.objects.get(pk=pk).delete()
+    return redirect('reviews:index')
+
+def update(request, pk):
+    review = Review.objects.get(pk=pk)
+    if request.method == 'POST':
+        form = ReviewForm(request.POST, request.FILES, instance=review)
+        if form.is_valid():
+            reviews = form.save(commit=False)
+            reviews.user = request.user
+            reviews.save()
+            return redirect('reviews:index')
+    else:
+        form = ReviewForm(instance=review)
+    context = {
+        'form' : form
+    }
+    return render(request, 'reviews/form.html', context)
 
 def comment_create(request, pk):
     if request.user.is_authenticated:
@@ -56,3 +75,4 @@ def comment_delete(request, comment_pk):
         comment.delete()
         return redirect('reviews:index')
     return redirect('accounts:login')
+

@@ -6,16 +6,23 @@
 <h1>
   리뷰 보는 곳
 </h1>
-<a href="{% url 'reviews:create' %}">리뷰 작성</a>
+<div>
+  <a href="{% url 'reviews:create' %}">리뷰 작성</a>
+</div>
 
 {% for review in reviews %}
   {% if review.review_image %}
-    <p>{{ review.review_content }}</p>
     <img src="{{ review.review_image.url }}">
-    <p>{{ review.created_at }}</p>
   {% endif %}
   <p>{{ review.review_content }}</p>
   <p>{{ review.created_at }}</p>
+  <!-- 삭제 -->
+  <form action="{% url 'reviews:delete' review.pk %}" method="POST">
+    {% csrf_token %}
+    <input class="btn btn-danger" type="submit" value="삭제">
+    <!-- 수정 -->
+    <a href="{% url 'reviews:update' review.pk %}">수정</a>
+  </form>
 {% endfor %}
 
 {% endblock %}
