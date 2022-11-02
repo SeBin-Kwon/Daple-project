@@ -78,20 +78,9 @@ WSGI_APPLICATION = 'daple.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "djongo",
-        'ENFORCE_SCHEMA': False,
-        "NAME": "test",  # name of your DB which you want to access
-        "CLIENT": {
-            'host': 'mongodb+srv://root:test12344@model.qbltslw.mongodb.net/?retryWrites=true&w=majority',
-            # your db_url if not hosted then localhost
-            'port': 27017,  # port e.g. 27017
-            'username': 'root',
-            'password': 'test1234',
-            'authSource': 'admin',  # set your db auth_source if you know
-            'authMechanism': 'SCRAM-SHA-1'  # set your auth_mechanism if you know
-            # add other settings as per your requirements
-        }
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 # Password validation

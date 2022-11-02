@@ -44,5 +44,4 @@ def mypage(request, pk):
     context = {
         'user': user
     }
-    print(context)
     return render(request, 'accounts/mypage.html', context)

@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Review, Comment
 from .forms import ReviewForm, CommentForm
 # Create your views here.

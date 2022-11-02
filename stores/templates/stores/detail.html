@@ -1,20 +1,34 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% load django_bootstrap5 %}
 
 {% block content %}
+
+    <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f67a00458fad2dd649d99395a35661d1&libraries=services"></script>
+
 
     <div class="container">
         <div class="row">
             <div class="col-md-6">
                 <p>
-                가게정보 : {{ store_data.store_name }}
+                    가게정보 : {{ store_data.store_name }}
                 </p>
                 가게주소 : {{ store_data.store_address }}
                 가게번호 : {{ store_data.store_number }}
 
             </div>
         </div>
+    {{ store_data.reviews }}
     </div>
+    <button type="button" onclick="getCurrentPosBtn();locationSearch()" class="btn btn-lg btn-primary" id="getMyPositionBtn">내 위치 가져오기
+    </button>
+
+    <div id="map" style="width:500px;height:400px;"></div>
+
+    <script type="text/javascript" src="{% static 'js/map.js' %}"></script>
+
+
+
+    <!-- 부트스트랩 이용을 위한 jQuery와 CDN -->
 
 {% endblock %}
