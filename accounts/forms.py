@@ -5,7 +5,7 @@ class CustomUserCreationForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ('profile_image', 'nickname', 'username', 'password1', 'password2', 'email', 'phone')
+        fields = ('profile_image', 'nickname', 'username', 'password1', 'password2', 'email', 'phone','Is_owner')
         labels = {
             'profile_image': '프로필사진',
             'nickname': '이름',
@@ -13,5 +13,6 @@ class CustomUserCreationForm(UserCreationForm):
             'password1': '비밀번호',
             'password2': '비밀번호확인',
             'email': '이메일주소',
-            'phone': '휴대폰번호'
+            'phone': '휴대폰번호',
+            'Is_owner': '가게 주인이신가요?',
         }

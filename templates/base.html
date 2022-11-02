@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -38,13 +39,16 @@
               Dropdown
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="#">Action</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
+              {% if user.is_authenticated %}
+              <li><a class="nav-link" href="{% url 'accounts:mypage' user.pk %}">마이페이지</a></li>
               <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
-            </ul>
-          </li>
-        </ul>
+              <li><a class="nav-link" href="{% url 'accounts:logout' %}">로그아웃하기</a>
+                  {% else %}
+                <a class="nav-link" href="{% url 'accounts:signup' %}">회원가입하기</a>
+                <a class="nav-link" href="{% url 'accounts:login' %}">로그인하기</a>
+                  {% endif %}
+              </li>
+          </ul>
         <form class="d-flex">
           <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
           <button class="btn btn-outline-success" type="submit">Search</button>
@@ -52,12 +56,11 @@
       </div>
     </div>
   </nav>
-
-  <div class="container my-5">
+<div class="container my-5">
     {% block content %}{% endblock content %}
     <script type="text/javascript" defer src="{% static 'javascript/style.js' %}"></script>
     {% bootstrap_javascript %}
-  </div>
+</div>
 
 </body>
 </html>
