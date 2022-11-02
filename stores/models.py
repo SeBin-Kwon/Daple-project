@@ -5,12 +5,19 @@ from django.conf import settings
 
 
 # Create your models here.
+class Thematag(models.Model):
+	thematag_name = models.CharField(max_length=20)
+
+class Foodtag(models.Model):
+	foodtag_name = models.CharField(max_length=20)
+
 class Store(models.Model):
     store_name = models.CharField(max_length=100)
     store_address = models.CharField(max_length=100)
     store_grade = models.IntegerField()
     store_tel = models.IntegerField()
-    store_liked = models.IntegerField(default=0)
+    # store_liked = models.IntegerField(default=0)
+    store_liked = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_stores')
     store_image = models.ImageField(upload_to='stores',blank=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     store_x = models.IntegerField(default=0)
@@ -22,3 +29,5 @@ class Store(models.Model):
         format="JPEG",
         options={"quality": 90},
     )
+    foodtag_id = models.ForeignKey(Foodtag, on_delete=models.CASCADE)
+    thematag_id = models.ForeignKey(Thematag, on_delete=models.CASCADE)
