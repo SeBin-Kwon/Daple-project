@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="4641825b-3417-4d9d-87b4-84b135cdd87d" name="변경" comment="">
+      <change afterPath="$PROJECT_DIR$/stores/forms.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stores/migrations/0002_alter_store_store_image.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stores/templates/stores/create.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stores/templates/stores/edit.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/daple/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/daple/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stores/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/stores/migrations/0001_initial.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stores/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/stores/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stores/templates/stores/detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/stores/templates/stores/detail.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stores/templates/stores/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/stores/templates/stores/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stores/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/stores/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stores/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/stores/views.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DjangoConsoleOptions" custom-start-script="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)">
+    <option name="myCustomStartScript" value="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+        <option value="HTML File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Merge.Settings">
+    <option name="BRANCH" value="origin/develop" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="stores" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2Gtgy9bgZHNZsPLkGKhhDH5tV1o" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;terminal&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\runed\Desktop\semi_01\Daple" />
+      <recent name="C:\Users\runed\Desktop\semi_01\Daple\stores" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="Daple" type="Python.DjangoServer" factoryName="Django server">
+      <module name="Daple" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="launchJavascriptDebuger" value="false" />
+      <option name="port" value="8000" />
+      <option name="host" value="" />
+      <option name="additionalOptions" value="" />
+      <option name="browserUrl" value="" />
+      <option name="runTestServer" value="false" />
+      <option name="runNoReload" value="false" />
+      <option name="useCustomRunCommand" value="false" />
+      <option name="customRunCommand" value="" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="애플리케이션 수준" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="디폴트 작업">
+      <changelist id="4641825b-3417-4d9d-87b4-84b135cdd87d" name="변경" comment="" />
+      <created>1667213545861</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1667213545861</updated>
+      <workItem from="1667213553409" duration="7185000" />
+      <workItem from="1667261935220" duration="1359000" />
+      <workItem from="1667263352304" duration="110000" />
+      <workItem from="1667263473725" duration="10227000" />
+      <workItem from="1667276194418" duration="6631000" />
+      <workItem from="1667287757618" duration="7080000" />
+      <workItem from="1667299627196" duration="8315000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="develop" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

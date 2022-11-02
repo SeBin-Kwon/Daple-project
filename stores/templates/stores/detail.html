@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% load django_bootstrap5 %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <p>
+                가게정보 : {{ store_data.store_name }}
+                </p>
+                가게주소 : {{ store_data.store_address }}
+                가게번호 : {{ store_data.store_number }}
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
