@@ -40,7 +40,7 @@ def create(request):
 @login_required
 def edit(request,pk):
     data = Store.objects.get(pk=pk)
-    if request.user == data.user:
+    if (request.user == data.user) and (data.Is_owner == True) :
         if request.method == 'POST':
             store_form = StoreForm(request.POST, request.FILES, instance=data)
             if store_form.is_valid():
@@ -60,13 +60,12 @@ def edit(request,pk):
 
 @login_required
 def delete(request,pk):
-    if request.method == 'POST':
-        data = Store.objects.get(pk=pk)
+    data = Store.objects.get(pk=pk)
+    if (request.user == data.user) and (data.Is_owner == True) :
         data.delete()
         return redirect('stores:index')
 
-
-def test():
+def search():
     client_id = "uCCiykUMH5IF4JADGgWL"
     client_secret = "mD53NEgVgg"
     encText = urllib.parse.quote("우동")
