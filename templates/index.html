@@ -11,8 +11,9 @@
   <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}">
   {% bootstrap_css %}
 </head>
-<body class="bg-image">
-  <a class="btn btn-primary" href="">다플 시작하기</a>
+<body class="bg-image d-flex align-items-center">
+  <img class="navbar-brand" src="{% static 'images/logo.png' %}" style="width: 280px; margin: 200px 0 150px 0;">
+  <a class="btn-start" href="">다플 시작하기</a>
   <script type="text/javascript" defer src="{% static 'javascript/style.js' %}"></script>
   {% bootstrap_javascript %}
 </body>
