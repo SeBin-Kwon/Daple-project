@@ -75,6 +75,7 @@ def delete(request,pk):
 
 
 
+
 def kakao_search():
     searching = '합정 스타벅스'
     url = 'https://dapi.kakao.com/v2/local/search/keyword.json?query={}'.format(searching)
