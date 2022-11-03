@@ -12,6 +12,7 @@ from django.http import JsonResponse
 import datetime
 from django.contrib.auth.decorators import login_required
 import requests
+import json
 
 from accounts.models import User
 
@@ -23,7 +24,23 @@ def index(request):
         'stores': data
     }
 
-    return render(request,'stores/index.html', context)
+    if request.method == 'POST':
+        jsonObject = json.loads(request.body)
+        for i in range(len(jsonObject)):
+            if not Store.objects.filter(kakao_id=jsonObject[i]['id']).exists():
+                db = Store.objects.create(
+                    store_address=jsonObject[i]['address_name'],
+                    store_tel=jsonObject[i]['phone'],
+                    store_name=jsonObject[i]['place_name'],
+                    store_url=jsonObject[i]['place_url'],
+                    store_x=jsonObject[i]['x'],
+                    store_y=jsonObject[i]['y'],
+                    kakao_id=jsonObject[i]['id'])
+                db.save()
+
+
+    return render(request, 'stores/index.html', context)
+
 
 def detail(request, pk):
     data = Store.objects.get(pk=pk)
@@ -34,10 +51,10 @@ def detail(request, pk):
     comments = Comment.objects.all().order_by('-pk')
     comment_form = CommentForm()
     context = {
-        'reviews' : reviews,
-        'comment_form' : comment_form,
-        'comments':comments,
-        'store_data':data,
+        'reviews': reviews,
+        'comment_form': comment_form,
+        'comments': comments,
+        'store_data': data,
     }
     # context ={
     #     'store_data':data,
@@ -45,7 +62,8 @@ def detail(request, pk):
     #     # 'comment':comment
     # }
 
-    return render(request,'stores/detail.html',context)
+    return render(request, 'stores/detail.html', context)
+
 
 @login_required
 def create(request):
@@ -60,40 +78,39 @@ def create(request):
     else:
         form = StoreForm()
     context = {
-        'form':form
+        'form': form
     }
-    return render(request, 'stores/create.html',context)
+    return render(request, 'stores/create.html', context)
+
 
 @login_required
-def edit(request,pk):
+def edit(request, pk):
     data = Store.objects.get(pk=pk)
-    if (request.user == data.user) and (data.Is_owner == True) :
+    if (request.user == data.user) and (data.Is_owner == True):
         if request.method == 'POST':
             store_form = StoreForm(request.POST, request.FILES, instance=data)
             if store_form.is_valid():
                 store_form.save()
-                return redirect('stores:detail',data.pk)
+                return redirect('stores:detail', data.pk)
         else:
             store_form = StoreForm(instance=data)
 
         context = {
-           'store_form':store_form
+            'store_form': store_form
         }
 
-        return render(request,'stores/edit.html',context)
+        return render(request, 'stores/edit.html', context)
     else:
 
-        return redirect("stores:detail",data.pk)
+        return redirect("stores:detail", data.pk)
+
 
 @login_required
-def delete(request,pk):
+def delete(request, pk):
     data = Store.objects.get(pk=pk)
-    if (request.user == data.user) and (data.Is_owner == True) :
+    if (request.user == data.user) and (data.Is_owner == True):
         data.delete()
         return redirect('stores:index')
-
-
-
 
 
 def kakao_search():
@@ -108,9 +125,9 @@ def kakao_search():
 
 def store_like(request, pk):
     store = get_object_or_404(Store, pk=pk)
-    
+
     if store.store_liked.filter(id=request.user.id).exists():
-    # if request.user in store.store_liked.all(): 
+        # if request.user in store.store_liked.all():
         store.store_liked.remove(request.user)
         is_liked = False
     else:
@@ -118,3 +135,8 @@ def store_like(request, pk):
         is_liked = True
     context = {'isLiked': is_liked, 'likeCount': store.store_liked.count()}
     return JsonResponse(context)
+
+
+def db_save(request):
+
+    return redirect('stores:index')

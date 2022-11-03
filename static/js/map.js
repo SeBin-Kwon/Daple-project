@@ -8,6 +8,7 @@ var mapContainer = document.getElementById('map'), // 지도를 표시할 div
 // 지도를 생성한다
 var map = new kakao.maps.Map(mapContainer, mapOption);
 var final
+
 function locationLoadSuccess(pos) {
     // 현재 위치 받아오기
     var currentPos = new kakao.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
@@ -44,17 +45,17 @@ function getCurrentPosBtn() {
 
 }
 
-function getAddr(lat,lng){
+function getAddr(lat, lng) {
 
 
     $.ajax({
         url: 'https://dapi.kakao.com/v2/local/geo/coord2address.json?',
         type: 'GET',
-        data: {x:lng,y:lat},
+        data: {x: lng, y: lat},
         headers: {'Authorization': 'KakaoAK 0f23477b2b3262f820c688ff81fdf916'},
         success: function (data) {
             let result = data.documents
-            final= result[0].address.region_3depth_name;
+            final = result[0].address.region_3depth_name;
 
         },
         error: function (e) {
@@ -75,7 +76,6 @@ function locationSearch() {
     var result = position.split(/[(, )]/)
     let lat = result[1];
     let lng = result[3];
-    console.log(final);
 
     getAddr(lat, lng);
 
@@ -83,22 +83,29 @@ function locationSearch() {
     $.ajax({
         url: 'https://dapi.kakao.com/v2/local/search/category.json?',
         type: 'GET',
-        data: {category_group_code:'FD6',x:lng,y:lat},
+        data: {category_group_code: 'FD6', x: lng, y: lat},
         headers: {'Authorization': 'KakaoAK 0f23477b2b3262f820c688ff81fdf916'},
         success: function (data) {
-            console.log(data.documents[0]);
-            document.getElementById('#search-result').innerText = data.documents[0].address_name;
+            const serachresult = document.querySelector('#search-result')
+            console.log(serachresult)
+            console.log(data.documents)
+            //========================================================================
+
+            //======================
+            for (var i = 0; i < data.documents.length; i++) {
+                serachresult.innerText += (' 주소 :' + data.documents[i].address_name + ' 이름 : ' + data.documents[i].place_name + ' 전화번호 : ' + data.documents[i].phone)
+
+            }
+
             // for (var i=0; i < data.documents.length; i++) {
             //     document.getElementById('#search-result').innerHTML = data.documents[i];
             // }
-
-
-            placesSearchCB()
         },
         error: function (e) {
             console.log(e);
         }
     });
+
 
 // 카테고리로 은행을 검색합니다
 //     ps.categorySearch('FD6', placesSearchCB, {useMapBounds: true});
