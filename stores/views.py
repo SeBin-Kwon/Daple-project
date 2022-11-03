@@ -48,13 +48,22 @@ def detail(request, pk):
     # comment = data.comment.all()
 
     reviews = Review.objects.filter(store_id=pk).order_by('-pk')
+    sum_rating = 0
+    for review in reviews:
+        sum_rating += review.review_rating
+    people_num = len(reviews)
+    avg_rating = sum_rating / people_num
+    
     comments = Comment.objects.all().order_by('-pk')
     comment_form = CommentForm()
     context = {
+        'store_data': data,
         'reviews': reviews,
         'comment_form': comment_form,
         'comments': comments,
-        'store_data': data,
+        'avg_rating': avg_rating,
+        'people_num': people_num,
+        # 'store_star': avg_rating * 10,
     }
     # context ={
     #     'store_data':data,

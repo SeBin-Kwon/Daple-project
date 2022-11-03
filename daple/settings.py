@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'reviews',
     'stores',
     'accounts',
+    'mathfilters',
     'django_bootstrap5',
     'django_extensions',
     'imagekit',

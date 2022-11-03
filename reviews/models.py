@@ -19,7 +19,10 @@ class Review(models.Model):
     review_service = models.IntegerField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now = True)
-    review_image = models.ImageField(upload_to='images/', blank=True)
+    review_image = ProcessedImageField(upload_to='images/', blank=True,
+    processors=[ResizeToFill(400,300)],
+    format='JPEG',
+    options={'quality':100})
 
 class Comment(models.Model):
     review = models.ForeignKey(Review, on_delete=models.CASCADE)
