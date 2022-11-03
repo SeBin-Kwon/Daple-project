@@ -7,6 +7,7 @@ from .models import Store
 from .forms import StoreForm
 from django.contrib.auth.decorators import login_required
 import requests
+
 from accounts.models import User
 
 
@@ -21,13 +22,14 @@ def index(request):
 
 def detail(request,pk):
     data = Store.objects.get(pk=pk)
-    reviews = data.reviews.get(pk=pk)
-    comment = data.comment.all()
+    # reviews = data.store_reviews.all()
+    # comment = data.comment.all()
     context ={
         'store_data':data,
-        'reviews':reviews,
-        'comment':comment
+        # 'reviews':reviews,
+        # 'comment':comment
     }
+
     return render(request,'stores/detail.html',context)
 
 @login_required
@@ -37,6 +39,7 @@ def create(request):
         if form.is_valid():
             new = form.save(commit=False)
             new.user = request.user
+            # new.review = request.review
             new.save()
             return redirect('stores:index')
     else:

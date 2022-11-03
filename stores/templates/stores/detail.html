@@ -18,8 +18,9 @@
 
             </div>
         </div>
-    {{ store_data.reviews }}
+{#    {{ store_data.reviews }}#}
     </div>
+        <a href="{% url 'reviews:create' store_data.pk %}"><button> 라뷰 작성하기</button></a>
     <button type="button" onclick="getCurrentPosBtn();locationSearch()" class="btn btn-lg btn-primary" id="getMyPositionBtn">내 위치 가져오기
     </button>
 
