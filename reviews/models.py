@@ -9,7 +9,7 @@ from stores.models import Foodtag
 class Review(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     review_liked = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_reviews')
-    store = models.ForeignKey(Store, on_delete=models.CASCADE, related_name='review_store')
+    store = models.ForeignKey(Store, on_delete=models.CASCADE, related_name='store', null=True)
     # foodtag_id = models.ForeignKey(Foodtag, on_delete=models.CASCADE,blank=True)
     # thematag_id = models.ForeignKey(Thematag, on_delete=models.CASCADE,blank=True)
     review_content = models.TextField()
