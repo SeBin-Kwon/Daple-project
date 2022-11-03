@@ -6,6 +6,9 @@ from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import update_session_auth_hash
+from django.http import JsonResponse
+import json
+from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 def index(request):
@@ -89,3 +92,25 @@ def mypage_delete(request, pk):
 def temp(request, pk):
     print(pk)
     return render('accounts:index')
+
+def database(request):
+    jsonObject = json.loads(request.body)
+    # user = User()
+    user = User.objects.get(username=jsonObject.get('username'))
+    # user.username = jsonObject.get('username')
+    # user.email = jsonObject.get('email')
+    # user.save()
+    print(user.username)
+    print(request.session)
+    auth_login(request, user)
+    print('1')
+    return JsonResponse({'username': user.username, 'email': user.email})
+
+# @csrf_exempt
+# def kakaoLogin(request):
+#     form = AuthenticationForm(request, data=request.POST)
+#     if form.is_valid():
+#         auth_login(request, form.get_user())
+#         return redirect('accounts:index')
+
+# '{"username":2508796199,"email":"dayeong5479@hanmail.net"}'

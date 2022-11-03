@@ -29,4 +29,6 @@ urlpatterns = [
     path('mypage-update/<int:pk>/', views.mypage_update, name='mypage-update'),
     path('mypage-delete/<int:pk>/', views.mypage_delete, name='mypage-delete'),
     path('temp/<int:pk>/', views.temp, name='temp'),
+    path('database/', views.database, name='database'),
+    # path('kakaoLogin/', views.kakaoLogin, name='kakaoLogin'),
 ]
