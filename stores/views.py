@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 import urllib
 import json
 from urllib import parse
@@ -7,12 +7,13 @@ from .models import Store
 from .forms import StoreForm
 from django.contrib.auth.decorators import login_required
 import requests
-from django.conf import settings
-from reviews.models import Review,Comment
+
+from accounts.models import User
 
 
 def index(request):
     data = Store.objects.all()
+
     context = {
         'stores': data
     }
@@ -21,13 +22,14 @@ def index(request):
 
 def detail(request,pk):
     data = Store.objects.get(pk=pk)
-    reviews = data.reviews.get(pk=pk)
-    comment = data.comment.all()
+    # reviews = data.store_reviews.all()
+    # comment = data.comment.all()
     context ={
         'store_data':data,
-        'reviews':reviews,
-        'comment':comment
+        # 'reviews':reviews,
+        # 'comment':comment
     }
+
     return render(request,'stores/detail.html',context)
 
 @login_required
@@ -35,7 +37,10 @@ def create(request):
     if request.method == 'POST':
         form = StoreForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            new = form.save(commit=False)
+            new.user = request.user
+            # new.review = request.review
+            new.save()
             return redirect('stores:index')
     else:
         form = StoreForm()

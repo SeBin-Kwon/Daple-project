@@ -1,20 +1,26 @@
 {% load django_bootstrap5 %}
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>DAPLE</title>
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
   <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}">
   {% bootstrap_css %}
 </head>
 <body class="bg-image d-flex align-items-center">
   <img class="navbar-brand" src="{% static 'images/logo.png' %}" style="width: 280px; margin: 200px 0 150px 0;">
-  <a class="btn-start" href="">다플 시작하기</a>
+  <lord-icon
+    src="https://cdn.lordicon.com/hjbsbdhw.json"
+    trigger="morph"
+    style="width:250px;height:250px">
+</lord-icon>
+  <a class="btn-start" href="{% url 'stores:index' %}">다플 시작하기</a>
   <script type="text/javascript" defer src="{% static 'javascript/style.js' %}"></script>
+  <script src="https://cdn.lordicon.com/qjzruarw.js"></script>
   {% bootstrap_javascript %}
 </body>
 </html>

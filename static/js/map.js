@@ -32,11 +32,10 @@ function locationLoadError(pos) {
 // 위치 가져오기 버튼 클릭시
 function getCurrentPosBtn() {
     navigator.geolocation.getCurrentPosition(locationLoadSuccess, locationLoadError);
+    setTimeout(locationSearch, 2000)
 
 
     // kakao.maps.load(function () {
-
-
     // });
     // var bounds = map.getBounds();
     // var swLatLng = bounds.getSouthWest();
@@ -45,31 +44,41 @@ function getCurrentPosBtn() {
 
 }
 
-async function locationSearch(){
-    await getCurrentPosBtn()
+function locationSearch() {
+
     var infowindow = new kakao.maps.InfoWindow({zIndex: 1});
 
     var ps = new kakao.maps.services.Places(map);
+//==================================================
+    // var position = map.getCenter().toString();
+    //
+    //  var result = position.split(/[()]/)
+    //
+    //
+    // console.log(position);
+    //
+    // console.log(result[1]);
+    // console.log(result[2]);
+    // var params = '&location='+result[1];
+    // params +=result[2];
+    // params +='&radius=';
+    //
+    //
+    // $.ajax({
+    //     url: 'https://dapi.kakao.com/v2/local/search/category.json?category_group_code=FD6'+params,
+    //     type: 'GET',
+    //     data:{},
+    //     headers: {'Authorization': 'KakaoAK 0f23477b2b3262f820c688ff81fdf916'},
+    //     success: function (data) {
+    //         console.log(data);
+    //     },
+    //     error: function (e) {
+    //         console.log(e);
+    //     }
+    // });
 
-    var position = map.getCenter();
-    var newposition = position.toCoords();
-
-    console.log(newposition)
-
-    $.ajax({
-        url: 'https://dapi.kakao.com/v2/local/search/category.json?category_group_code=FD6' ,
-        type: 'GET',
-        data:{},
-        headers: {'Authorization': 'KakaoAK 0f23477b2b3262f820c688ff81fdf916'},
-        success: function (data) {
-            console.log(data);
-        },
-        error: function (e) {
-            console.log(e);
-        }
-    });
 // 카테고리로 은행을 검색합니다
-//     ps.categorySearch('FD6', placesSearchCB, {useMapBounds: true});
+    ps.categorySearch('FD6', placesSearchCB, {useMapBounds: true});
 
 // 키워드 검색 완료 시 호출되는 콜백함수 입니다
     function placesSearchCB(data, status, pagination) {
