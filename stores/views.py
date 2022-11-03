@@ -1,10 +1,15 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib import messages
 import urllib
 import json
 from urllib import parse
 from urllib import request
 from .models import Store
 from .forms import StoreForm
+from reviews.models import Review, Comment
+from reviews.forms import ReviewForm, CommentForm
+from django.http import JsonResponse
+import datetime
 from django.contrib.auth.decorators import login_required
 import requests
 
@@ -20,15 +25,25 @@ def index(request):
 
     return render(request,'stores/index.html', context)
 
-def detail(request,pk):
+def detail(request, pk):
     data = Store.objects.get(pk=pk)
     # reviews = data.store_reviews.all()
     # comment = data.comment.all()
-    context ={
+
+    reviews = Review.objects.filter(store_id=pk).order_by('-pk')
+    comments = Comment.objects.all().order_by('-pk')
+    comment_form = CommentForm()
+    context = {
+        'reviews' : reviews,
+        'comment_form' : comment_form,
+        'comments':comments,
         'store_data':data,
-        # 'reviews':reviews,
-        # 'comment':comment
     }
+    # context ={
+    #     'store_data':data,
+    #     # 'reviews':reviews,
+    #     # 'comment':comment
+    # }
 
     return render(request,'stores/detail.html',context)
 
@@ -89,3 +104,17 @@ def kakao_search():
     }
     places = requests.get(url, headers=headers).json()['documents']
     print(places)
+
+
+def store_like(request, pk):
+    store = get_object_or_404(Store, pk=pk)
+    
+    if store.store_liked.filter(id=request.user.id).exists():
+    # if request.user in store.store_liked.all(): 
+        store.store_liked.remove(request.user)
+        is_liked = False
+    else:
+        store.store_liked.add(request.user)
+        is_liked = True
+    context = {'isLiked': is_liked, 'likeCount': store.store_liked.count()}
+    return JsonResponse(context)

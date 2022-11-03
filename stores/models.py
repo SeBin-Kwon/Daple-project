@@ -17,12 +17,12 @@ class Store(models.Model):
     store_name = models.CharField(max_length=100)
     store_address = models.CharField(max_length=100)
     store_grade = models.IntegerField(default=0)
-    store_tel = models.IntegerField()
+    store_tel = models.IntegerField(default=0)
     store_liked = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_stores')
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    store_x = models.IntegerField(default=0)
-    store_y = models.IntegerField(default=0)
-    review = models.ForeignKey('reviews.Review', on_delete=models.CASCADE, related_name='store_reviews', blank=True, null=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,blank=True, null=True)
+    store_x = models.CharField(default=0,max_length=100)
+    store_y = models.CharField(default=0,max_length=100)
+    # review = models.ForeignKey('reviews.Review', on_delete=models.CASCADE, related_name='store_reviews', blank=True, null=True)
     store_image = ProcessedImageField(
         upload_to="stores/",
         blank=True,
@@ -30,5 +30,5 @@ class Store(models.Model):
         format="JPEG",
         options={"quality": 90},
     )
-    # foodtag_id = models.ForeignKey(Foodtag, on_delete=models.CASCADE,blank=True)
-    # thematag_id = models.ForeignKey(Thematag, on_delete=models.CASCADE,blank=True)
+    foodtag_id = models.ForeignKey(Foodtag, on_delete=models.CASCADE,null=True,blank=True)
+    thematag_id = models.ForeignKey(Thematag, on_delete=models.CASCADE,null=True,blank=True)

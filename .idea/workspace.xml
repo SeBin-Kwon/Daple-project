@@ -5,18 +5,18 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/accounts/migrations/0001_initial.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/reviews/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/reviews/migrations/0002_auto_20221102_2147.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/reviews/migrations/0003_auto_20221102_2149.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reviews/migrations/0002_initial.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reviews/migrations/0004_auto_20221103_0942.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reviews/migrations/0005_alter_review_store.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reviews/migrations/0006_alter_review_store.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reviews/migrations/0007_auto_20221103_1002.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/reviews/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/reviews/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/static/js/map.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/js/map.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/stores/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/stores/migrations/0002_alter_store_store_grade.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/stores/migrations/0003_auto_20221102_2146.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/stores/migrations/0004_auto_20221102_2149.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stores/migrations/0002_alter_store_review.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stores/migrations/0003_alter_store_review.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/stores/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/stores/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stores/templates/stores/detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/stores/templates/stores/detail.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stores/templates/stores/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/stores/templates/stores/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stores/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/stores/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -113,7 +113,7 @@
       <workItem from="1667299627196" duration="8977000" />
       <workItem from="1667348178322" duration="34432000" />
       <workItem from="1667434288984" duration="2240000" />
-      <workItem from="1667436558105" duration="2499000" />
+      <workItem from="1667436558105" duration="7467000" />
     </task>
     <servers />
   </component>
