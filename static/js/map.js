@@ -33,10 +33,12 @@ function locationLoadError(pos) {
 function getCurrentPosBtn() {
     navigator.geolocation.getCurrentPosition(locationLoadSuccess, locationLoadError);
 
+    var position = map.getCenter();
+    var newposition = position.toCoords();
+    console.log(newposition)
+
 
     // kakao.maps.load(function () {
-
-
     // });
     // var bounds = map.getBounds();
     // var swLatLng = bounds.getSouthWest();
@@ -45,8 +47,8 @@ function getCurrentPosBtn() {
 
 }
 
-async function locationSearch(){
-    await getCurrentPosBtn()
+function locationSearch(){
+    getCurrentPosBtn()
     var infowindow = new kakao.maps.InfoWindow({zIndex: 1});
 
     var ps = new kakao.maps.services.Places(map);
@@ -55,6 +57,7 @@ async function locationSearch(){
     var newposition = position.toCoords();
 
     console.log(newposition)
+    console.log(getposition)
 
     $.ajax({
         url: 'https://dapi.kakao.com/v2/local/search/category.json?category_group_code=FD6' ,
