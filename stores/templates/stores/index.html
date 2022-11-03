@@ -9,9 +9,10 @@
   <title>DAPLE</title>
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
   <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
   {% bootstrap_css %}
 </head>
-<body class="position-relative" style="height: 2000px;">
+<body class="position-relative">
     <!-- 네브바 -->
     <nav class="nav navbar navbar-dark navbar-expand-lg shadow-sm px-3" id="nav-sticky" style="height: 90px;">
         <div class="container-fluid">
@@ -35,7 +36,7 @@
                 <!-- 검색창 -->
                 <form class="d-flex">
                     <input class="form-control me-2" type="search" placeholder="맛집 검색하기" aria-label="Search">
-                    <button class="search-btn btn" type="submit" style="background-color: #f08724; color: white;">Search</button>
+                    <a class="search-btn btn" type="submit"><i class="bi bi-search"></i></a>
                 </form>
                 <!-- 유저이름 -->
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
