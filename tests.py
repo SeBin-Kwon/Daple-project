@@ -16,7 +16,10 @@ headers = {
 }
 places = requests.get(url, headers=headers).json()
 places = places['documents']
-print(places)
+for i in range(len(places)):
+    db_save = Store(store_name=places[i]["place_name"], store_address=places[i]["address_name"], store_x=places[i]["x"],
+                    store_y=places[i]["y"])
+    db_save.save()
 
 # client_id = "uCCiykUMH5IF4JADGgWL"
 # client_secret = "mD53NEgVgg"
