@@ -37,7 +37,6 @@
                     <input class="form-control me-2" type="search" placeholder="맛집 검색하기" aria-label="Search">
                     <button class="search-btn btn" type="submit" style="background-color: #f08724; color: white;">Search</button>
                 </form>
-
                 <!-- 유저이름 -->
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item dropdown">
@@ -60,6 +59,16 @@
                       </ul>
                     </li>
                 </ul>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                {% for item in stores %}
+                <h1><a href="{% url 'stores:detail' item.pk %}">{{ item.store_name }}</a></h1>
+
+
+                {%  endfor %}
+            <a href="{% url 'stores:create' %}">생성</a>
             </div>
         </div>
     </nav>
@@ -83,11 +92,21 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    {% for item in stores %}
-                    <h1><a href="{% url 'stores:detail' item.pk %}">{{ item.store_name }}</a></h1>
+                {% for item in stores %}
+                <h1><a href="{% url 'stores:detail' item.pk %}">{{ item.store_name }}</a></h1>
+
+    <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f67a00458fad2dd649d99395a35661d1&libraries=services"></script>
+    <button type="button" onclick="getCurrentPosBtn()" class="btn btn-lg btn-primary" id="getMyPositionBtn">내 위치 가져오기
+    </button>
+
+    <div id="map" style="width:500px;height:400px;"></div>
+
+    <script type="text/javascript" src="{% static 'js/map.js' %}"></script>
 
 
-                    {%  endfor %}
+
+
+                {%  endfor %}
                 </div>
             </div>
         </div>

@@ -45,3 +45,22 @@ def mypage(request, pk):
         'user': user
     }
     return render(request, 'accounts/mypage.html', context)
+
+def mypage_update(request, pk):
+    user = User.objects.get(pk=pk)
+    if request.method == 'POST':
+        form = CustomUserCreationForm(request.POST, request.FILES, instance=user)
+        if form.is_valid():
+            form.save()
+            return redirect('accounts:mypage', user.pk)
+    else:
+        form = CustomUserCreationForm(instance=user)
+    context = {
+        'form': form
+    }
+    return render(request, 'accounts/mypage-update.html', context)
+
+def mypage_delete(request, pk):
+    user = User.objects.get(pk=pk)
+    user.delete()
+    return redirect('accounts:index')

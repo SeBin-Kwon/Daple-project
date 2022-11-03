@@ -15,8 +15,9 @@
     {% bootstrap_button button_type="submit" content="로그인하기" %}
 </form>
 
+<a class="btn btn-primary" href="{% url 'accounts:logout' %}">로그아웃하기</a>
+
 <a href="{% provider_login_url 'google' %}">구글 로그인</a>
-<a href="{% provider_login_url 'naver' %}">네이버 로그인</a>
-<a href="{% provider_login_url 'kakao' %}">카카오 로그인</a>
+<a href="{% provider_login_url 'kakao' method='oauth2' %}">카카오 로그인</a>
 
 {% endblock %}

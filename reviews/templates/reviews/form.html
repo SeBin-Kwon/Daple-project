@@ -10,7 +10,7 @@
   </h1>
   <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
-    {% bootstrap_form form %}
+    {% bootstrap_form review_form %}
     <input type="submit" value="작성 완료">
     <a href="{% url 'reviews:index' %}">뒤로</a>
   </form>
@@ -20,7 +20,7 @@
   </h1>
   <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
-    {% bootstrap_form form %}
+    {% bootstrap_form review_form %}
     <input type="submit" value="작성 완료">
     <a href="{% url 'reviews:index' %}">뒤로</a>
   </form>

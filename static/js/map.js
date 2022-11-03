@@ -32,11 +32,11 @@ function locationLoadError(pos) {
 // 위치 가져오기 버튼 클릭시
 function getCurrentPosBtn() {
     navigator.geolocation.getCurrentPosition(locationLoadSuccess, locationLoadError);
+    setTimeout(locationSearch,1000)
+
 
 
     // kakao.maps.load(function () {
-
-
     // });
     // var bounds = map.getBounds();
     // var swLatLng = bounds.getSouthWest();
@@ -45,16 +45,17 @@ function getCurrentPosBtn() {
 
 }
 
-async function locationSearch(){
-    await getCurrentPosBtn()
+function locationSearch(){
+
     var infowindow = new kakao.maps.InfoWindow({zIndex: 1});
 
     var ps = new kakao.maps.services.Places(map);
 
     var position = map.getCenter();
-    var newposition = position.toCoords();
+    var newposition = position.toCoords().toArray;
 
-    console.log(newposition)
+    // console.log(newposition[0])
+
 
     $.ajax({
         url: 'https://dapi.kakao.com/v2/local/search/category.json?category_group_code=FD6' ,
