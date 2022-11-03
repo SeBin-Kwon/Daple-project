@@ -1,3 +1,42 @@
+* {
+  margin: 0;
+  padding: 0; 
+  letter-spacing: -0.93px;
+  outline: none;
+  font-family: 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+.appra {
+  display: inline-block;
+  line-height: 32px;
+  padding: 2px 18px 0px 18px;
+  border: 1px solid #222228;
+  border-radius: 20px;
+  margin-right: 10px;
+  float: right;
+}
+.appra span {
+  font-size: 13px;
+  padding: 2px 0 3px 25px;
+  background: url(https://s3-ap-northeast-1.amazonaws.com/dcicons/new/images/web/profile/review@2x.png) no-repeat left;
+  background-size: 20px;
+}
+.appra.active span {
+background: url(https://s3-ap-northeast-1.amazonaws.com/dcicons/new/images/web/profile/review-w@2x.png) no-repeat left;
+background-size: 20px;
+}
+.display-none {
+  display: none;
+}
+
+/*                                */
+
 nav {
   position: fixed;
   top: 0;
