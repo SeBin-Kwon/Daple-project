@@ -14,7 +14,7 @@
 
 window.addEventListener("scroll", function(){
   let nav = document.querySelector("nav");
-  nav.classList.toggle("position-sticky", this.window.scrollY > 0);
+  nav.classList.toggle("sticky-top", this.window.scrollY > 0);
   const navSticky = document.querySelector("#nav-sticky");
   if (window.scrollY > 0){
     navSticky.style.height = "60px";

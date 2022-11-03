@@ -7,28 +7,33 @@
 {% endblock %}
 
 {% block content %}
+<div class="prorile-card d-flex flex-column align-items-center m-auto">
+    {% if user.is_authenticated %}
 
-{% if user.is_authenticated %}
+        {% if user.profile_image %}
+            <div class="profile-crop">
+                <img class="profile-image" src="{{ user.profile_image.url }}" alt=""">
+            </div>
+        {% else %}
+            <div class="profile-crop"><img class="profile-image" src="https://dummyimage.com/300X400" alt=""></div>
+        {% endif %}
+        <div class="mt-4">
+            <p><span class="fw-bold">닉네임 : </span>{{ user.nickname }}</p>
+            <p><span class="fw-bold">이름 : </span>{{ user.username }}</p>
+            <p><span class="fw-bold">이메일 : </span>{{ user.email }}</p>
+            <p><span class="fw-bold">핸드폰 번호 : </span>{{ user.phone }}</p>
+        </div>
 
-    {% if user.profile_image %}
-        <h1><img src="{{ user.profile_image.url }}" alt="" style="width:300px; height:400px;"></h1>
+        <div class="d-flex mt-4">
+            <a class="btn me-3 text-white" href="{% url 'accounts:mypage-update' user.pk %}" style="background-color: #f08724;">내 정보 수정하기</a>
+            <a class="btn btn-outline-danger" href="{% url 'accounts:mypage-delete' user.pk %}">회원 탈퇴하기</a>
+        </div>
+
     {% else %}
-        <h1><img src="https://dummyimage.com/300X400" alt=""></h1>
+
+        <h1><a href="{% url 'accounts:signup' %}">회원가입하기</a></h1>
+        <h1><a href="{% url 'accounts:login' %}">로그인하기</a></h1>
+
     {% endif %}
-
-    <h1>{{ user.nickname }}</h1>
-    <h1>{{ user.username }}</h1>
-    <h1>{{ user.email }}</h1>
-    <h1>{{ user.phone }}</h1>
-
-    <a href="{% url 'accounts:mypage-update' user.pk %}"><button>회원정보 수정하기</button></a>
-    <a href="{% url 'accounts:mypage-delete' user.pk %}"><button>회원 탈퇴하기</button></a>
-
-{% else %}
-
-    <h1><a href="{% url 'accounts:signup' %}">회원가입하기</a></h1>
-    <h1><a href="{% url 'accounts:login' %}">로그인하기</a></h1>
-
-{% endif %}
-
+</div>
 {% endblock %}

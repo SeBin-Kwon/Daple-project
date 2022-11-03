@@ -21,6 +21,7 @@ a {
   margin-right: 10px;
   float: right;
 }
+
 .appra span {
   font-size: 13px;
   padding: 2px 0 3px 25px;
@@ -64,8 +65,8 @@ nav {
   color: white;
   background-color: #f08724;
   text-decoration: none;
-  width: 15rem;
-  height: 50px;
+  width: 16rem;
+  height: 52px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -73,14 +74,38 @@ nav {
   box-shadow: 3px 10px 15px 2px rgba(0, 0, 0, 0.165);
 }
 
-.btn-start:before {
-  left: 0; top: 0; width: 100%; height: 0; border-bottom-left-radius: 50%; border-bottom-right-radius: 50%;
-}
-
 #carouselExampleSlidesOnly {
   z-index: -1;
 }
 
-.search-btn {
-  background-color: #f08724;
+.form-floating {
+  z-index: -1;
+}
+
+.dropdown-menu {
+  --bs-dropdown-min-width: 115px !important;
+}
+
+.profile-crop {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.profile-image {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 300px;
+  transform: translate(-50%,-50%);
+}
+
+.prorile-card {
+  background-color: white;
+  padding: 4rem 0;
+  box-shadow: 3px 10px 15px 2px rgba(0, 0, 0, 0.165);
+  width: 35rem;
+  border-radius: 20px;
 }

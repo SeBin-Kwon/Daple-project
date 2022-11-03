@@ -13,14 +13,15 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
     {% bootstrap_css %}
     {% block css %}{% endblock css %}
 
 </head>
-<body class="bg-light" style="height: 2000px;">
-<nav class="nav navbar navbar-expand-lg shadow-sm px-3 bg-white" id="nav-sticky" style="height: 90px;">
-    <div class="container-fluid">
-        <a href="{% url 'index' %}">
+<body class="bg-light">
+<nav class="nav navbar navbar-expand-lg shadow-sm bg-white" id="nav-sticky" style="height: 90px; z-index: 100;">
+    <div class="container bg-white">
+        <a href="{% url 'stores:index' %}">
         <img class="navbar-brand" src="{% static 'images/logo.png' %}" style="width: 100px;">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -29,45 +30,80 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link" aria-current="page" href="{% url 'stores:index' %}">Store</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'reviews:index' %}">Review</a>
-                </li>
+                </li> -->
             </ul>
 
             <!-- 검색창 -->
+            <br>
             <form class="d-flex">
-                <input class="form-control me-2" type="search" placeholder="맛집 검색하기" aria-label="Search">
-                <button class="search-btn btn" type="submit" style="background-color: #f08724; color: white;">Search</button>
+                <input class="form-control me-1" type="search" placeholder="맛집 검색하기" aria-label="Search" style="border-radius: 104.375rem; width: 30rem;">
+                <a class="search-btn btn" type="submit"><i class="bi bi-search"></i></a>
             </form>
+            <br>
 
             <!-- 유저이름 -->
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                     data-bs-toggle="dropdown" aria-expanded="false">
-                        유저이름
+                        {{ user }}
                     </a>
                     <ul class="dropdown-menu" id="drop-menu" aria-labelledby="navbarDropdown">
                         {% if user.is_authenticated %}
-                            <li><a class="nav-link" href="{% url 'accounts:mypage' user.pk %}">마이페이지</a></li>
+                            <li><a class="nav-link ms-3" href="{% url 'accounts:mypage' user.pk %}">마이페이지</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="nav-link" href="{% url 'accounts:logout' %}">로그아웃하기</a>
+                            <li><a class="nav-link ms-3" href="{% url 'accounts:logout' %}">로그아웃하기</a>
                         {% else %}
-                            <a class="nav-link" href="{% url 'accounts:signup' %}">회원가입하기</a>
-                            <a class="nav-link" href="{% url 'accounts:login' %}">로그인하기</a>
+                            <a class="nav-link ms-3" href="{% url 'accounts:signup' %}">회원가입하기</a>
+                            <a class="nav-link ms-3" href="{% url 'accounts:login' %}">로그인하기</a>
                         {% endif %}
                     </li>
                   </ul>
                 </li>
             </ul>
+
         </div>
     </div>
 </nav>
+
+<!-- <nav class="nav sticky-top navbar navbar-expand-lg shadow-sm bg-light">
+    <div class="container">
+      <a class="navbar-brand" href="{% url 'stores:index' %}">
+        <img class="navbar-brand" src="{% static 'images/logo.png' %}" style="width: 100px;">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <br>
+          <form class="d-flex me-auto">
+              <input class="form-control me-1" type="search" placeholder="맛집 검색하기" aria-label="Search" style="border-radius: 104.375rem;">
+              <a class="search-btn btn" type="submit"><i class="bi bi-search"></i></a>
+            </form>
+        <br>
+        <div class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                {{ user }}
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">Action</a></li>
+              <li><a class="dropdown-item" href="#">Another action</a></li>
+              <li><a class="dropdown-item" href="#">Something else here</a></li>
+            </ul>
+          </li>
+        </div>
+      </div>
+    </div>
+  </nav> -->
+
 <div class="container my-5">
     {% block content %}{% endblock content %}
     <script type="text/javascript" defer src="{% static 'javascript/style.js' %}"></script>
