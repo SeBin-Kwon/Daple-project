@@ -35,6 +35,9 @@ def login(request):
     }
     return render(request, 'accounts/login.html', context)
 
+def callback(request):
+    return render(request, 'accounts/callback.html')
+
 def logout(request):
     auth_logout(request)
     return redirect('accounts:index')
@@ -64,3 +67,7 @@ def mypage_delete(request, pk):
     user = User.objects.get(pk=pk)
     user.delete()
     return redirect('accounts:index')
+
+def temp(request, pk):
+    print(pk)
+    return render('accounts:index')

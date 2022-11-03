@@ -5,6 +5,10 @@
 {% providers_media_js %}
 
 {% block css %}
+<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 {% endblock %}
 
 {% block content %}
@@ -18,6 +22,90 @@
 <a class="btn btn-primary" href="{% url 'accounts:logout' %}">로그아웃하기</a>
 
 <a href="{% provider_login_url 'google' %}">구글 로그인</a>
-<a href="{% provider_login_url 'kakao' method='oauth2' %}">카카오 로그인</a>
+<a href="{% provider_login_url 'naver' %}">네이버 로그인</a>
+<a href="http://192.168.0.48:5500/accounts/examples/html/kakao_login.html">소셜 로그인</a>
+
+<!-- 새로운 kakao -->
+<a id="kakao-login-btn"></a>
+	<button class="api-btn" onclick="unlinkApp()">앱 탈퇴하기</button>
+	<div id="result"></div>
+<script type="text/javascript">
+  function unlinkApp() {
+    Kakao.API.request({
+      url: '/v1/user/unlink',
+      success: function(res) {
+        alert('success: ' + JSON.stringify(res))
+      },
+      fail: function(err) {
+        alert('fail: ' + JSON.stringify(err))
+      },
+    })
+  }
+</script>
+ 
+<script type="text/javascript">
+Kakao.init('a0cada2d8b8a9ceb068c7ff974a58db2');
+console.log(Kakao.isInitialized());
+ 
+  Kakao.Auth.createLoginButton({
+    container: '#kakao-login-btn',
+    success: function(authObj) {
+      Kakao.API.request({
+        url: '/v2/user/me',
+        success: function(result) {
+          $('#result').append(result);
+          id = result.id
+          connected_at = result.connected_at
+          kakao_account = result.kakao_account
+          $('#result').append(kakao_account);
+          resultdiv="<h2>로그인 성공 !!"
+          resultdiv += '<h4>id: '+id+'<h4>'
+          resultdiv += '<h4>connected_at: '+connected_at+'<h4>'
+          email ="";
+          gender = "";
+          if(typeof kakao_account != 'undefined'){
+        	  email = kakao_account.email;
+        	  gender = kakao_account.gender;
+          }
+          resultdiv += '<h4>email: '+email+'<h4>'
+          resultdiv += '<h4>gender: '+gender+'<h4>'
+          $('#result').append(resultdiv);
+          
+        },
+        fail: function(error) {
+          alert(
+            'login success, but failed to request user information: ' +
+              JSON.stringify(error)
+          )
+        },
+      })
+    },
+    fail: function(err) {
+      alert('failed to login: ' + JSON.stringify(err))
+    },
+  })
+</script>
+
+<!-- 새로운 naver -->
+
+<!-- 네이버아이디로로그인 버튼 노출 영역 -->
+<div id="naver_id_login"></div>
+<!-- //네이버아이디로로그인 버튼 노출 영역 -->
+<script type="text/javascript">
+    var naver_id_login = new naver_id_login("V9ZIRTdzRy9gYTZ2tQsN", "http://127.0.0.1:8000/daple-accounts/callback/");
+    var state = naver_id_login.getUniqState();
+    naver_id_login.setButton("white", 2,40);
+    naver_id_login.setDomain("YOUR_SERVICE_URL");
+    naver_id_login.setState(state);
+    naver_id_login.setPopup();
+    naver_id_login.init_naver_id_login();
+</script>
+
+{% if user.is_authenticated %}
+<h1>로그인 됨</h1>
+<a class="nav-link" href="{% url 'accounts:mypage' user.pk %}">마이페이지</a>
+{% else %}
+<h1>로그인 안됨</h1>
+{% endif %}
 
 {% endblock %}
