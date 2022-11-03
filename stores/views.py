@@ -52,7 +52,10 @@ def detail(request, pk):
     for review in reviews:
         sum_rating += review.review_rating
     people_num = len(reviews)
-    avg_rating = sum_rating / people_num
+    if sum_rating:
+        avg_rating = sum_rating / people_num
+    else:
+        avg_rating = 0
     
     comments = Comment.objects.all().order_by('-pk')
     comment_form = CommentForm()
