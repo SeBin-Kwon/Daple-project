@@ -60,7 +60,8 @@
                     </li>
                 </ul>
 
-    <div class="container">
+    <!-- <div class="container">
+        <a href="{% url 'stores:create' %}">생성</a>
         <div class="row">
             <div class="col-md-12">
                 {% for item in stores %}
@@ -68,13 +69,27 @@
 
 
                 {%  endfor %}
-            <a href="{% url 'stores:create' %}">생성</a>
+            
             </div>
         </div>
+    </div> -->
     </nav>
+    <div class="container">
+        <a href="{% url 'stores:create' %}">생성</a>
+        <div class="row">
+            <div class="col-md-12">
+                {% for item in stores %}
+                <h1><a href="{% url 'stores:detail' item.pk %}">{{ item.store_name }}</a></h1>
+
+
+                {%  endfor %}
+            
+            </div>
+        </div>
+    </div>
 
 <!-- 캐러쉘 -->
-<div id="carouselExampleSlidesOnly" class="position-absolute top-0 carousel slide carousel-fade" data-bs-ride="carousel">
+<!-- <div id="carouselExampleSlidesOnly" class="position-absolute top-0 carousel slide carousel-fade" data-bs-ride="carousel">
     <div class="carousel-inner">
       <div class="carousel-item active">
         <img src="https://dummyimage.com/1280x800/000/fff" class="d-block w-100" alt="...">
@@ -86,10 +101,11 @@
         <img src="https://dummyimage.com/1280x800/000/fff" class="d-block w-100" alt="...">
       </div>
     </div>
-  </div>
+  </div> -->
 
   <!-- 본문 컨텐츠 -->
-        <div class="container">
+
+        <!-- <div class="container">
             <div class="row">
                 <div class="col-md-12">
                 {% for item in stores %}
@@ -104,12 +120,11 @@
     <script type="text/javascript" src="{% static 'js/map.js' %}"></script>
 
 
-
-
                 {%  endfor %}
                 </div>
             </div>
-        </div>
+        </div> -->
+
     <!-- <script type="text/javascript" defer src="{% static 'javascript/style.js' %}"></script> -->
     <script>
         window.addEventListener("scroll", function(){

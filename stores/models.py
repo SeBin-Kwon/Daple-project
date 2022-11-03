@@ -22,7 +22,7 @@ class Store(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,blank=True, null=True)
     store_x = models.CharField(default=0,max_length=100)
     store_y = models.CharField(default=0,max_length=100)
-    review = models.ForeignKey('reviews.Review', on_delete=models.CASCADE, related_name='store_reviews', blank=True, null=True)
+    # review = models.ForeignKey('reviews.Review', on_delete=models.CASCADE, related_name='store_reviews', blank=True, null=True)
     store_image = ProcessedImageField(
         upload_to="stores/",
         blank=True,
@@ -30,5 +30,5 @@ class Store(models.Model):
         format="JPEG",
         options={"quality": 90},
     )
-    # foodtag_id = models.ForeignKey(Foodtag, on_delete=models.CASCADE,blank=True)
-    # thematag_id = models.ForeignKey(Thematag, on_delete=models.CASCADE,blank=True)
+    foodtag_id = models.ForeignKey(Foodtag, on_delete=models.CASCADE,null=True,blank=True)
+    thematag_id = models.ForeignKey(Thematag, on_delete=models.CASCADE,null=True,blank=True)
