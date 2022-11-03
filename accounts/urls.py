@@ -25,6 +25,7 @@ urlpatterns = [
     path('callback/', views.callback, name='callback'),
     path('logout/', views.logout, name='logout'),
     path('mypage/<int:pk>/', views.mypage, name='mypage'),
+    path('password/', views.change_password, name='change_password'),
     path('mypage-update/<int:pk>/', views.mypage_update, name='mypage-update'),
     path('mypage-delete/<int:pk>/', views.mypage_delete, name='mypage-delete'),
     path('temp/<int:pk>/', views.temp, name='temp'),
