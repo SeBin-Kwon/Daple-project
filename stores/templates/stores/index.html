@@ -4,63 +4,68 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DAPLE</title>
-  <link rel="stylesheet" href="{% static 'css/style.css' %}">
-  <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
-  {% bootstrap_css %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DAPLE</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"
+            integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+    {% bootstrap_css %}
 </head>
 <body class="position-relative">
-    <!-- 네브바 -->
-    <nav class="nav navbar navbar-dark navbar-expand-lg shadow-sm px-3" id="nav-sticky" style="height: 90px;">
-        <div class="container-fluid">
-            <a href="{% url 'index' %}">
+<!-- 네브바 -->
+<nav class="nav navbar navbar-dark navbar-expand-lg shadow-sm px-3" id="nav-sticky" style="height: 90px;">
+    <div class="container-fluid">
+        <a href="{% url 'index' %}">
             <img class="navbar-brand" src="{% static 'images/logo.png' %}" style="width: 100px;">
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="{% url 'stores:index' %}">Store</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'reviews:index' %}">Review</a>
-                    </li>
-                </ul>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="{% url 'stores:index' %}">Store</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'reviews:index' %}">Review</a>
+            </li>
+        </ul>
 
-                <!-- 검색창 -->
-                <form class="d-flex">
-                    <input class="form-control me-2" type="search" placeholder="맛집 검색하기" aria-label="Search">
-                    <a class="search-btn btn" type="submit"><i class="bi bi-search"></i></a>
-                </form>
-                <!-- 유저이름 -->
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                            유저이름
-                        </a>
-                        <ul class="dropdown-menu" id="drop-menu" aria-labelledby="navbarDropdown" style="background-color: rgba(0,0,0,0);">
-                            {% if user.is_authenticated %}
-                                <li><a class="nav-link" href="{% url 'accounts:mypage' user.pk %}">마이페이지</a></li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li><a class="nav-link" href="{% url 'accounts:logout' %}">로그아웃하기</a>
-                            {% else %}
-                                <a class="nav-link" href="{% url 'accounts:signup' %}">회원가입하기</a>
-                                <a class="nav-link" href="{% url 'accounts:login' %}">로그인하기</a>
-                            {% endif %}
+        <!-- 검색창 -->
+        <form class="d-flex">
+            <input class="form-control me-2" type="search" placeholder="맛집 검색하기" aria-label="Search">
+            <a class="search-btn btn" type="submit"><i class="bi bi-search"></i></a>
+        </form>
+        <!-- 유저이름 -->
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                   data-bs-toggle="dropdown" aria-expanded="false">
+                    유저이름
+                </a>
+                <ul class="dropdown-menu" id="drop-menu" aria-labelledby="navbarDropdown"
+                    style="background-color: rgba(0,0,0,0);">
+                    {% if user.is_authenticated %}
+                        <li><a class="nav-link" href="{% url 'accounts:mypage' user.pk %}">마이페이지</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
                         </li>
-                      </ul>
+                        <li><a class="nav-link" href="{% url 'accounts:logout' %}">로그아웃하기</a>
+                    {% else %}
+                        <a class="nav-link" href="{% url 'accounts:signup' %}">회원가입하기</a>
+                        <a class="nav-link" href="{% url 'accounts:login' %}">로그인하기</a>
+                    {% endif %}
                     </li>
                 </ul>
+            </li>
+        </ul>
+    </div>
 
     <!-- <div class="container">
         <a href="{% url 'stores:create' %}">생성</a>
@@ -75,20 +80,20 @@
             </div>
         </div>
     </div> -->
-    </nav>
-    <div class="container">
-        <a href="{% url 'stores:create' %}">생성</a>
-        <div class="row">
-            <div class="col-md-12">
-                {% for item in stores %}
+</nav>
+<div class="container">
+    <a href="{% url 'stores:create' %}">생성</a>
+    <div class="row">
+        <div class="col-md-12">
+            {% for item in stores %}
                 <h1><a href="{% url 'stores:detail' item.pk %}">{{ item.store_name }}</a></h1>
 
 
-                {%  endfor %}
-            
-            </div>
+            {% endfor %}
+
         </div>
     </div>
+</div>
 
 <!-- 캐러쉘 -->
 <!-- <div id="carouselExampleSlidesOnly" class="position-absolute top-0 carousel slide carousel-fade" data-bs-ride="carousel">
@@ -105,31 +110,158 @@
     </div>
   </div> -->
 
-  <!-- 본문 컨텐츠 -->
+<!-- 본문 컨텐츠 -->
 
-        <!-- <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                {% for item in stores %}
-                <h1><a href="{% url 'stores:detail' item.pk %}">{{ item.store_name }}</a></h1>
+<div id="search-result">
 
-    <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f67a00458fad2dd649d99395a35661d1&libraries=services"></script>
-    <button type="button" onclick="getCurrentPosBtn()" class="btn btn-lg btn-primary" id="getMyPositionBtn">내 위치 가져오기
-    </button>
+</div>
+<button type="button" onclick="getCurrentPosBtn()" class="btn btn-lg btn-primary" id="getMyPositionBtn">내 위치 가져오기
+</button>
 
-    <div id="map" style="width:500px;height:400px;"></div>
+<div id="map" style="width:500px;height:400px;"></div>
 
-    <script type="text/javascript" src="{% static 'js/map.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/map.js' %}"></script>
+
+<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f67a00458fad2dd649d99395a35661d1&libraries=services"></script>
+<script>
+    var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+        mapOption = {
+            center: new kakao.maps.LatLng(37.56646, 126.98121), // 지도의 중심좌표
+            level: 4, // 지도의 확대 레벨
+            mapTypeId: kakao.maps.MapTypeId.ROADMAP // 지도종류
+        };
+
+    // 지도를 생성한다
+    var map = new kakao.maps.Map(mapContainer, mapOption);
+    var final
+
+    function locationLoadSuccess(pos) {
+        // 현재 위치 받아오기
+        var currentPos = new kakao.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
+
+        // 지도 이동(기존 위치와 가깝다면 부드럽게 이동)
+        map.panTo(currentPos);
+
+        // 마커 생성
+        var marker = new kakao.maps.Marker({
+            position: currentPos
+        });
+
+        // 기존에 마커가 있다면 제거
+        marker.setMap(null);
+        marker.setMap(map);
+    }
+
+    function locationLoadError(pos) {
+        alert('위치 정보를 가져오는데 실패했습니다.');
+    }
+
+    // 위치 가져오기 버튼 클릭시
+    function getCurrentPosBtn() {
+        navigator.geolocation.getCurrentPosition(locationLoadSuccess, locationLoadError);
+        setTimeout(locationSearch, 3000)
 
 
-                {%  endfor %}
-                </div>
-            </div>
-        </div> -->
+        // kakao.maps.load(function () {
+        // });
+        // var bounds = map.getBounds();
+        // var swLatLng = bounds.getSouthWest();
+        // var neLatLng = bounds.getNorthEast();
+        // console.log(swLatLng, neLatLng);
 
-    <!-- <script type="text/javascript" defer src="{% static 'javascript/style.js' %}"></script> -->
-    <script>
-        window.addEventListener("scroll", function(){
+    }
+
+    function getAddr(lat, lng) {
+
+
+        $.ajax({
+            url: 'https://dapi.kakao.com/v2/local/geo/coord2address.json?',
+            type: 'GET',
+            data: {x: lng, y: lat},
+            headers: {'Authorization': 'KakaoAK 0f23477b2b3262f820c688ff81fdf916'},
+            success: function (data) {
+                let result = data.documents
+                final = result[0].address.region_3depth_name;
+
+            },
+            error: function (e) {
+                console.log(e);
+            }
+        });
+
+    }
+
+    function locationSearch() {
+
+
+        var infowindow = new kakao.maps.InfoWindow({zIndex: 1});
+
+
+        var position = map.getCenter().toString();
+
+        var result = position.split(/[(, )]/)
+        let lat = result[1];
+        let lng = result[3];
+        console.log(final);
+
+        getAddr(lat, lng);
+
+
+        $.ajax({
+            url: 'https://dapi.kakao.com/v2/local/search/category.json?',
+            type: 'GET',
+            data: {category_group_code: 'FD6', x: lng, y: lat},
+            headers: {'Authorization': 'KakaoAK 0f23477b2b3262f820c688ff81fdf916'},
+            success: function (data) {
+                const serachresult = document.querySelector('#search-result')
+                console.log(data.documents)
+                for (var i = 0; i < data.documents.length; i++) {
+                    serachresult.innerText += (' 주소 :' + data.documents[i].address_name + ' 이름 : ' + data.documents[i].place_name + ' 전화번호 : ' + data.documents[i].phone)
+
+                }
+                // for (var i=0; i < data.documents.length; i++) {
+                //     document.getElementById('#search-result').innerHTML = data.documents[i];
+                // }
+                placesSearchCB()
+            },
+            error: function (e) {
+                console.log(e);
+            }
+        });
+
+// 카테고리로 은행을 검색합니다
+//     ps.categorySearch('FD6', placesSearchCB, {useMapBounds: true});
+//
+// 키워드 검색 완료 시 호출되는 콜백함수 입니다
+        function placesSearchCB(data, status, pagination) {
+            if (status === kakao.maps.services.Status.OK) {
+                for (var i = 0; i < data.length; i++) {
+                    displayMarker(data[i]);
+                }
+            }
+        }
+
+// 지도에 마커를 표시하는 함수입니다
+        function displayMarker(place) {
+            // 마커를 생성하고 지도에 표시합니다
+            var marker = new kakao.maps.Marker({
+                map: map,
+                position: new kakao.maps.LatLng(place.y, place.x)
+            });
+
+            // 마커에 클릭이벤트를 등록합니다
+            kakao.maps.event.addListener(marker, 'click', function () {
+                // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
+                infowindow.setContent('<div style="padding:5px;font-size:12px;">' + place.place_name + '</div>');
+                infowindow.open(map, marker);
+            });
+        }
+
+    }
+</script>
+<!-- <script type="text/javascript" defer src="{% static 'javascript/style.js' %}"></script> -->
+<script>
+    window.addEventListener("scroll", function () {
         let nav = document.querySelector("nav");
         nav.classList.toggle("position-sticky", this.window.scrollY > 0);
         const navSticky = document.querySelector("#nav-sticky");
@@ -137,7 +269,7 @@
         const dropMenu = document.querySelector("#drop-menu");
         // dropMenu.classList.toggle("bg-dark", this.window.scrollY === 0);
 
-        if (window.scrollY > 0){
+        if (window.scrollY > 0) {
             navSticky.style.backgroundColor = "white";
             navSticky.style.height = "60px";
             dropMenu.style.backgroundColor = "white";
@@ -146,9 +278,9 @@
             navSticky.style.height = "90px";
             dropMenu.style.backgroundColor = "rgba(0,0,0,0)";
         }
-        })
-    </script>
-    <script src="https://cdn.lordicon.com/qjzruarw.js"></script>
-    {% bootstrap_javascript %}
-    </body>
+    })
+</script>
+<script src="https://cdn.lordicon.com/qjzruarw.js"></script>
+{% bootstrap_javascript %}
+</body>
 </html> 
