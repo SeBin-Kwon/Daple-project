@@ -66,8 +66,8 @@
   <!--코멘트-->
     <a id="review-{{ review.pk }}-comments" type="button" onclick="getComment(this.id)">댓글보기</a> | 
     <a id="review-{{ review.pk }}-comment-create" type="button" onclick="getCreateComment(this.id)">댓글달기</a>
-    <br>
-    <form id="review-{{ review.pk }}-comment-create-form" data-review-id="{{ review.pk }}" class="display-none">
+    <br><br>
+    <form id="review-{{ review.pk }}-comment-create-form" data-review-id="{{ review.pk }}" class="display-none" onsubmit="submitComment(this.id)">
       {% csrf_token %}
       {% bootstrap_form comment_form layout='floating'%}
       {% bootstrap_button button_type="submit" content="OK" %}
@@ -109,48 +109,15 @@
     }
   }
 
-//   const getCreateComment = function (e) {
-//     console.log(e)
-//     const commentForm = document.querySelector(`#${e}-form`)
-//     commentForm.classList.toggle('display-none');
-
-//     commentForm.addEventListener('submit', function(event) {
-//       event.preventDefault();
-//       axios({
-//         method: 'post',
-//         url: `/reviews/${event.target.dataset.reviewId}/comments/`,
-//         headers: {'X-CSRFToken': csrftoken},
-//         data: new FormData(commentForm)
-//       })
-//       .then(response => {
-//         const commentsList = document.querySelector(`#review-${event.target.dataset.reviewId}-comments-list`)
-//         commentsList.textContent="";
-//         for (let i = 0 ;i < response.data.comments_data.length;i++ ){
-//           if ( response.data.comments_data[i].request_user_pk === response.data.comments_data[i].user_pk ) {
-//             commentsList.insertAdjacentHTML('beforeend',`<span>${response.data.comments_data[i].username} | ${response.data.comments_data[i].content} | ${response.data.comments_data[i].created_at} </span>
-//             <button id="comment-${response.data.comments_data[i].comment_pk}-update" data-review-id="${response.data.comments_data[i].review_pk}" data-comment-id="${response.data.comments_data[i].comment_pk}" class="btn btn-outline-success" onclick="getUpdateComment(this.id)">수정</button>
-//             <button id="comment-${response.data.comments_data[i].comment_pk}-delete" data-review-id="${response.data.comments_data[i].review_pk}" data-comment-id="${response.data.comments_data[i].comment_pk}" class="btn btn-outline-danger" onclick="deleteComment(this.id)">삭제</button>
-//             <div id="comment-${response.data.comments_data[i].comment_pk}-update-form" class="display-none">
-//             <input id="comment-${response.data.comments_data[i].comment_pk}-update-content" type="text" value="${response.data.comments_data[i].content}">
-//             <button id="comment-${response.data.comments_data[i].comment_pk}-update-btn" class="btn btn-primary" data-review-id="${response.data.comments_data[i].review_pk}" data-comment-id="${response.data.comments_data[i].comment_pk}" onclick="updateComment(this.id)">확인</button>
-//             </div><br>`)
-//           } else {
-//             commentsList.insertAdjacentHTML('beforeend',`<span>${response.data.comments_data[i].username} | ${response.data.comments_data[i].content} | ${response.data.comments_data[i].created_at} </span><br>`)
-//           }
-      
-//         }
-//         commentForm.reset()
-//       })
-//     })
-//   }
-
-const getCreateComment = function (e) {
-    console.log(e)
+  const getCreateComment = function (e) {
     const commentForm = document.querySelector(`#${e}-form`)
     commentForm.classList.toggle('display-none');
+  }
+  
+  const submitComment = function (e) {
+    event.preventDefault();
+    const commentForm = document.querySelector(`#${e}`)
 
-    commentForm.addEventListener('submit', function(event) {
-      event.preventDefault();
       axios({
         method: 'post',
         url: `/reviews/${event.target.dataset.reviewId}/comments/`,
@@ -158,7 +125,7 @@ const getCreateComment = function (e) {
         data: new FormData(commentForm)
       })
       .then(response => {
-        const commentsList = document.querySelector(`#review-${event.target.dataset.reviewId}-comments-list`)
+        const commentsList = document.querySelector(`#review-${response.data.comments_data[0].review_pk}-comments-list`)
         commentsList.textContent="";
         for (let i = 0 ;i < response.data.comments_data.length;i++ ){
           if ( response.data.comments_data[i].request_user_pk === response.data.comments_data[i].user_pk ) {
@@ -176,7 +143,7 @@ const getCreateComment = function (e) {
         }
         commentForm.reset()
       })
-    })
+
   }
 
   const getUpdateComment = function (e) {
@@ -290,6 +257,5 @@ const getCreateComment = function (e) {
   
   </script>
     <!-- 부트스트랩 이용을 위한 jQuery와 CDN -->
-    
 
 {% endblock %}

@@ -9,7 +9,7 @@ from django.contrib.auth import update_session_auth_hash
 from django.http import JsonResponse
 import json
 from django.views.decorators.csrf import csrf_exempt
-
+from stores.models import Thematag, Foodtag
 # Create your views here.
 def index(request):
     Thematag.objects.create(thematag_name='가성비좋은')
