@@ -1,5 +1,5 @@
 from .models import User
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 
 class CustomUserCreationForm(UserCreationForm):
 
@@ -16,3 +16,9 @@ class CustomUserCreationForm(UserCreationForm):
             'phone': '휴대폰번호',
             'Is_owner': '가게 주인이신가요?',
         }
+
+class CustomUserChangeForm(UserChangeForm):
+
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'phone', 'nickname', 'profile_image')

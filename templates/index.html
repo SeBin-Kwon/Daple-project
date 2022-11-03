@@ -9,15 +9,17 @@
   <title>DAPLE</title>
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
   <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
   {% bootstrap_css %}
 </head>
 <body class="bg-image d-flex align-items-center">
-  <img class="navbar-brand" src="{% static 'images/logo.png' %}" style="width: 280px; margin: 200px 0 150px 0;">
+  <img class="navbar-brand" src="{% static 'images/logo.png' %}" style="width: 260px; margin: 120px 20px 30px 0;">
   <lord-icon
-    src="https://cdn.lordicon.com/hjbsbdhw.json"
-    trigger="morph"
-    style="width:250px;height:250px">
-</lord-icon>
+    src="https://cdn.lordicon.com/lbkuzggq.json"
+    trigger="hover"
+    colors="primary:#e4e4e4,secondary:#848484,tertiary:#e86830"
+    style="width:250px;height:250px; margin-bottom: 20px;">
+  </lord-icon>
   <a class="btn-start" href="{% url 'stores:index' %}">다플 시작하기</a>
   <script type="text/javascript" defer src="{% static 'javascript/style.js' %}"></script>
   <script src="https://cdn.lordicon.com/qjzruarw.js"></script>

@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from .models import Review, Comment
+from stores.models import Store
 from .forms import ReviewForm, CommentForm
 from django.http import JsonResponse
 import json
@@ -18,14 +19,16 @@ def index(request):
     }
     return render(request, 'reviews/index.html', context)
 
-def create(request):
+def create(request, pk):
+    store = Store.objects.get(pk=pk)
     if request.method == 'POST':
         review_form = ReviewForm(request.POST,request.FILES)
         if review_form.is_valid():
             review = review_form.save(commit=False)
             review.user = request.user
+            review.store = store
             review_form.save()
-            return redirect('reviews:index')
+            return redirect('stores:detail', pk)
     else:
         review_form = ReviewForm()
     context = {
@@ -41,7 +44,9 @@ def update(request, pk):
             reviews = review_form.save(commit=False)
             reviews.user = request.user
             reviews.save()
-            return redirect('reviews:index')
+
+            return redirect(request.GET.get('next'))
+            # return redirect('reviews:index')
     else:
         review_form = ReviewForm(instance=review)
     context = {
@@ -51,7 +56,9 @@ def update(request, pk):
 
 def delete(request, pk):
     Review.objects.get(pk=pk).delete()
-    return redirect('reviews:index')
+
+    return redirect(request.GET.get('next'))
+    # return redirect('reviews:index')
 
 
 def comment_create(request, pk):
