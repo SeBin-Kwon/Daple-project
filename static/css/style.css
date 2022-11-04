@@ -193,6 +193,27 @@ i {
   height: 2.7rem;
 }
 
+
 .signup {
   margin: 0 5rem;
+}
+
+#kakao-login-btn {
+  width: 100% !important;
+  height: 2.7rem !important;
+}
+
+#kakao-login-btn > img {
+  width: 100% !important;
+  height: 2.7rem !important;
+}
+
+#kakao-login-btn {
+  width: 100% !important;
+  height: 2.7rem !important;
+}
+
+#naver_id_login > a > img {
+  width: 100% !important;
+  height: 2.7rem !important;
 }

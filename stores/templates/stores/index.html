@@ -77,31 +77,10 @@
         <a href="{% url 'stores:create' %}">생성</a>
         <div class="row">
             <div class="col-md-12">
-                {% for item in stores %}
-
-                <h1><a href="{% url 'stores:detail' item.pk %}">{{ item.store_name }}</a></h1>
 
 
-            {% endfor %}
 
 
-    {% for item in stores %}
-        <div class="card mb-3" style="max-width: 540px;">
-            <div class="row g-0">
-                <div class="col-md-4">
-                    <a href="{% url 'stores:detail' item.pk %}"><img src="{% static 'images/alt.png' %}" class="img-fluid rounded-start" alt="..."></a>
-                </div>
-                <div class="col-md-8">
-                    <div class="card-body">
-                        <h5 class="card-title"><a href="{% url 'stores:detail' item.pk %}">{{ item.store_name }}</a>
-                        </h5>
-                        <p class="card-text">{{ item.store_address }}</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
 </div> -->
 
 
@@ -125,11 +104,27 @@
     </div>
 
     </div>
+    </div>
+<div>
+<button type="button" onclick="getCurrentPosBtn()" class="btn btn-lg btn-primary" id="getMyPositionBtn">내 위치 가져오기
+</button>
   <!-- 본문 컨텐츠 -->
-
-
-<div id="search-result">
-
+    {% for item in stores %}
+        <div class="card mb-3" style="max-width: 540px;">
+            <div class="row g-0">
+                <div class="col-md-4">
+                    <a href="{% url 'stores:detail' item.pk %}"><img src="{% static 'images/alt.png' %}" class="img-fluid rounded-start" alt="..."></a>
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title"><a href="{% url 'stores:detail' item.pk %}">{{ item.store_name }}</a>
+                        </h5>
+                        <p class="card-text">{{ item.store_address }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+           {% endfor %}
 </div>
 <button type="button" onclick="getCurrentPosBtn()" class="btn btn-lg btn-primary" id="getMyPositionBtn">내 위치 가져오기
 </button>
