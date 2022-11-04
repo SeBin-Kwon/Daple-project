@@ -39,8 +39,8 @@ def signup(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
-            print(form.get_user())
+            user = form.save()
+            auth_login(request, user)
             return redirect('accounts:index')
     else:
         form = CustomUserCreationForm()
