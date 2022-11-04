@@ -116,15 +116,40 @@ def temp(request, pk):
 
 def database(request):
     jsonObject = json.loads(request.body)
-    # user = User()
-    user = User.objects.get(username=jsonObject.get('username'))
-    # user.username = jsonObject.get('username')
-    # user.email = jsonObject.get('email')
-    # user.save()
-    print(user.username)
-    print(request.session)
-    auth_login(request, user)
-    print('1')
+    username = jsonObject.get('username')
+    users = User.objects.filter(username=username)
+    print(users)
+    if users:
+        user = User.objects.get(username=username)
+        auth_login(request, user)
+    else:
+        user = User()
+        user.username = jsonObject.get('username')
+        user.email = jsonObject.get('email')
+        user.save()
+        user = User.objects.get(username=username)
+        auth_login(request, user)
+    return JsonResponse({'username': user.username, 'email': user.email})
+
+def database_naver(request):
+    jsonObject = json.loads(request.body)
+    username = jsonObject.get('id')
+    print(username)
+    users = User.objects.filter(username=username)
+    if users:
+        user = User.objects.get(username=username)
+        auth_login(request, user)
+        print('complete!')
+    else:
+        user = User()
+        user.username = jsonObject.get('id')
+        print(jsonObject.get('id'))
+        user.nickname = jsonObject.get('name')
+        user.email = jsonObject.get('email')
+        # user.phone = jsonObject.get('mobile')
+        user.save()
+        user = User.objects.get(username=username)
+        auth_login(request, user)
     return JsonResponse({'username': user.username, 'email': user.email})
 
 # @csrf_exempt
