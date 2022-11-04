@@ -74,8 +74,8 @@ console.log(Kakao.isInitialized());
             headers: {'X-CSRFToken': csrftoken},
             data: {'username': id, 'email': email}
             }).then(response => {
-            // location.reload();
-            window.location.href = 'http://localhost:8000/reviews/'; // 이동할 url
+            location.reload();
+            // window.location.href = 'http://localhost:8000/reviews/'; // 이동할 url
             })
 
         },
@@ -120,13 +120,15 @@ console.log(Kakao.isInitialized());
 <div id="naver_id_login"></div>
 <!-- //네이버아이디로로그인 버튼 노출 영역 -->
 <script type="text/javascript">
-    var naver_id_login = new naver_id_login("V9ZIRTdzRy9gYTZ2tQsN", "http://127.0.0.1:8000/daple-accounts/callback/");
+    var naver_id_login = new naver_id_login("V9ZIRTdzRy9gYTZ2tQsN", "http://127.0.0.1:8000/accounts/callback/");
     var state = naver_id_login.getUniqState();
     naver_id_login.setButton("white", 2,40);
     naver_id_login.setDomain("YOUR_SERVICE_URL");
     naver_id_login.setState(state);
     naver_id_login.setPopup();
     naver_id_login.init_naver_id_login();
+    // window.location.href = 'http://localhost:8000/accounts/';
+    // setTimeout(function() {location.reload();}, 7000);
 </script>
 
 {% if user.is_authenticated %}
