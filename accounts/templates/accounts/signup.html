@@ -1,12 +1,16 @@
 {% extends 'base2.html' %}
-
+{% load static %}
 {% load django_bootstrap5 %}
 
 {% block css %}
 {% endblock %}
 
 {% block content %}
-<div class="container">
+<div class="container" style="padding: 5rem;">
+    <div class="d-flex justify-content-center align-items-baseline mb-5">
+        <img class="navbar-brand me-2" src="{% static 'images/logo.png' %}" style="width: 110px;">
+        <h3 class="title">회원가입</h3>
+    </div>
     <form action="" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         {% bootstrap_form form %}
