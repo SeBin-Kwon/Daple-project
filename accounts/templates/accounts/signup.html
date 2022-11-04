@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'base2.html' %}
 
 {% load django_bootstrap5 %}
 
@@ -6,11 +6,12 @@
 {% endblock %}
 
 {% block content %}
-
-<form action="" method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    {% bootstrap_form form %}
-    {% bootstrap_button button_type="submit" content="가입하기" %}
-</form>
+<div class="container">
+    <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        <input class="btn text-white my-2" type="submit" value="회원가입 완료" style="background-color: #f08724;">
+    </form>
+</div>
 
 {% endblock %}

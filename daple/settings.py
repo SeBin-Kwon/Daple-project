@@ -32,28 +32,17 @@ INSTALLED_APPS = [
     'reviews',
     'stores',
     'accounts',
+    'mathfilters',
     'django_bootstrap5',
     'django_extensions',
     'imagekit',
     'django.contrib.admin',
     'django.contrib.auth',
-    'django.contrib.sites',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'phonenumber_field',
-
-    #allauth
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-
-    #provider
-    'allauth.socialaccount.providers.auth0',
-    'allauth.socialaccount.providers.google',
-    'allauth.socialaccount.providers.naver',
-    'allauth.socialaccount.providers.kakao'
 ]
 
 MIDDLEWARE = [
@@ -141,14 +130,3 @@ MEDIA_ROOT = BASE_DIR / 'media'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'accounts.User'
-
-AUTHENTICATION_BACKENDS = (
-    'django.contrib.auth.backends.ModelBackend',
-
-    'allauth.account.auth_backends.AuthenticationBackend'
-)
-
-ACCOUNT_LOGOUT_ON_GET = True
-
-SITE_ID = 1
-LOGIN_REDIRECT_URL = '/'

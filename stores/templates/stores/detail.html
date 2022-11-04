@@ -1,75 +1,79 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load django_bootstrap5 %}
-
+{% load mathfilters %}
 {% block content %}
     <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f67a00458fad2dd649d99395a35661d1&libraries=services"></script>
-
+<div class="div-cont d-flex flex-column align-items-center bg-white">
+    <br>
     <button type="button" onclick="getCurrentPosBtn();locationSearch()" class="btn btn-lg btn-primary" id="getMyPositionBtn">내 위치 가져오기
     </button>
+    <br>
     <div id="map" style="width:500px;height:400px;"></div>
-    <div class="row">
         <div class="col-md-6">
             <p>
-                가게정보 : {{ store_data.store_name }}
+              가게정보 : {{ store_data.store_name }}
             </p>
-            가게주소 : {{ store_data.store_address }}
-            가게번호 : {{ store_data.store_number }}
-
-            {% if request.user.is_authenticated %}
-            {% if request.user in store_data.store_liked.all %}
-                <i id="store-like-btn" data-store-id="{{ store_data.pk }}" class="bi bi-heart-fill" onclick="storeLike(this.id)">{{ store_data.store_liked.count }}</i>
-            {% else %}
-                <i id="store-like-btn" data-store-id="{{ store_data.pk }}" class="bi bi-heart" onclick="storeLike(this.id)">{{ store_data.store_liked.count }}</i>
-            {% endif %}
-            {% endif %}
-            {% if request.user.is_authenticated %}
-            <a href="{% url 'stores:reviews_create' store_data.pk  %}" class="appra">
-            <span>평가하기</span>
-            </a>
-        {% endif %}
+              가게주소 : {{ store_data.store_address }}
+            <br>
+              가게번호 : {{ store_data.store_number }}
+            <br>
+            <br>
         </div>
-    </div>
-<h1>
+        <div>{{ people_num }}명의 평가 {{ avg_rating }}점 <span id="store-star" class="star-rate"><i style="width:{{ avg_rating|mul:10 }}%;"></i></span></div>
+        <br>
+        <div class="d-flex flex-column align-items-center">
+          {% if request.user.is_authenticated %}
+          {% if request.user in store_data.store_liked.all %}
+              <i id="store-like-btn" data-store-id="{{ store_data.pk }}" class="text-danger bi bi-heart-fill" onclick="storeLike(this.id)"> {{ store_data.store_liked.count }}</i>
+          {% else %}
+              <i id="store-like-btn" data-store-id="{{ store_data.pk }}" class="text-danger bi bi-heart" onclick="storeLike(this.id)"> {{ store_data.store_liked.count }}</i>
+          {% endif %}
+          <br>
+          <a href="{% url 'stores:reviews_create' store_data.pk  %}" class="appra">
+            <span>평가하기</span>
+          </a>
+          {% endif %}
+        </div>
+        <br>
+  <h2>
     {{ reviews.count }} 건의 방문자 평가
-  </h1>
-
+  </h2>
+  <hr>
   <br>
   {% for review in reviews %}
     {% if review.review_image %}
       <img src="{{ review.review_image.url }}">
     {% endif %}
+    <p>{{ review.user.username }} ( {{ review.user.review_set.all.count }}곳 작성, <span id="like-btn-{{ review.pk }}-gonggam">{{ review.user.like_reviews.all.count }}</span>개 공감받음 ) {{ review.created_at | date:"Y-m-d" }}</p>
+    <p>총평 <span id="review-{{ review.pk }}-star" class="star-rate"><i style="width:{{ review.review_rating|mul:10 }}%;"></i></span></p>
+    <p>맛<i class="star">{{ review.review_taste }}</i>  가격<i class="star">{{ review.review_price }}</i>  서비스<i class="star">{{ review.review_service }}</i></p>
     <p>내용 : {{ review.review_content }}</p>
     {% if request.user.is_authenticated %}
       {% if request.user in review.review_liked.all %}
-        <i id="like-btn-{{ review.pk }}" data-review-id="{{ review.pk }}" class="bi bi-heart-fill" onclick="like(this.id)">{{ review.review_liked.count }}</i>
+        <i id="like-btn-{{ review.pk }}" data-review-id="{{ review.pk }}" class="text-danger bi bi-heart-fill" onclick="like(this.id)"> {{ review.review_liked.count }}</i>
       {% else %}
-        <i id="like-btn-{{ review.pk }}" data-review-id="{{ review.pk }}" class="bi bi-heart" onclick="like(this.id)">{{ review.review_liked.count }}</i>
+        <i id="like-btn-{{ review.pk }}" data-review-id="{{ review.pk }}" class="text-danger bi bi-heart" onclick="like(this.id)"> {{ review.review_liked.count }}</i>
       {% endif %}
     {% endif %}
-    <p>생성일 : {{ review.created_at }}</p>
+    <br>
     <!-- 수정 삭제 -->
     {% if request.user.pk == review.user.pk %}
+    <div>
       <a href="{% url 'reviews:update' review.pk %}?next={{ request.path }}"><button class="btn btn-success">수정</button></a>
       <a href="{% url 'reviews:delete' review.pk %}?next={{ request.path }}"><button class="btn btn-danger">삭제</button></a>
-      <!-- <form action="{% url 'reviews:update' review.pk %}" method="POST">
-        {% csrf_token %}
-        <input class="btn btn-success" type="submit" value="수정">
-      </form>
-      <form action="{% url 'reviews:delete' review.pk %}" method="POST">
-        {% csrf_token %}
-        <input class="btn btn-danger" type="submit" value="삭제">
-      </form> -->
+    </div>
     {% endif %}
-      <br>
-  
+    <br>
   <!--코멘트-->
+  <div>
     <a id="review-{{ review.pk }}-comments" type="button" onclick="getComment(this.id)">댓글보기</a> | 
     <a id="review-{{ review.pk }}-comment-create" type="button" onclick="getCreateComment(this.id)">댓글달기</a>
+  </div>
     <br>
-    <form id="review-{{ review.pk }}-comment-create-form" data-review-id="{{ review.pk }}" class="display-none">
+    <form id="review-{{ review.pk }}-comment-create-form" data-review-id="{{ review.pk }}" class="display-none" onsubmit="submitComment(this.id)">
       {% csrf_token %}
-      {% bootstrap_form comment_form layout='floating'%}
+      {% bootstrap_form comment_form %}
       {% bootstrap_button button_type="submit" content="OK" %}
     </form>
     <div id="review-{{ review.pk }}-comments-list" data-review-id="{{ review.pk }}" class="display-none">
@@ -90,9 +94,10 @@
     </div>
     <hr>
   {% endfor %}
+</div>
 
-    <script type="text/javascript" src="{% static 'js/map.js' %}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script type="text/javascript" src="{% static 'js/map.js' %}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
   const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value
   
@@ -109,48 +114,15 @@
     }
   }
 
-//   const getCreateComment = function (e) {
-//     console.log(e)
-//     const commentForm = document.querySelector(`#${e}-form`)
-//     commentForm.classList.toggle('display-none');
-
-//     commentForm.addEventListener('submit', function(event) {
-//       event.preventDefault();
-//       axios({
-//         method: 'post',
-//         url: `/reviews/${event.target.dataset.reviewId}/comments/`,
-//         headers: {'X-CSRFToken': csrftoken},
-//         data: new FormData(commentForm)
-//       })
-//       .then(response => {
-//         const commentsList = document.querySelector(`#review-${event.target.dataset.reviewId}-comments-list`)
-//         commentsList.textContent="";
-//         for (let i = 0 ;i < response.data.comments_data.length;i++ ){
-//           if ( response.data.comments_data[i].request_user_pk === response.data.comments_data[i].user_pk ) {
-//             commentsList.insertAdjacentHTML('beforeend',`<span>${response.data.comments_data[i].username} | ${response.data.comments_data[i].content} | ${response.data.comments_data[i].created_at} </span>
-//             <button id="comment-${response.data.comments_data[i].comment_pk}-update" data-review-id="${response.data.comments_data[i].review_pk}" data-comment-id="${response.data.comments_data[i].comment_pk}" class="btn btn-outline-success" onclick="getUpdateComment(this.id)">수정</button>
-//             <button id="comment-${response.data.comments_data[i].comment_pk}-delete" data-review-id="${response.data.comments_data[i].review_pk}" data-comment-id="${response.data.comments_data[i].comment_pk}" class="btn btn-outline-danger" onclick="deleteComment(this.id)">삭제</button>
-//             <div id="comment-${response.data.comments_data[i].comment_pk}-update-form" class="display-none">
-//             <input id="comment-${response.data.comments_data[i].comment_pk}-update-content" type="text" value="${response.data.comments_data[i].content}">
-//             <button id="comment-${response.data.comments_data[i].comment_pk}-update-btn" class="btn btn-primary" data-review-id="${response.data.comments_data[i].review_pk}" data-comment-id="${response.data.comments_data[i].comment_pk}" onclick="updateComment(this.id)">확인</button>
-//             </div><br>`)
-//           } else {
-//             commentsList.insertAdjacentHTML('beforeend',`<span>${response.data.comments_data[i].username} | ${response.data.comments_data[i].content} | ${response.data.comments_data[i].created_at} </span><br>`)
-//           }
-      
-//         }
-//         commentForm.reset()
-//       })
-//     })
-//   }
-
-const getCreateComment = function (e) {
-    console.log(e)
+  const getCreateComment = function (e) {
     const commentForm = document.querySelector(`#${e}-form`)
     commentForm.classList.toggle('display-none');
+  }
+  
+  const submitComment = function (e) {
+    event.preventDefault();
+    const commentForm = document.querySelector(`#${e}`)
 
-    commentForm.addEventListener('submit', function(event) {
-      event.preventDefault();
       axios({
         method: 'post',
         url: `/reviews/${event.target.dataset.reviewId}/comments/`,
@@ -158,7 +130,7 @@ const getCreateComment = function (e) {
         data: new FormData(commentForm)
       })
       .then(response => {
-        const commentsList = document.querySelector(`#review-${event.target.dataset.reviewId}-comments-list`)
+        const commentsList = document.querySelector(`#review-${response.data.comments_data[0].review_pk}-comments-list`)
         commentsList.textContent="";
         for (let i = 0 ;i < response.data.comments_data.length;i++ ){
           if ( response.data.comments_data[i].request_user_pk === response.data.comments_data[i].user_pk ) {
@@ -176,7 +148,7 @@ const getCreateComment = function (e) {
         }
         commentForm.reset()
       })
-    })
+
   }
 
   const getUpdateComment = function (e) {
@@ -248,6 +220,7 @@ const getCreateComment = function (e) {
 
   const like = function (e) {
     const heart = document.querySelector(`#${e}`)
+    const gonggam = document.querySelector(`#${e}-gonggam`)
 
     axios({
       method: 'get',
@@ -257,12 +230,14 @@ const getCreateComment = function (e) {
       if (response.data.isLiked === true) {
         heart.classList.add('bi-heart-fill')
         heart.classList.remove('bi-heart')
+        gonggam.innerText = parseInt(gonggam.innerText) + 1
       } else {
         heart.classList.add('bi-heart')
         heart.classList.remove('bi-heart-fill')
+        gonggam.innerText = parseInt(gonggam.innerText) - 1
       }
       
-      heart.innerText = response.data.likeCount
+      heart.textContent = " " + response.data.likeCount
     })
   }
 
@@ -282,14 +257,9 @@ const getCreateComment = function (e) {
         storeHeart.classList.remove('bi-heart-fill')
       }
       
-      storeHeart.innerText = response.data.likeCount
-      console.log(response.data.likeCount)
+      storeHeart.textContent = " " + response.data.likeCount
     })
   }
 
-  
-  </script>
-    <!-- 부트스트랩 이용을 위한 jQuery와 CDN -->
-    
-
+</script>
 {% endblock %}

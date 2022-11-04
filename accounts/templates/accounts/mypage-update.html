@@ -6,11 +6,17 @@
 {% endblock %}
 
 {% block content %}
-
+<h3 class="title fs-4 mb-4">프로필 수정</h3>
+<div class="mypage-box p-5">
 <form action="" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     {% bootstrap_form form %}
-    {% bootstrap_button button_type="submit" content="회원정보 수정하기" %}
+    <div class="text-end">
+        <a class="btn btn-outline-secondary" href="{% url 'accounts:change_password' %}">비밀번호 변경하기</a>
+        <input class="btn ms-2 text-white" type="submit" value="수정 완료" style="background-color: #f08724;">
+    </div>
 </form>
+
+</div>
 
 {% endblock %}

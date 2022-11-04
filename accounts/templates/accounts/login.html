@@ -1,8 +1,6 @@
-{% extends 'base.html' %}
-
+{% extends 'base2.html' %}
+{% load static %}
 {% load django_bootstrap5 %}
-{% load socialaccount %}
-{% providers_media_js %}
 
 {% block css %}
 <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
@@ -12,23 +10,51 @@
 {% endblock %}
 
 {% block content %}
+<div class="login-page d-flex justify-content-center align-items-center">
+  <div class="login-box">
+    <div class="text-center mb-5">
+      <img class="navbar-brand" src="{% static 'images/logo.png' %}" style="width: 200px;">
+    </div>
+    <form action="" method="POST">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        <input class="login-btn btn text-white my-2" type="submit" value="로그인" style="background-color: #f08724;">
+    </form>
+    <a class="btn btn-outline-warning mb-2" href="{% url 'accounts:signup' %}">회원가입</a>
 
-<form action="" method="POST">
-    {% csrf_token %}
-    {% bootstrap_form form %}
-    {% bootstrap_button button_type="submit" content="로그인하기" %}
-</form>
+    <!-- <a class="btn btn-primary" href="{% url 'accounts:logout' %}">로그아웃하기</a> -->
+    
+    <!-- 새로운 kakao -->
+    <a class="mb-2" id="kakao-login-btn"></a>
+    <!-- <button class="api-btn" onclick="unlinkApp()">앱 탈퇴하기</button>
+      <div id="result"></div> -->
+      
+      <!-- 새로운 naver -->
+      
+      <!-- 네이버아이디로로그인 버튼 노출 영역 -->
+      <div class="mb-2" id="naver_id_login"></div>
 
-<a class="btn btn-primary" href="{% url 'accounts:logout' %}">로그아웃하기</a>
+      <a class="btn btn-outline-secondary" href="{% url 'stores:index' %}">뒤로가기</a>
+      <!-- //네이버아이디로로그인 버튼 노출 영역 -->
+      <script type="text/javascript">
+        var naver_id_login = new naver_id_login("V9ZIRTdzRy9gYTZ2tQsN", "http://127.0.0.1:8000/daple-accounts/callback/");
+        var state = naver_id_login.getUniqState();
+        naver_id_login.setButton("white", 2,40);
+        naver_id_login.setDomain("YOUR_SERVICE_URL");
+        naver_id_login.setState(state);
+        naver_id_login.setPopup();
+        naver_id_login.init_naver_id_login();
+    </script>
 
-<a href="{% provider_login_url 'google' %}">구글 로그인</a>
-<a href="{% provider_login_url 'naver' %}">네이버 로그인</a>
-<a href="http://192.168.0.48:5500/accounts/examples/html/kakao_login.html">소셜 로그인</a>
+    <!-- {% if user.is_authenticated %}
+    <h1>로그인 됨</h1>
+    <a class="nav-link" href="{% url 'accounts:mypage' user.pk %}">마이페이지</a>
+    {% else %}
+    <h1>로그인 안됨</h1>
+    {% endif %} -->
 
-<!-- 새로운 kakao -->
-<a id="kakao-login-btn"></a>
-	<button class="api-btn" onclick="unlinkApp()">앱 탈퇴하기</button>
-	<div id="result"></div>
+  </div>
+</div>
 <script type="text/javascript">
   function unlinkApp() {
     Kakao.API.request({
@@ -43,6 +69,8 @@
   }
 </script>
  
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
 <script type="text/javascript">
 Kakao.init('a0cada2d8b8a9ceb068c7ff974a58db2');
 console.log(Kakao.isInitialized());
@@ -71,6 +99,17 @@ console.log(Kakao.isInitialized());
           resultdiv += '<h4>gender: '+gender+'<h4>'
           $('#result').append(resultdiv);
           
+          const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value
+          axios({
+            method: 'post',
+            url: `/accounts/database/`,
+            headers: {'X-CSRFToken': csrftoken},
+            data: {'username': id, 'email': email}
+            }).then(response => {
+            // location.reload();
+            window.location.href = 'http://localhost:8000/reviews/'; // 이동할 url
+            })
+
         },
         fail: function(error) {
           alert(
@@ -84,28 +123,25 @@ console.log(Kakao.isInitialized());
       alert('failed to login: ' + JSON.stringify(err))
     },
   })
+
+  // function createHiddenLoginForm(kakaoId){
+	
+	// var frm = document.createElement('form');
+	// frm.setAttribute('method', 'post');
+	// frm.setAttribute('action', '/accounts/kakaoLogin/');
+  // const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value
+  // frm.setAttribute('headers', 'csrftoken');
+	// var hiddenInput = document.createElement('input');
+	// hiddenInput.setAttribute('type','hidden');
+	// hiddenInput.setAttribute('name','userid');
+	// hiddenInput.setAttribute('value',kakaoId);
+	// frm.appendChild(hiddenInput);
+	// document.body.appendChild(frm);
+	// frm.submit();
+	
+// }
+
+
 </script>
-
-<!-- 새로운 naver -->
-
-<!-- 네이버아이디로로그인 버튼 노출 영역 -->
-<div id="naver_id_login"></div>
-<!-- //네이버아이디로로그인 버튼 노출 영역 -->
-<script type="text/javascript">
-    var naver_id_login = new naver_id_login("V9ZIRTdzRy9gYTZ2tQsN", "http://127.0.0.1:8000/daple-accounts/callback/");
-    var state = naver_id_login.getUniqState();
-    naver_id_login.setButton("white", 2,40);
-    naver_id_login.setDomain("YOUR_SERVICE_URL");
-    naver_id_login.setState(state);
-    naver_id_login.setPopup();
-    naver_id_login.init_naver_id_login();
-</script>
-
-{% if user.is_authenticated %}
-<h1>로그인 됨</h1>
-<a class="nav-link" href="{% url 'accounts:mypage' user.pk %}">마이페이지</a>
-{% else %}
-<h1>로그인 안됨</h1>
-{% endif %}
 
 {% endblock %}

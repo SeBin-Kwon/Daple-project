@@ -13,12 +13,11 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
     {% bootstrap_css %}
     {% block css %}{% endblock css %}
 
 </head>
-<body class="bg-light">
+<body class="bg-light" style="height:2000px">
 <nav class="nav navbar navbar-expand-lg shadow-sm bg-white" id="nav-sticky" style="height: 90px; z-index: 100;">
     <div class="container bg-white">
         <a href="{% url 'stores:index' %}">
