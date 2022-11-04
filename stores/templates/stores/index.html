@@ -17,11 +17,12 @@
     {% bootstrap_css %}
 </head>
 
-<body class="position-relative" style="height: 2000px;">
-<!-- 네브바 -->
-<nav class="nav navbar navbar-dark navbar-expand-lg shadow-sm" id="nav-sticky" style="height: 90px; z-index: 100;">
-    <div class="container">
-        <a href="{% url 'stores:index' %}">
+<body class="position-relative bg-light">
+    <!-- 네브바 -->
+    <nav class="nav navbar navbar-dark navbar-expand-lg shadow-sm" id="nav-sticky" style="height: 90px; z-index: 100;">
+        <div class="container">
+            <a href="{% url 'stores:index' %}">
+
             <img class="navbar-brand" src="{% static 'images/logo.png' %}" style="width: 100px;">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -72,61 +73,75 @@
             </ul>
 
         </div>
-    </div>
-</nav>
+<<<<<<< HEAD
+    </nav>
 
 
-<a href="{% url 'stores:create' %}">생성</a>
+    <!-- <a href="{% url 'stores:create' %}">생성</a>
+    <div class="row">
+        <div class="col-md-12">
+    </div> -->
 
-<!-- 캐러쉘 -->
-<div id="carouselExampleSlidesOnly" class="position-absolute top-0 carousel slide carousel-fade"
-     data-bs-ride="carousel">
-    <div class="car-overlay">
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img src="{% static 'images/c1.jpg' %}" class="d-block w-100" alt="...">
-            </div>
-            <div class="carousel-item">
-                <img src="{% static 'images/c2.jpg' %}" class="d-block w-100" alt="...">
-            </div>
-            <div class="carousel-item">
-                <img src="{% static 'images/c3.jpg' %}" class="d-block w-100" alt="...">
-            </div>
-            <div class="carousel-item">
-                <img src="{% static 'images/c4.jpg' %}" class="d-block w-100" alt="...">
-            </div>
-        </div>
+    <div class="content position-absolute top-0">
+    <!-- 캐러쉘 -->
+        <div id="carouselExampleSlidesOnly" class="position-relative mb-5 carousel slide carousel-fade" data-bs-ride="carousel">
+            <div class="car-overlay">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="{% static 'images/c1.jpg' %}" class="d-block w-100" alt="...">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="{% static 'images/c2.jpg' %}" class="d-block w-100" alt="...">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="{% static 'images/c3.jpg' %}" class="d-block w-100" alt="...">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="{% static 'images/c4.jpg' %}" class="d-block w-100" alt="...">
 
-    </div>
-</div>
-<div>
-    <button type="button" onclick="getCurrentPosBtn()" class="btn btn-lg btn-primary" id="getMyPositionBtn">내 주변 맛집 찾기
-    </button>
-    <!-- 본문 컨텐츠 -->
-    {% for item in stores %}
-        <div class="card mb-3" style="max-width: 540px;">
-            <div class="row g-0">
-                <div class="col-md-4">
-                    <a href="{% url 'stores:detail' item.pk %}"><img src="{% static 'images/alt.png' %}"
-                                                                     class="img-fluid rounded-start" alt="..."></a>
-                </div>
-                <div class="col-md-8">
-                    <div class="card-body">
-                        <h5 class="card-title"><a href="{% url 'stores:detail' item.pk %}">{{ item.store_name }}</a>
-                        </h5>
-                        <p class="card-text">{{ item.store_address }}</p>
                     </div>
                 </div>
+
+            </div>
+
+            <div class="main-title text-center">
+                <h1 class="mb-4">{{ user }}<span class="sub-title">님을 위한 맛집 추천</span></h1>
+                <!-- 내위치버튼1 -->
+                <button type="button" onclick="getCurrentPosBtn()" class="map-btn shadow btn btn-lg text-white" id="getMyPositionBtn" style="border-radius: 30px; width: 15rem; background-color: #f08724; font-size: 18px; font-weight: 500;">내 위치 가져오기
+                </button>
             </div>
         </div>
-    {% endfor %}
-</div>
-<button type="button" onclick="getCurrentPosBtn()" class="btn btn-lg btn-primary" id="getMyPositionBtn">내 주변 맛집 찾기
-</button>
 
-<div id="map" style="width:500px;height:400px;"></div>
-<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f67a00458fad2dd649d99395a35661d1&libraries=services"></script>
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+        <div class="container">
+        <!-- 본문 컨텐츠 -->
+            {% for item in stores %}
+                <div class="card mb-3" style="max-width: 540px;">
+                    <div class="row g-0">
+                        <div class="col-md-4">
+                            <a href="{% url 'stores:detail' item.pk %}"><img src="{% static 'images/alt.png' %}" class="img-fluid rounded-start" alt="..."></a>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title"><a href="{% url 'stores:detail' item.pk %}">{{ item.store_name }}</a>
+                                </h5>
+                                <p class="card-text">{{ item.store_address }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+        </div>
+
+        <!-- 내위치버튼2 -->
+        <!-- <button type="button" onclick="getCurrentPosBtn()" class="btn btn-lg btn-primary" id="getMyPositionBtn">내 위치 가져오기
+        </button> -->
+
+        <!-- 지도 -->
+        <div id="map" style="width:500px;height:400px;"></div>
+        <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f67a00458fad2dd649d99395a35661d1&libraries=services"></script>
+</div>
+
 
 <script>
     var mapContainer = document.getElementById('map'), // 지도를 표시할 div
@@ -213,6 +228,15 @@
 
         axios({
             url: 'https://dapi.kakao.com/v2/local/search/category.json?',
+<<<<<<< HEAD
+            type: 'GET',
+            data: {category_group_code: 'FD6', x: lng, y: lat},
+            headers: {'Authorization': 'KakaoAK 0f23477b2b3262f820c688ff81fdf916'},
+            success: function (data) {
+                const serachresult = document.querySelector('#search-result')
+
+                $.ajax({
+=======
             method: 'GET',
             params: {category_group_code: 'FD6', x: lng, y: lat, page: i},
             headers: {
@@ -222,6 +246,7 @@
             .then(response => {
                 console.log(response.data.meta, i)
                 axios({
+>>>>>>> 0b3a9450aa47110f48cfa17be13ceaac62ad0010
                     url:{% url 'stores:index' %},
                     method: 'POST',
                     headers: {
@@ -267,7 +292,7 @@
 
     }
 </script>
-<!-- <script type="text/javascript" defer src="{% static 'javascript/style.js' %}"></script> -->
+// <script type="text/javascript" defer src="{% static 'javascript/style.js' %}"></script>
 <script>
     window.addEventListener("scroll", function () {
         let nav = document.querySelector("nav");
