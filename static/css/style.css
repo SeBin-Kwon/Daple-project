@@ -61,6 +61,12 @@ nav {
   flex-direction: column;
 }
 
+.car-overlay{
+  min-height: 100%;
+  width: 100%;
+  filter: brightness(60%); 
+}
+
 .btn-start {
   color: white;
   background-color: #f08724;

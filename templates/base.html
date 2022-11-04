@@ -55,14 +55,14 @@
                     </a>
                     <ul class="dropdown-menu" id="drop-menu" aria-labelledby="navbarDropdown">
                         {% if user.is_authenticated %}
-                            <li><a class="nav-link ms-3" href="{% url 'accounts:mypage' user.pk %}">마이페이지</a></li>
+                            <li><a class="nav-link ms-1" href="{% url 'accounts:mypage' user.pk %}">마이페이지</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="nav-link ms-3" href="{% url 'accounts:logout' %}">로그아웃하기</a>
+                            <li><a class="nav-link ms-1" href="{% url 'accounts:logout' %}">로그아웃하기</a>
                         {% else %}
-                            <a class="nav-link ms-3" href="{% url 'accounts:signup' %}">회원가입하기</a>
-                            <a class="nav-link ms-3" href="{% url 'accounts:login' %}">로그인하기</a>
+                            <a class="nav-link ms-1" href="{% url 'accounts:signup' %}">회원가입하기</a>
+                            <a class="nav-link ms-1" href="{% url 'accounts:login' %}">로그인하기</a>
                         {% endif %}
                     </li>
                   </ul>
