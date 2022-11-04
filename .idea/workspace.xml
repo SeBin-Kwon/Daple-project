@@ -4,14 +4,9 @@
     <list default="true" id="4641825b-3417-4d9d-87b4-84b135cdd87d" name="변경" comment="map api complete">
       <change beforePath="$PROJECT_DIR$/.idea/dataSources/1839cb49-e1f7-4d02-9fc2-5c2e302a93d0.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/1839cb49-e1f7-4d02-9fc2-5c2e302a93d0.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accounts/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/reviews/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/js/map.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/js/map.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stores/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/stores/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/stores/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/js/map.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stores/templates/stores/detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/stores/templates/stores/detail.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/stores/templates/stores/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/stores/templates/stores/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stores/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/stores/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stores/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/stores/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,6 +57,7 @@
 }</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\runed\Desktop\semi_01\Daple\static\images" />
       <recent name="C:\Users\runed\Desktop\semi_01\Daple" />
       <recent name="C:\Users\runed\Desktop\semi_01\Daple\stores" />
     </key>
@@ -112,7 +108,8 @@
       <workItem from="1667477616982" duration="7531000" />
       <workItem from="1667487825441" duration="45000" />
       <workItem from="1667487893693" duration="704000" />
-      <workItem from="1667488634658" duration="188000" />
+      <workItem from="1667488634658" duration="1854000" />
+      <workItem from="1667521484008" duration="8632000" />
     </task>
     <task id="LOCAL-00001" summary="map api complete">
       <created>1667465408051</created>

@@ -30,5 +30,6 @@ urlpatterns = [
     path('mypage-delete/<int:pk>/', views.mypage_delete, name='mypage-delete'),
     path('temp/<int:pk>/', views.temp, name='temp'),
     path('database/', views.database, name='database'),
+    path('database/naver/', views.database_naver, name='databse_naver'),
     # path('kakaoLogin/', views.kakaoLogin, name='kakaoLogin'),
 ]

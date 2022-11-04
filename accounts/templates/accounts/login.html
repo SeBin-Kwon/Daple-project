@@ -106,8 +106,8 @@ console.log(Kakao.isInitialized());
             headers: {'X-CSRFToken': csrftoken},
             data: {'username': id, 'email': email}
             }).then(response => {
-            // location.reload();
-            window.location.href = 'http://localhost:8000/reviews/'; // 이동할 url
+            location.reload();
+            // window.location.href = 'http://localhost:8000/reviews/'; // 이동할 url
             })
 
         },
@@ -144,4 +144,33 @@ console.log(Kakao.isInitialized());
 
 </script>
 
+<<<<<<< HEAD
+=======
+
+
+<!-- 새로운 naver -->
+
+<!-- 네이버아이디로로그인 버튼 노출 영역 -->
+<div id="naver_id_login"></div>
+<!-- //네이버아이디로로그인 버튼 노출 영역 -->
+<script type="text/javascript">
+    var naver_id_login = new naver_id_login("V9ZIRTdzRy9gYTZ2tQsN", "http://127.0.0.1:8000/accounts/callback/");
+    var state = naver_id_login.getUniqState();
+    naver_id_login.setButton("white", 2,40);
+    naver_id_login.setDomain("YOUR_SERVICE_URL");
+    naver_id_login.setState(state);
+    naver_id_login.setPopup();
+    naver_id_login.init_naver_id_login();
+    // window.location.href = 'http://localhost:8000/accounts/';
+    // setTimeout(function() {location.reload();}, 7000);
+</script>
+
+{% if user.is_authenticated %}
+<h1>로그인 됨</h1>
+<a class="nav-link" href="{% url 'accounts:mypage' user.pk %}">마이페이지</a>
+{% else %}
+<h1>로그인 안됨</h1>
+{% endif %}
+
+>>>>>>> fce20e67683a90fe654a2882f03c89a35000e7b4
 {% endblock %}
