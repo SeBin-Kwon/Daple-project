@@ -231,3 +231,11 @@ i {
 /* #carouselExampleSlidesOnly {
 
 } */
+
+.carousel-item-start {
+  width: 100vw;
+}
+
+.carousel-item {
+  width: 100%;
+}
