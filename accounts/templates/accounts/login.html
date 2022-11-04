@@ -15,6 +15,12 @@
     <div class="text-center mb-5">
       <img class="navbar-brand" src="{% static 'images/logo.png' %}" style="width: 200px;">
     </div>
+    {% if user.is_authenticated %}
+    <div style="display:flex; flex-direction:row; margin-bottom:1rem; font-weight: lighter;">
+      <p style="margin:0; color:gray;">로그인 되었습니다!</p>
+      <a href="{% url 'accounts:mypage' user.pk %}" style="color:black; margin-left:0.3rem;">마이페이지 가기</a>
+    </div>
+    {% endif %}
     <form action="" method="POST">
         {% csrf_token %}
         {% bootstrap_form form %}
@@ -37,7 +43,7 @@
       <a class="btn btn-outline-secondary" href="{% url 'stores:index' %}">뒤로가기</a>
       <!-- //네이버아이디로로그인 버튼 노출 영역 -->
       <script type="text/javascript">
-        var naver_id_login = new naver_id_login("V9ZIRTdzRy9gYTZ2tQsN", "http://127.0.0.1:8000/daple-accounts/callback/");
+        var naver_id_login = new naver_id_login("V9ZIRTdzRy9gYTZ2tQsN", "http://127.0.0.1:8000/accounts/callback/");
         var state = naver_id_login.getUniqState();
         naver_id_login.setButton("white", 2,40);
         naver_id_login.setDomain("YOUR_SERVICE_URL");
@@ -144,9 +150,6 @@ console.log(Kakao.isInitialized());
 
 </script>
 
-<<<<<<< HEAD
-=======
-
 
 <!-- 새로운 naver -->
 
@@ -165,12 +168,4 @@ console.log(Kakao.isInitialized());
     // setTimeout(function() {location.reload();}, 7000);
 </script>
 
-{% if user.is_authenticated %}
-<h1>로그인 됨</h1>
-<a class="nav-link" href="{% url 'accounts:mypage' user.pk %}">마이페이지</a>
-{% else %}
-<h1>로그인 안됨</h1>
-{% endif %}
-
->>>>>>> fce20e67683a90fe654a2882f03c89a35000e7b4
 {% endblock %}
