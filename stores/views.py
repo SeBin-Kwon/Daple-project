@@ -116,7 +116,6 @@ def edit(request, pk):
 
         return redirect("stores:detail", data.pk)
 
-
 @login_required
 def delete(request, pk):
     data = Store.objects.get(pk=pk)
@@ -152,3 +151,24 @@ def store_like(request, pk):
 def db_save(request):
 
     return redirect('stores:index')
+
+
+def search(request):
+
+    for i in range(1, 46):
+        searching = '스타벅스'
+        num = i
+        url = 'https://dapi.kakao.com/v2/local/search/keyword.json?page={}&query={}'.format(i, searching)
+        headers = {
+            "Authorization": "KakaoAK 0f23477b2b3262f820c688ff81fdf916"
+        }
+        print(url)
+        places = requests.get(url, headers=headers).json()
+        places = places['documents']
+        for i in range(len(places)):
+            db_save = Store(store_name=places[i]["place_name"], store_address=places[i]["address_name"],
+                            store_x=places[i]["x"],
+                            store_y=places[i]["y"], kakao_id=places[i]["id"])
+            db_save.save()
+
+    return None
