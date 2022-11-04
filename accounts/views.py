@@ -40,6 +40,7 @@ def signup(request):
         form = CustomUserCreationForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
+            print(form.get_user())
             return redirect('accounts:index')
     else:
         form = CustomUserCreationForm()
