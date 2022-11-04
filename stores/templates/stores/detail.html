@@ -3,263 +3,336 @@
 {% load django_bootstrap5 %}
 {% load mathfilters %}
 {% block content %}
-    <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f67a00458fad2dd649d99395a35661d1&libraries=services"></script>
-<div class="div-cont d-flex flex-column align-items-center bg-white">
-    <br>
-    <button type="button" onclick="getCurrentPosBtn();locationSearch()" class="btn btn-lg btn-primary" id="getMyPositionBtn">내 위치 가져오기
-    </button>
-    <br>
-    <div id="map" style="width:500px;height:400px;"></div>
-        <div class="col-md-6">
-            <p>
-              가게정보 : {{ store_data.store_name }}
-            </p>
-              가게주소 : {{ store_data.store_address }}
-            <br>
-              가게번호 : {{ store_data.store_number }}
-            <br>
-            <br>
+
+
+
+    <div class="div-cont d-flex flex-row align-items-center bg-white">
+        <div class="col-md-5">
+            <div id="detail_map" style="width:250px;height:250px;"></div>
         </div>
-        <div>{{ people_num }}명의 평가 {{ avg_rating }}점 <span id="store-star" class="star-rate"><i style="width:{{ avg_rating|mul:10 }}%;"></i></span></div>
+        <div class="col-md-4">
+            <p>
+                가게정보 : {{ store_data.store_name }}
+            </p>
+            가게주소 : {{ store_data.store_address }}
+            <br>
+            가게번호 : {{ store_data.store_number }}
+            <br>
+
+        </div>
+
+    </div>
+    <div class="div-cont d-flex flex-column align-items-center bg-white">
+        <div>{{ people_num }}명의 평가 {{ avg_rating }}점 <span id="store-star" class="star-rate"><i
+                style="width:{{ avg_rating|mul:10 }}%;"></i></span></div>
         <br>
         <div class="d-flex flex-column align-items-center">
-          {% if request.user.is_authenticated %}
-          {% if request.user in store_data.store_liked.all %}
-              <i id="store-like-btn" data-store-id="{{ store_data.pk }}" class="text-danger bi bi-heart-fill" onclick="storeLike(this.id)"> {{ store_data.store_liked.count }}</i>
-          {% else %}
-              <i id="store-like-btn" data-store-id="{{ store_data.pk }}" class="text-danger bi bi-heart" onclick="storeLike(this.id)"> {{ store_data.store_liked.count }}</i>
-          {% endif %}
-          <br>
-          <a href="{% url 'stores:reviews_create' store_data.pk  %}" class="appra">
-            <span>평가하기</span>
-          </a>
-          {% endif %}
+            {% if request.user.is_authenticated %}
+                {% if request.user in store_data.store_liked.all %}
+                    <i id="store-like-btn" data-store-id="{{ store_data.pk }}"
+                       class="text-danger bi bi-heart-fill"
+                       onclick="storeLike(this.id)"> {{ store_data.store_liked.count }}</i>
+                {% else %}
+                    <i id="store-like-btn" data-store-id="{{ store_data.pk }}" class="text-danger bi bi-heart"
+                       onclick="storeLike(this.id)"> {{ store_data.store_liked.count }}</i>
+                {% endif %}
+                <br>
+                <a href="{% url 'stores:reviews_create' store_data.pk %}" class="appra">
+                    <span>평가하기</span>
+                </a>
+            {% endif %}
         </div>
         <br>
-  <h2>
-    {{ reviews.count }} 건의 방문자 평가
-  </h2>
-  <hr>
-  <br>
-  {% for review in reviews %}
-    {% if review.review_image %}
-      <img src="{{ review.review_image.url }}">
-    {% endif %}
-    <p>{{ review.user.username }} ( {{ review.user.review_set.all.count }}곳 작성, <span id="like-btn-{{ review.pk }}-gonggam">{{ review.user.like_reviews.all.count }}</span>개 공감받음 ) {{ review.created_at | date:"Y-m-d" }}</p>
-    <p>총평 <span id="review-{{ review.pk }}-star" class="star-rate"><i style="width:{{ review.review_rating|mul:10 }}%;"></i></span></p>
-    <p>맛<i class="star">{{ review.review_taste }}</i>  가격<i class="star">{{ review.review_price }}</i>  서비스<i class="star">{{ review.review_service }}</i></p>
-    <p>내용 : {{ review.review_content }}</p>
-    {% if request.user.is_authenticated %}
-      {% if request.user in review.review_liked.all %}
-        <i id="like-btn-{{ review.pk }}" data-review-id="{{ review.pk }}" class="text-danger bi bi-heart-fill" onclick="like(this.id)"> {{ review.review_liked.count }}</i>
-      {% else %}
-        <i id="like-btn-{{ review.pk }}" data-review-id="{{ review.pk }}" class="text-danger bi bi-heart" onclick="like(this.id)"> {{ review.review_liked.count }}</i>
-      {% endif %}
-    {% endif %}
-    <br>
-    <!-- 수정 삭제 -->
-    {% if request.user.pk == review.user.pk %}
-    <div>
-      <a href="{% url 'reviews:update' review.pk %}?next={{ request.path }}"><button class="btn btn-success">수정</button></a>
-      <a href="{% url 'reviews:delete' review.pk %}?next={{ request.path }}"><button class="btn btn-danger">삭제</button></a>
-    </div>
-    {% endif %}
-    <br>
-  <!--코멘트-->
-  <div>
-    <a id="review-{{ review.pk }}-comments" type="button" onclick="getComment(this.id)">댓글보기</a> | 
-    <a id="review-{{ review.pk }}-comment-create" type="button" onclick="getCreateComment(this.id)">댓글달기</a>
-  </div>
-    <br>
-    <form id="review-{{ review.pk }}-comment-create-form" data-review-id="{{ review.pk }}" class="display-none" onsubmit="submitComment(this.id)">
-      {% csrf_token %}
-      {% bootstrap_form comment_form %}
-      {% bootstrap_button button_type="submit" content="OK" %}
-    </form>
-    <div id="review-{{ review.pk }}-comments-list" data-review-id="{{ review.pk }}" class="display-none">
-    {% for comment in comments %}
-      {%if review.pk == comment.review_id %}
-        <span>{{ comment.user }} | {{ comment.comment_content }} | {{ comment.created_at }}</span>
-        {% if user.pk == comment.user_id %}
-        <button id="comment-{{ comment.pk }}-update" data-review-id="{{ review.pk }}" data-comment-id="{{ comment.pk }}" class="btn btn-outline-success" onclick="getUpdateComment(this.id)">수정</button>
-        <button id="comment-{{ comment.pk }}-delete" data-review-id="{{ review.pk }}" data-comment-id="{{ comment.pk }}" class="btn btn-outline-danger" onclick="deleteComment(this.id)">삭제</button>
-        <div id="comment-{{ comment.pk }}-update-form" class="display-none">
-          <input id="comment-{{ comment.pk }}-update-content" type="text" value="{{ comment.comment_content }}">
-          <button id="comment-{{ comment.pk }}-update-btn" class="btn btn-primary" data-review-id="{{ review.pk }}" data-comment-id="{{ comment.pk }}" onclick="updateComment(this.id)">확인</button>
-        </div>
-        {% endif%}
+        <h2>
+            {{ reviews.count }} 건의 방문자 평가
+        </h2>
+        <hr>
         <br>
-      {% endif %}
-    {% endfor %}
+        {% for review in reviews %}
+            {% if review.review_image %}
+                <img src="{{ review.review_image.url }}">
+            {% endif %}
+            <p>{{ review.user.username }} ( {{ review.user.review_set.all.count }}곳 작성, <span
+                    id="like-btn-{{ review.pk }}-gonggam">{{ review.user.like_reviews.all.count }}</span>개 공감받음
+                ) {{ review.created_at | date:"Y-m-d" }}</p>
+            <p>총평 <span id="review-{{ review.pk }}-star" class="star-rate"><i
+                    style="width:{{ review.review_rating|mul:10 }}%;"></i></span></p>
+            <p>맛<i class="star">{{ review.review_taste }}</i> 가격<i class="star">{{ review.review_price }}</i>
+                서비스<i
+                        class="star">{{ review.review_service }}</i></p>
+            <p>내용 : {{ review.review_content }}</p>
+            {% if request.user.is_authenticated %}
+                {% if request.user in review.review_liked.all %}
+                    <i id="like-btn-{{ review.pk }}" data-review-id="{{ review.pk }}"
+                       class="text-danger bi bi-heart-fill"
+                       onclick="like(this.id)"> {{ review.review_liked.count }}</i>
+                {% else %}
+                    <i id="like-btn-{{ review.pk }}" data-review-id="{{ review.pk }}"
+                       class="text-danger bi bi-heart"
+                       onclick="like(this.id)"> {{ review.review_liked.count }}</i>
+                {% endif %}
+            {% endif %}
+            <br>
+            <!-- 수정 삭제 -->
+            {% if request.user.pk == review.user.pk %}
+                <div>
+                    <a href="{% url 'reviews:update' review.pk %}?next={{ request.path }}">
+                        <button class="btn btn-success">수정</button>
+                    </a>
+                    <a href="{% url 'reviews:delete' review.pk %}?next={{ request.path }}">
+                        <button class="btn btn-danger">삭제</button>
+                    </a>
+                </div>
+            {% endif %}
+            <br>
+            <!--코멘트-->
+            <div>
+                <a id="review-{{ review.pk }}-comments" type="button" onclick="getComment(this.id)">댓글보기</a> |
+                <a id="review-{{ review.pk }}-comment-create" type="button" onclick="getCreateComment(this.id)">댓글달기</a>
+            </div>
+            <br>
+            <form id="review-{{ review.pk }}-comment-create-form" data-review-id="{{ review.pk }}"
+                  class="display-none"
+                  onsubmit="submitComment(this.id)">
+                {% csrf_token %}
+                {% bootstrap_form comment_form %}
+                {% bootstrap_button button_type="submit" content="OK" %}
+            </form>
+            <div id="review-{{ review.pk }}-comments-list" data-review-id="{{ review.pk }}"
+                 class="display-none">
+                {% for comment in comments %}
+                    {% if review.pk == comment.review_id %}
+                        <span>{{ comment.user }} | {{ comment.comment_content }} | {{ comment.created_at }}</span>
+                        {% if user.pk == comment.user_id %}
+                            <button id="comment-{{ comment.pk }}-update" data-review-id="{{ review.pk }}"
+                                    data-comment-id="{{ comment.pk }}" class="btn btn-outline-success"
+                                    onclick="getUpdateComment(this.id)">수정
+                            </button>
+                            <button id="comment-{{ comment.pk }}-delete" data-review-id="{{ review.pk }}"
+                                    data-comment-id="{{ comment.pk }}" class="btn btn-outline-danger"
+                                    onclick="deleteComment(this.id)">삭제
+                            </button>
+                            <div id="comment-{{ comment.pk }}-update-form" class="display-none">
+                                <input id="comment-{{ comment.pk }}-update-content" type="text"
+                                       value="{{ comment.comment_content }}">
+                                <button id="comment-{{ comment.pk }}-update-btn" class="btn btn-primary"
+                                        data-review-id="{{ review.pk }}" data-comment-id="{{ comment.pk }}"
+                                        onclick="updateComment(this.id)">확인
+                                </button>
+                            </div>
+                        {% endif %}
+                        <br>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <hr>
+        {% endfor %}
     </div>
-    <hr>
-  {% endfor %}
-</div>
 
-  <script type="text/javascript" src="{% static 'js/map.js' %}"></script>
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<script>
-  const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value
-  
-  const getComment = function (e) {
-    const comments = document.querySelector(`#${e}`)
-    const commentsList = document.querySelector(`#${e}-list`)
-    commentsList.classList.toggle('display-none');
 
-    if(commentsList.classList.contains('display-none')) {
-      comments.innerText = "댓글보기"
-    }
-    else {
-      comments.innerText = "댓글닫기"
-    }
-  }
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f67a00458fad2dd649d99395a35661d1&libraries=services"></script>
+    <script>
 
-  const getCreateComment = function (e) {
-    const commentForm = document.querySelector(`#${e}-form`)
-    commentForm.classList.toggle('display-none');
-  }
-  
-  const submitComment = function (e) {
-    event.preventDefault();
-    const commentForm = document.querySelector(`#${e}`)
+        var x = '{{ store_data.store_x }}'
+        var y = '{{ store_data.store_y }}'
+        var url = '{{ store_data.store_url }}'
 
-      axios({
-        method: 'post',
-        url: `/reviews/${event.target.dataset.reviewId}/comments/`,
-        headers: {'X-CSRFToken': csrftoken},
-        data: new FormData(commentForm)
-      })
-      .then(response => {
-        const commentsList = document.querySelector(`#review-${response.data.comments_data[0].review_pk}-comments-list`)
-        commentsList.textContent="";
-        for (let i = 0 ;i < response.data.comments_data.length;i++ ){
-          if ( response.data.comments_data[i].request_user_pk === response.data.comments_data[i].user_pk ) {
-            commentsList.insertAdjacentHTML('beforeend',`<span>${response.data.comments_data[i].username} | ${response.data.comments_data[i].content} | ${response.data.comments_data[i].created_at} </span>
+        var mapContainer = document.getElementById('detail_map'), // 지도를 표시할 div
+            mapOption = {
+                center: new kakao.maps.LatLng(y, x), // 지도의 중심좌표
+                level: 3, // 지도의 확대 레벨
+                mapTypeId: kakao.maps.MapTypeId.ROADMAP
+            };
+
+        var map = new kakao.maps.Map(mapContainer, mapOption);
+        map.setZoomable(false);
+        // 마커가 표시될 위치입니다
+        var markerPosition = new kakao.maps.LatLng(y, x);
+
+        // 마커를 생성합니다
+        var marker = new kakao.maps.Marker({
+            position: markerPosition
+        });
+
+        // 마커가 지도 위에 표시되도록 설정합니다
+        marker.setMap(map);
+
+        var iwContent = '<div style="padding:5px;"> {{ store_data.store_name }} <br><a href={{ store_data.store_url }} style="color:blue" target="_blank">큰지도보기</a> ', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+            iwPosition = new kakao.maps.LatLng(33.450701, 126.570667); //인포윈도우 표시 위치입니다
+
+        // 인포윈도우를 생성합니다
+        var infowindow = new kakao.maps.InfoWindow({
+            position: iwPosition,
+            content: iwContent
+        });
+
+        // 마커 위에 인포윈도우를 표시합니다. 두번째 파라미터인 marker를 넣어주지 않으면 지도 위에 표시됩니다
+        infowindow.open(map, marker);
+
+    </script>
+
+    <script>
+        const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value
+
+        const getComment = function (e) {
+            const comments = document.querySelector(`#${e}`)
+            const commentsList = document.querySelector(`#${e}-list`)
+            commentsList.classList.toggle('display-none');
+
+            if (commentsList.classList.contains('display-none')) {
+                comments.innerText = "댓글보기"
+            } else {
+                comments.innerText = "댓글닫기"
+            }
+        }
+
+        const getCreateComment = function (e) {
+            const commentForm = document.querySelector(`#${e}-form`)
+            commentForm.classList.toggle('display-none');
+        }
+
+        const submitComment = function (e) {
+            event.preventDefault();
+            const commentForm = document.querySelector(`#${e}`)
+
+            axios({
+                method: 'post',
+                url: `/reviews/${event.target.dataset.reviewId}/comments/`,
+                headers: {'X-CSRFToken': csrftoken},
+                data: new FormData(commentForm)
+            })
+                .then(response => {
+                    const commentsList = document.querySelector(`#review-${response.data.comments_data[0].review_pk}-comments-list`)
+                    commentsList.textContent = "";
+                    for (let i = 0; i < response.data.comments_data.length; i++) {
+                        if (response.data.comments_data[i].request_user_pk === response.data.comments_data[i].user_pk) {
+                            commentsList.insertAdjacentHTML('beforeend', `<span>${response.data.comments_data[i].username} | ${response.data.comments_data[i].content} | ${response.data.comments_data[i].created_at} </span>
             <button id="comment-${response.data.comments_data[i].comment_pk}-update" data-review-id="${response.data.comments_data[i].review_pk}" data-comment-id="${response.data.comments_data[i].comment_pk}" class="btn btn-outline-success" onclick="getUpdateComment(this.id)">수정</button>
             <button id="comment-${response.data.comments_data[i].comment_pk}-delete" data-review-id="${response.data.comments_data[i].review_pk}" data-comment-id="${response.data.comments_data[i].comment_pk}" class="btn btn-outline-danger" onclick="deleteComment(this.id)">삭제</button>
             <div id="comment-${response.data.comments_data[i].comment_pk}-update-form" class="display-none">
             <input id="comment-${response.data.comments_data[i].comment_pk}-update-content" type="text" value="${response.data.comments_data[i].content}">
             <button id="comment-${response.data.comments_data[i].comment_pk}-update-btn" class="btn btn-primary" data-review-id="${response.data.comments_data[i].review_pk}" data-comment-id="${response.data.comments_data[i].comment_pk}" onclick="updateComment(this.id)">확인</button>
             </div><br>`)
-          } else {
-            commentsList.insertAdjacentHTML('beforeend',`<span>${response.data.comments_data[i].username} | ${response.data.comments_data[i].content} | ${response.data.comments_data[i].created_at} </span><br>`)
-          }
-      
+                        } else {
+                            commentsList.insertAdjacentHTML('beforeend', `<span>${response.data.comments_data[i].username} | ${response.data.comments_data[i].content} | ${response.data.comments_data[i].created_at} </span><br>`)
+                        }
+
+                    }
+                    commentForm.reset()
+                })
+
         }
-        commentForm.reset()
-      })
 
-  }
+        const getUpdateComment = function (e) {
+            const updateComment = document.querySelector(`#${e}-form`)
+            updateComment.classList.toggle('display-none');
+        }
 
-  const getUpdateComment = function (e) {
-    const updateComment = document.querySelector(`#${e}-form`)
-    updateComment.classList.toggle('display-none');
-  }
+        const updateComment = function (e) {
+            const commentValue = document.querySelector(`#comment-${event.target.dataset.commentId}-update-content`).value
 
-  const updateComment = function (e) {
-    const commentValue = document.querySelector(`#comment-${event.target.dataset.commentId}-update-content`).value
+            axios({
+                method: 'post',
+                url: `/reviews/${event.target.dataset.reviewId}/${event.target.dataset.commentId}/update/`,
+                headers: {'X-CSRFToken': csrftoken},
+                data: {'content': commentValue}
+            })
+                .then(response => {
+                    const commentsList = document.querySelector(`#review-${response.data.comments_data[0].review_pk}-comments-list`)
+                    commentsList.textContent = "";
 
-    axios({
-        method: 'post',
-        url: `/reviews/${event.target.dataset.reviewId}/${event.target.dataset.commentId}/update/`,
-        headers: {'X-CSRFToken': csrftoken},
-        data: {'content':commentValue}
-      })
-      .then(response => {
-        const commentsList = document.querySelector(`#review-${response.data.comments_data[0].review_pk}-comments-list`)
-        commentsList.textContent="";
-        
-        for (let i = 0 ;i < response.data.comments_data.length;i++ ){
-          if ( response.data.comments_data[i].request_user_pk === response.data.comments_data[i].user_pk ) {
-            commentsList.insertAdjacentHTML('beforeend',`<span>${response.data.comments_data[i].username} | ${response.data.comments_data[i].content} | ${response.data.comments_data[i].created_at} </span>
+                    for (let i = 0; i < response.data.comments_data.length; i++) {
+                        if (response.data.comments_data[i].request_user_pk === response.data.comments_data[i].user_pk) {
+                            commentsList.insertAdjacentHTML('beforeend', `<span>${response.data.comments_data[i].username} | ${response.data.comments_data[i].content} | ${response.data.comments_data[i].created_at} </span>
             <button id="comment-${response.data.comments_data[i].comment_pk}-update" data-review-id="${response.data.comments_data[i].review_pk}" data-comment-id="${response.data.comments_data[i].comment_pk}" class="btn btn-outline-success" onclick="getUpdateComment(this.id)">수정</button>
             <button id="comment-${response.data.comments_data[i].comment_pk}-delete" data-review-id="${response.data.comments_data[i].review_pk}" data-comment-id="${response.data.comments_data[i].comment_pk}" class="btn btn-outline-danger" onclick="deleteComment(this.id)">삭제</button>
             <div id="comment-${response.data.comments_data[i].comment_pk}-update-form" class="display-none">
             <input id="comment-${response.data.comments_data[i].comment_pk}-update-content" type="text" value="${response.data.comments_data[i].content}">
             <button id="comment-${response.data.comments_data[i].comment_pk}-update-btn" class="btn btn-primary" data-review-id="${response.data.comments_data[i].review_pk}" data-comment-id="${response.data.comments_data[i].comment_pk}" onclick="updateComment(this.id)">확인</button>
             </div><br>`)
-          } else {
-            commentsList.insertAdjacentHTML('beforeend',`<span>${response.data.comments_data[i].username} | ${response.data.comments_data[i].content} | ${response.data.comments_data[i].created_at} </span><br>`)
-          }
-      
-        }
-    })
-  }
+                        } else {
+                            commentsList.insertAdjacentHTML('beforeend', `<span>${response.data.comments_data[i].username} | ${response.data.comments_data[i].content} | ${response.data.comments_data[i].created_at} </span><br>`)
+                        }
 
-  const deleteComment = function (e) {
-    const reviewPk = event.target.dataset.reviewId
-    if (confirm("정말 삭제하시겠습니까??") == true){
-      axios({
-        method: 'post',
-        url: `/reviews/${event.target.dataset.reviewId}/${event.target.dataset.commentId}/delete/`,
-        headers: {'X-CSRFToken': csrftoken},
-      })
-      .then(response => {
-        const commentsList = document.querySelector(`#review-${reviewPk}-comments-list`)
-        commentsList.textContent="";
-        
-        for (let i = 0 ;i < response.data.comments_data.length;i++ ){
-          if ( response.data.comments_data[i].request_user_pk === response.data.comments_data[i].user_pk ) {
-            commentsList.insertAdjacentHTML('beforeend',`<span>${response.data.comments_data[i].username} | ${response.data.comments_data[i].content} | ${response.data.comments_data[i].created_at} </span>
+                    }
+                })
+        }
+
+        const deleteComment = function (e) {
+            const reviewPk = event.target.dataset.reviewId
+            if (confirm("정말 삭제하시겠습니까??") == true) {
+                axios({
+                    method: 'post',
+                    url: `/reviews/${event.target.dataset.reviewId}/${event.target.dataset.commentId}/delete/`,
+                    headers: {'X-CSRFToken': csrftoken},
+                })
+                    .then(response => {
+                        const commentsList = document.querySelector(`#review-${reviewPk}-comments-list`)
+                        commentsList.textContent = "";
+
+                        for (let i = 0; i < response.data.comments_data.length; i++) {
+                            if (response.data.comments_data[i].request_user_pk === response.data.comments_data[i].user_pk) {
+                                commentsList.insertAdjacentHTML('beforeend', `<span>${response.data.comments_data[i].username} | ${response.data.comments_data[i].content} | ${response.data.comments_data[i].created_at} </span>
             <button id="comment-${response.data.comments_data[i].comment_pk}-update" data-review-id="${response.data.comments_data[i].review_pk}" data-comment-id="${response.data.comments_data[i].comment_pk}" class="btn btn-outline-success" onclick="getUpdateComment(this.id)">수정</button>
             <button id="comment-${response.data.comments_data[i].comment_pk}-delete" data-review-id="${response.data.comments_data[i].review_pk}" data-comment-id="${response.data.comments_data[i].comment_pk}" class="btn btn-outline-danger" onclick="deleteComment(this.id)">삭제</button>
             <div id="comment-${response.data.comments_data[i].comment_pk}-update-form" class="display-none">
             <input id="comment-${response.data.comments_data[i].comment_pk}-update-content" type="text" value="${response.data.comments_data[i].content}">
             <button id="comment-${response.data.comments_data[i].comment_pk}-update-btn" class="btn btn-primary" data-review-id="${response.data.comments_data[i].review_pk}" data-comment-id="${response.data.comments_data[i].comment_pk}" onclick="updateComment(this.id)">확인</button>
             </div><br>`)
-          } else {
-            commentsList.insertAdjacentHTML('beforeend',`<span>${response.data.comments_data[i].username} | ${response.data.comments_data[i].content} | ${response.data.comments_data[i].created_at} </span><br>`)
-          }
-      
+                            } else {
+                                commentsList.insertAdjacentHTML('beforeend', `<span>${response.data.comments_data[i].username} | ${response.data.comments_data[i].content} | ${response.data.comments_data[i].created_at} </span><br>`)
+                            }
+
+                        }
+                    })
+            } else {
+                return;
+            }
         }
-      })
-    }else{
-        return;
-    }
-  }
 
-  const like = function (e) {
-    const heart = document.querySelector(`#${e}`)
-    const gonggam = document.querySelector(`#${e}-gonggam`)
+        const like = function (e) {
+            const heart = document.querySelector(`#${e}`)
+            const gonggam = document.querySelector(`#${e}-gonggam`)
 
-    axios({
-      method: 'get',
-      url: `/reviews/${event.target.dataset.reviewId}/like/`
-    })
-    .then(response => {
-      if (response.data.isLiked === true) {
-        heart.classList.add('bi-heart-fill')
-        heart.classList.remove('bi-heart')
-        gonggam.innerText = parseInt(gonggam.innerText) + 1
-      } else {
-        heart.classList.add('bi-heart')
-        heart.classList.remove('bi-heart-fill')
-        gonggam.innerText = parseInt(gonggam.innerText) - 1
-      }
-      
-      heart.textContent = " " + response.data.likeCount
-    })
-  }
+            axios({
+                method: 'get',
+                url: `/reviews/${event.target.dataset.reviewId}/like/`
+            })
+                .then(response => {
+                    if (response.data.isLiked === true) {
+                        heart.classList.add('bi-heart-fill')
+                        heart.classList.remove('bi-heart')
+                        gonggam.innerText = parseInt(gonggam.innerText) + 1
+                    } else {
+                        heart.classList.add('bi-heart')
+                        heart.classList.remove('bi-heart-fill')
+                        gonggam.innerText = parseInt(gonggam.innerText) - 1
+                    }
 
-  const storeLike = function (e) {
-    const storeHeart = document.querySelector(`#${e}`)
+                    heart.textContent = " " + response.data.likeCount
+                })
+        }
 
-    axios({
-      method: 'get',
-      url: `/stores/detail/${event.target.dataset.storeId}/like/`
-    })
-    .then(response => {
-      if (response.data.isLiked === true) {
-        storeHeart.classList.add('bi-heart-fill')
-        storeHeart.classList.remove('bi-heart')
-      } else {
-        storeHeart.classList.add('bi-heart')
-        storeHeart.classList.remove('bi-heart-fill')
-      }
-      
-      storeHeart.textContent = " " + response.data.likeCount
-    })
-  }
+        const storeLike = function (e) {
+            const storeHeart = document.querySelector(`#${e}`)
 
-</script>
+            axios({
+                method: 'get',
+                url: `/stores/detail/${event.target.dataset.storeId}/like/`
+            })
+                .then(response => {
+                    if (response.data.isLiked === true) {
+                        storeHeart.classList.add('bi-heart-fill')
+                        storeHeart.classList.remove('bi-heart')
+                    } else {
+                        storeHeart.classList.add('bi-heart')
+                        storeHeart.classList.remove('bi-heart-fill')
+                    }
+
+                    storeHeart.textContent = " " + response.data.likeCount
+                })
+        }
+
+    </script>
 {% endblock %}
