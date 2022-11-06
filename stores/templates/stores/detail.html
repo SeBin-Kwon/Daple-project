@@ -45,6 +45,28 @@
                 {% endif %}
             {% endif %}
         </div>
+        <div>
+            <span class="sociallink ml-1">
+                <a href="javascript:sendLinkFacebook()" title="페이스북으로 공유">
+                  <img src="https://windybay.net/static/images/facebook.png" width=36 alt="Facebook">
+                </a>
+              </span>
+              <span class="sociallink ml-1">
+                <a href="javascript:sendLinkTwitter()" title="트위터로 공유">
+                  <img src="https://windybay.net/static/images/twitter.png" width=36 alt="Twitter">
+                </a>
+              </span>
+              <span class="sociallink ml-1">
+                <a href="javascript:sendLinkNaver()" title="네이버로 공유">
+                  <img src="https://windybay.net/static/images/naver.png" width=36 alt="Naver">
+                </a>
+              </span>
+              <span class="sociallink ml-1">
+                <a href="javascript:sendLinkKakao()" id="kakao-link-btn" title="카카오톡으로 공유">
+                  <img src="https://windybay.net/static/images//kakaotalk.png" width=36 alt="Kakaotalk">
+                </a>
+              </span>
+        </div>
         <br>
         <h2>
             {{ reviews.count }} 건의 방문자 평가
@@ -344,5 +366,29 @@
                 })
         }
 
+    function sendLinkFacebook(){
+        var facebook_share_url = "https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}";
+        window.open(facebook_share_url,
+                    'Share on Facebook',
+                    'scrollbars=no, width=500, height=500');
+    }
+    function sendLinkTwitter(){
+        var twitter_share_text="{{ post.title }}";
+        var twitter_share_url="{{ request.build_absolute_uri }}";
+        window.open("https://twitter.com/share?text="+twitter_share_text+"&url="+twitter_share_url,
+                    'Share on Twitter',
+                    'scrollbars=no, width=500, height=500');
+    }
+    function sendLinkNaver(){
+        var raw_url = "{{ request.build_absolute_uri }}";
+        // var raw_title = "{{ post.title }}"
+        var naver_root_url = "http://share.naver.com/web/shareView.nhn?url="
+        // var naver_share_url = naver_root_url+encodeURI(raw_url)+"&title="+encodeURI(raw_title);
+        var naver_share_url = naver_root_url+encodeURI(raw_url);
+        window.open(naver_share_url,
+                    'Share on Naver',
+                    'scrollbars=no, width=500, height=500');    
+    }
+    
     </script>
 {% endblock %}

@@ -59,7 +59,7 @@ def detail(request, pk):
         sum_rating += review.review_rating
     people_num = len(reviews)
     if sum_rating:
-        avg_rating = sum_rating / people_num
+        avg_rating = round(sum_rating / people_num,1)
     else:
         avg_rating = 0
 
