@@ -7,22 +7,21 @@
 
 
     <div class="div-cont d-flex flex-row align-items-center bg-white">
-        <div class="col-md-5">
+        <div class="col-md-4">
             <div id="detail_map" style="width:250px;height:250px;"></div>
         </div>
         <div class="col-md-4">
-            <p>
-                가게정보 : {{ store_data.store_name }}
-            </p>
-            가게주소 : {{ store_data.store_address }}
-            <br>
-            가게번호 : {{ store_data.store_number }}
-            <br>
-
+            <div><img src="https://via.placeholder.com/500x300" alt="임시이미지"></div>
         </div>
-
     </div>
     <div class="div-cont d-flex flex-column align-items-center bg-white">
+        <br>
+        가게정보 : {{ store_data.store_name }}
+        <br>
+        가게주소 : {{ store_data.store_address }}
+        <br>
+        가게번호 : {{ store_data.store_number }}
+        <br>
         <div>{{ people_num }}명의 평가 {{ avg_rating }}점 <span id="store-star" class="star-rate"><i
                 style="width:{{ avg_rating|mul:10 }}%;"></i></span></div>
         <br>
@@ -50,7 +49,7 @@
         <br>
         {% for review in reviews %}
             {% if review.review_image %}
-                <img src="{{ review.review_image.url }}">
+                <img src="{{ review.review_image.url }}" style="border-radius:9px;">
             {% endif %}
             <p>{{ review.user.username }} ( {{ review.user.review_set.all.count }}곳 작성, <span
                     id="like-btn-{{ review.pk }}-gonggam">{{ review.user.like_reviews.all.count }}</span>개 공감받음
