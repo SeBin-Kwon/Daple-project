@@ -39,8 +39,9 @@
 
             <!-- 검색창 -->
             <br>
-            <form class="d-flex">
-                <input class="form-control me-1" type="search" placeholder="맛집 검색하기" aria-label="Search" style="border-radius: 104.375rem; width: 30rem;">
+            <form class="d-flex" method="POST" action="{% url 'stores:search' %}">
+                {% csrf_token %}
+                <input class="form-control me-1" name="store_search" type="search" placeholder="맛집 검색하기" aria-label="Search" style="border-radius: 104.375rem; width: 30rem;">
                 <a class="search-btn btn" type="submit"><i class="bi bi-search"></i></a>
             </form>
             <br>
