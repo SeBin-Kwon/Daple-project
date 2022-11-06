@@ -1,10 +1,13 @@
-from djongo import models
+from django.db import models
+# from djongo import models
 from imagekit.models import ProcessedImageField
 from imagekit.processors import ResizeToFill
 from django.conf import settings
 from stores.models import Store
 from stores.models import Thematag
 from stores.models import Foodtag
+from django.core.validators import MinValueValidator, MaxValueValidator
+
 # Create your models here.
 class Review(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -13,10 +16,10 @@ class Review(models.Model):
     foodtag_id = models.ForeignKey(Foodtag, on_delete=models.CASCADE,null=True,blank=True)
     thematag_id = models.ForeignKey(Thematag, on_delete=models.CASCADE,null=True,blank=True)
     review_content = models.TextField()
-    review_rating = models.IntegerField()
-    review_taste = models.IntegerField()
-    review_price = models.IntegerField()
-    review_service = models.IntegerField()
+    review_rating = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(5)])
+    review_taste = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(5)])
+    review_price = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(5)])
+    review_service = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(5)])
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now = True)
     review_image = ProcessedImageField(upload_to='images/', blank=True,

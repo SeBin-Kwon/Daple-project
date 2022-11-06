@@ -21,7 +21,7 @@
         가게번호 : {{ store_data.store_number }}
         <br>
         <div>{{ people_num }}명의 평가 {{ avg_rating }}점 <span id="store-star" class="star-rate"><i
-                style="width:{{ avg_rating|mul:10 }}%;"></i></span></div>
+                style="width:{{ avg_rating|mul:20 }}%;"></i></span></div>
         <br>
         <div class="d-flex flex-column align-items-center">
             {% if request.user.is_authenticated %}
@@ -53,7 +53,7 @@
                     id="like-btn-{{ review.pk }}-gonggam">{{ review.user.like_reviews.all.count }}</span>개 공감받음
                 ) {{ review.created_at | date:"Y-m-d" }}</p>
             <p>총평 <span id="review-{{ review.pk }}-star" class="star-rate"><i
-                    style="width:{{ review.review_rating|mul:10 }}%;"></i></span></p>
+                    style="width:{{ review.review_rating|mul:20 }}%;"></i></span></p>
             <p>맛<i class="star">{{ review.review_taste }}</i> 가격<i class="star">{{ review.review_price }}</i>
                 서비스<i
                         class="star">{{ review.review_service }}</i></p>

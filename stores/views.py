@@ -45,8 +45,6 @@ def index(request):
 
 def detail(request, pk):
     data = Store.objects.get(pk=pk)
-    # reviews = data.store_reviews.all()
-    # comment = data.comment.all()
 
     reviews = Review.objects.filter(store_id=pk).order_by('-pk')
     sum_rating = 0
@@ -67,13 +65,7 @@ def detail(request, pk):
         'comments': comments,
         'avg_rating': avg_rating,
         'people_num': people_num,
-        # 'store_star': avg_rating * 10,
     }
-    # context ={
-    #     'store_data':data,
-    #     # 'reviews':reviews,
-    #     # 'comment':comment
-    # }
 
     return render(request, 'stores/detail.html', context)
 
@@ -85,7 +77,6 @@ def create(request):
         if form.is_valid():
             new = form.save(commit=False)
             new.user = request.user
-            # new.review = request.review
             new.save()
             return redirect('stores:index')
     else:
