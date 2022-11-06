@@ -24,9 +24,32 @@
             <p><span class="fw-bold">핸드폰 번호 : </span>{{ user.phone }}</p>
         </div>
 
+        <div class="d-flex justify-content-center" style="text-align: center;">
+            <div class="mx-3">Followings <br> <span id="followings-cnt">{{ user.followings.count }}</span></div>
+            <div class="mx-3">Followers <br> <span id="followers-cnt">{{ user.followers.count }}</span></div>      
+        </div>
+        {% if request.user.pk != user.pk%}
+        {% if request.user in user.followers.all %}
+        <button id=follow-btn class="btn btn-info mt-3" onclick="follow(this.id)"> 팔로우 취소 </button>
+        {% else %}
+        <button id=follow-btn class="btn btn-info mt-3" onclick="follow(this.id)"> 팔로우 하기 </button>
+        {% endif %}
+        {% endif %}
+
+        {% if request.user.pk == user.pk%}
         <div class="d-flex mt-4">
             <a class="btn me-3 text-white" href="{% url 'accounts:mypage-update' user.pk %}" style="background-color: #f08724;">내 정보 수정하기</a>
             <a class="btn btn-outline-danger" href="{% url 'accounts:mypage-delete' user.pk %}">회원 탈퇴하기</a>
+        </div>
+        {% endif %}
+
+        <div class="d-flex justify-content-center mt-4" style="text-align: center;">
+            <div class="mx-3">작성 리뷰 <br>
+                {{ user.followings.count }}
+            </div>
+            <div class="mx-3">작성 댓글 <br>
+                {{ user.followers.count }}
+            </div>      
         </div>
 
     {% else %}
@@ -36,4 +59,27 @@
 
     {% endif %}
 </div>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+    const follow = function (e) {
+        const followBtn = document.querySelector(`#${e}`)
+        const followingsCnt = document.querySelector(`#followings-cnt`)
+        const followersCnt = document.querySelector(`#followers-cnt`)
+        axios({
+                method: 'get',
+                url: `/accounts/mypage/{{ user.pk }}/follow/`
+            }).then(response => {
+                console.log(response.data.is_followings)
+                if (response.data.is_followings === true) {
+                    followBtn.innerText = "팔로우 취소"
+                    followingsCnt.innerText = response.data.followings_count
+                    followersCnt.innerText = response.data.followers_count
+                } else {
+                    followBtn.innerText = "팔로우 하기"
+                    followingsCnt.innerText = response.data.followings_count
+                    followersCnt.innerText = response.data.followers_count
+                }
+            })
+    }
+</script>
 {% endblock %}

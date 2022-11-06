@@ -1,4 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth import get_user_model
+from django.contrib import messages
 from .models import User
 from .forms import CustomUserCreationForm, CustomUserChangeForm
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
@@ -70,9 +72,12 @@ def logout(request):
     return redirect('accounts:index')
 
 def mypage(request, pk):
+    print(1)
     user = User.objects.get(pk=pk)
+    
     context = {
-        'user': user
+        'user': user,
+
     }
     return render(request, 'accounts/mypage.html', context)
 
@@ -161,3 +166,40 @@ def database_naver(request):
 #         return redirect('accounts:index')
 
 # '{"username":2508796199,"email":"dayeong5479@hanmail.net"}'
+
+# @login_required
+# def follow(request, pk):
+#     user = get_object_or_404(get_user_model(), pk=pk)
+#     if request.user == user:
+#         messages.warning(request, '스스로 팔로우 할 수 없습니다.')
+#         return redirect('accounts:mypage', pk)
+#     if request.user in user.followers.all():
+#         user.followers.remove(request.user)
+#     else:
+#         user.followers.add(request.user)
+#     return redirect('accounts:mypage', pk)
+
+@login_required
+def follow(request, pk):
+    user = get_object_or_404(get_user_model(), pk=pk)
+    if request.user == user:
+        messages.warning(request, '스스로 팔로우 할 수 없습니다.')
+        # return redirect('accounts:mypage', pk)
+    if request.user in user.followers.all():
+        user.followers.remove(request.user)
+        followings_count = user.followings.count()
+        followers_count = user.followers.count()
+        is_followings = False
+    else:
+        user.followers.add(request.user)
+        followings_count = user.followings.count()
+        followers_count = user.followers.count()
+        is_followings = True
+    
+    context = {
+        'is_followings': is_followings,
+        'followings_count': followings_count,
+        'followers_count': followers_count
+    }
+    # return redirect('accounts:mypage', pk)
+    return JsonResponse(context)

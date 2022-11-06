@@ -7,4 +7,4 @@ class User(AbstractUser):
     nickname = models.CharField(max_length=50)
     Is_owner = models.BooleanField(default=False)
     profile_image = models.ImageField(upload_to='images/', blank=True)
-    # followings = models.ManyToManyField('self', symmetrical=False, related_name='followers')
+    followings = models.ManyToManyField('self', symmetrical=False, related_name='followers', default=0)

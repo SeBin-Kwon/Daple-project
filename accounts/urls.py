@@ -32,4 +32,5 @@ urlpatterns = [
     path('database/', views.database, name='database'),
     path('database/naver/', views.database_naver, name='databse_naver'),
     # path('kakaoLogin/', views.kakaoLogin, name='kakaoLogin'),
+    path('mypage/<int:pk>/follow/', views.follow, name='follow'),
 ]
