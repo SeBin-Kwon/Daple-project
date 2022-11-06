@@ -12,6 +12,8 @@ from django.http import JsonResponse
 import json
 from django.views.decorators.csrf import csrf_exempt
 from stores.models import Thematag, Foodtag
+from reviews.models import Review, Comment
+
 # Create your views here.
 def index(request):
     Thematag.objects.create(thematag_name='가성비좋은')
@@ -72,12 +74,15 @@ def logout(request):
     return redirect('accounts:index')
 
 def mypage(request, pk):
-    print(1)
     user = User.objects.get(pk=pk)
+    
+    reviews = Review.objects.filter(user=user)
+    comments = Comment.objects.filter(user=user)
     
     context = {
         'user': user,
-
+        'reviews': reviews,
+        'comments': comments,
     }
     return render(request, 'accounts/mypage.html', context)
 
