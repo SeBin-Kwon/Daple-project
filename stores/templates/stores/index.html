@@ -94,14 +94,10 @@
     <!-- 캐러쉘 -->
     <div id="carouselExampleSlidesOnly" class="position-relative mb-5 carousel slide carousel-fade"
          data-bs-ride="carousel">
-        <div class="main-title text-center">
+        <div class="main-title text-center" style="z-index:4;">
             <h1 class="mb-4">{{ user }}<span class="sub-title">님을 위한 맛집 추천</span></h1>
             <!-- 내위치버튼1 -->
-            <button type="button" onclick="getCurrentPosBtn()" class="map-btn shadow btn btn-lg text-white"
-                    id="getMyPositionBtn"
-                    style="border-radius: 30px; width: 15rem; background-color: #f08724; font-size: 18px; font-weight: 500;">
-                내 위치 가져오기
-            </button>
+            <button type="button" onclick="getCurrentPosBtn()" class="map-btn shadow btn btn-lg text-white" id="getMyPositionBtn" style="border-radius: 30px; width: 15rem; background-color: #f08724; font-size: 18px; font-weight: 500;">내 주변 맛집 찾기</button>
         </div>
         <div class="car-overlay">
             <div class="carousel-inner">
@@ -129,14 +125,13 @@
     </div>
 
 
-    <div class="container">
+    <div class="container getMyPositionBtn">
         <!-- 본문 컨텐츠 -->
         {% for item in stores %}
             <div class="card mb-3" style="max-width: 540px;">
                 <div class="row g-0">
                     <div class="col-md-4">
-                        <a href="{% url 'stores:detail' item.pk %}"><img src="{% static 'images/alt.png' %}"
-                                                                         class="img-fluid rounded-start" alt="..."></a>
+                        <a href="{% url 'stores:detail' item.pk %}"><img src="{% static 'images/alt.png' %}" class="img-fluid rounded-start" alt="..."></a>
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">
@@ -149,6 +144,16 @@
             </div>
         {% endfor %}
     </div>
+
+    <!-- script -->
+    <script>
+        const buttonArr = document.querySelector('#getMyPositionBtn');
+
+        buttonArr.addEventListener('click',function(e){
+            e.preventDefault();
+            document.querySelector('.getMyPositionBtn').scrollIntoView(true);
+        });
+    </script>
 
     <div id="map" style="width:500px;height:400px;"></div>
     <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f67a00458fad2dd649d99395a35661d1&libraries=services"></script>
