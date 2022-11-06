@@ -13,6 +13,8 @@ import datetime
 from django.contrib.auth.decorators import login_required
 import requests
 import json
+from django.db.models import Q
+from django.core.paginator import Paginator
 
 from accounts.models import User
 
@@ -36,8 +38,13 @@ def index(request):
     else:
         data = Store.objects.all()
 
+        page = request.GET.get("page")
+        data_all = Store.objects.all()
+        paginator = Paginator(data_all, 5)
+        posts = paginator.get_page(page)
         context = {
-            'stores': data
+            'stores': data,
+            'posts': posts
         }
 
     return render(request, 'stores/index.html', context)
