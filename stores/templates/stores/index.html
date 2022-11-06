@@ -16,10 +16,10 @@
             integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
     {% bootstrap_css %}
     <style>
-        .arrow-down{
+        .arrow-down {
             position: fixed;
-            top:30px;
-            right:30px;
+            top: 30px;
+            right: 30px;
         }
     </style>
 </head>
@@ -94,6 +94,15 @@
     <!-- 캐러쉘 -->
     <div id="carouselExampleSlidesOnly" class="position-relative mb-5 carousel slide carousel-fade"
          data-bs-ride="carousel">
+        <div class="main-title text-center">
+            <h1 class="mb-4">{{ user }}<span class="sub-title">님을 위한 맛집 추천</span></h1>
+            <!-- 내위치버튼1 -->
+            <button type="button" onclick="getCurrentPosBtn()" class="map-btn shadow btn btn-lg text-white"
+                    id="getMyPositionBtn"
+                    style="border-radius: 30px; width: 15rem; background-color: #f08724; font-size: 18px; font-weight: 500;">
+                내 위치 가져오기
+            </button>
+        </div>
         <div class="car-overlay">
             <div class="carousel-inner">
                 <div class="carousel-item active">
@@ -115,17 +124,12 @@
                 </div>
             </div>
 
-            <div class="main-title text-center">
-                <h1 class="mb-4">{{ user }}<span class="sub-title">님을 위한 맛집 추천</span></h1>
-                <!-- 내위치버튼1 -->
-                <button type="button" onclick="getCurrentPosBtn()" class="map-btn shadow btn btn-lg text-white" id="getMyPositionBtn" style="border-radius: 30px; width: 15rem; background-color: #f08724; font-size: 18px; font-weight: 500;">내 위치 가져오기
-                </button>
-            </div>
+
         </div>
     </div>
 
 
-        <div class="container">
+    <div class="container">
         <!-- 본문 컨텐츠 -->
         {% for item in stores %}
             <div class="card mb-3" style="max-width: 540px;">
@@ -146,9 +150,9 @@
         {% endfor %}
     </div>
 
-<div id="map" style="width:500px;height:400px;"></div>
-<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f67a00458fad2dd649d99395a35661d1&libraries=services"></script>
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <div id="map" style="width:500px;height:400px;"></div>
+    <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f67a00458fad2dd649d99395a35661d1&libraries=services"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
     <script>
         var mapContainer = document.getElementById('map'), // 지도를 표시할 div
