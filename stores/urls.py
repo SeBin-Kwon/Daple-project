@@ -18,3 +18,4 @@ urlpatterns = [
     path('detail/<int:pk>/like/', views.store_like, name='store_like'),
     path('search', views.search, name='search'),
 ]
+
