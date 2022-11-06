@@ -25,8 +25,8 @@
         </div>
 
         <div class="d-flex justify-content-center" style="text-align: center;">
-            <div class="mx-3">Followings <br> <span id="followings-cnt">{{ user.followings.count }}</span></div>
-            <div class="mx-3">Followers <br> <span id="followers-cnt">{{ user.followers.count }}</span></div>      
+            <div class="mx-3">Followings <br> <a id="followings-cnt" data-bs-toggle="modal" data-bs-target="#Modal1" style="text-decoration: underline;cursor:pointer;">{{ user.followings.count }}</a></div>
+            <div class="mx-3">Followers <br> <a id="followers-cnt" data-bs-toggle="modal" data-bs-target="#Modal2" style="text-decoration: underline;cursor:pointer;">{{ user.followers.count }}</a></div>      
         </div>
         {% if request.user.is_authenticated %}
         {% if request.user.pk != user.pk%}
@@ -37,6 +37,40 @@
         {% endif %}
         {% endif %}
         {% endif %}
+  <!-- Modal -->
+  <div class="modal fade" id="Modal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Followings list</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          {% for follow in followings_list %}
+          <a href="{% url 'accounts:mypage' follow.pk %}">{{ follow.username }}</a>
+          {% endfor %}
+          <br>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="Modal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Followers list</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            {% for follow in followers_list %}
+            <a href="{% url 'accounts:mypage' follow.pk %}">{{ follow.username }}</a>
+            {% endfor %}
+            <br>
+          </div>
+      </div>
+    </div>
+  </div>
 
         {% if request.user.pk == user.pk%}
         <div class="d-flex mt-4">

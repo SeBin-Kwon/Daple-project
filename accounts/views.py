@@ -75,7 +75,12 @@ def logout(request):
 
 def mypage(request, pk):
     user = User.objects.get(pk=pk)
-    
+
+    followings_list = user.followings.all()
+    followers_list = user.followers.all()
+
+    print(followings_list)
+
     reviews = Review.objects.filter(user=user)
     comments = Comment.objects.filter(user=user)
     
@@ -83,6 +88,8 @@ def mypage(request, pk):
         'user': user,
         'reviews': reviews,
         'comments': comments,
+        'followings_list': followings_list,
+        'followers_list': followers_list,
     }
     return render(request, 'accounts/mypage.html', context)
 
