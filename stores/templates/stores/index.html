@@ -25,10 +25,10 @@
 </head>
 
 <body class="position-relative bg-light">
-    <!-- 네브바 -->
-    <nav class="nav navbar navbar-dark navbar-expand-lg shadow-sm" id="nav-sticky" style="height: 90px; z-index: 100;">
-        <div class="container">
-            <a href="{% url 'stores:index' %}">
+<!-- 네브바 -->
+<nav class="nav navbar navbar-dark navbar-expand-lg shadow-sm" id="nav-sticky" style="height: 90px; z-index: 100;">
+    <div class="container">
+        <a href="{% url 'stores:index' %}">
 
             <img class="navbar-brand" src="{% static 'images/logo.png' %}" style="width: 100px;">
         </a>
@@ -48,10 +48,11 @@
 
             <!-- 검색창 -->
             <br>
-            <form class="d-flex">
-                <input class="form-control me-1" type="search" placeholder="맛집 검색하기" aria-label="Search"
-                       style="border-radius: 104.375rem; width: 30rem;">
-                <a class="search-btn btn" type="submit" style="color: white;"><i class="bi bi-search"></i></a>
+            <form class="d-flex" method="POST" action="{% url 'stores:search' %}">
+                {% csrf_token %}
+                <input class="form-control me-1" name="store_search" type="search" placeholder="맛집 검색하기"
+                       aria-label="Search" style="border-radius: 104.375rem; width: 30rem;">
+                <a class="search-btn btn" type="submit"><i class="bi bi-search"></i></a>
             </form>
             <br>
 
@@ -84,251 +85,245 @@
 </nav>
 
 
-    <!-- <a href="{% url 'stores:create' %}">생성</a>
+<!-- <a href="{% url 'stores:create' %}">생성</a>
     <div class="row">
         <div class="col-md-12">
     </div> -->
 
-    <div class="content position-absolute top-0">
+<div class="content position-absolute top-0">
     <!-- 캐러쉘 -->
-        <div id="carouselExampleSlidesOnly" class="position-relative mb-5 carousel slide carousel-fade" data-bs-ride="carousel">
-            <div class="car-overlay">
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img src="{% static 'images/c1.jpg' %}" class="d-block w-100" alt="..." style="width: 100vw !important;">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="{% static 'images/c2.jpg' %}" class="d-block w-100" alt="..." style="width: 100vw !important;">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="{% static 'images/c3.jpg' %}" class="d-block w-100" alt="..." style="width: 100vw !important;">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="{% static 'images/c4.jpg' %}" class="d-block w-100" alt="..." style="width: 100vw !important;">
-
-                    </div>
+    <div id="carouselExampleSlidesOnly" class="position-relative mb-5 carousel slide carousel-fade"
+         data-bs-ride="carousel">
+        <div class="car-overlay">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="{% static 'images/c1.jpg' %}" class="d-block w-100" alt="..."
+                         style="width: 100vw !important;">
                 </div>
+                <div class="carousel-item">
+                    <img src="{% static 'images/c2.jpg' %}" class="d-block w-100" alt="..."
+                         style="width: 100vw !important;">
+                </div>
+                <div class="carousel-item">
+                    <img src="{% static 'images/c3.jpg' %}" class="d-block w-100" alt="..."
+                         style="width: 100vw !important;">
+                </div>
+                <div class="carousel-item">
+                    <img src="{% static 'images/c4.jpg' %}" class="d-block w-100" alt="..."
+                         style="width: 100vw !important;">
 
+                </div>
             </div>
 
             <div class="main-title text-center">
                 <h1 class="mb-4">{{ user }}<span class="sub-title">님을 위한 맛집 추천</span></h1>
                 <!-- 내위치버튼1 -->
-                <a href="javascript:;" data-anchor="anchor_div1">
-                    <button type="button" onclick="getCurrentPosBtn()" class="map-btn shadow btn btn-lg text-white" id="getMyPositionBtn" style="border-radius: 30px; width: 15rem; background-color: #f08724; font-size: 18px; font-weight: 500;">내 주변 맛집 찾기</button>
-                </a>
+                <button type="button" onclick="getCurrentPosBtn()" class="map-btn shadow btn btn-lg text-white" id="getMyPositionBtn" style="border-radius: 30px; width: 15rem; background-color: #f08724; font-size: 18px; font-weight: 500;">내 위치 가져오기
+                </button>
             </div>
         </div>
+    </div>
 
 
-        <div class="container getMyPositionBtn">
+        <div class="container">
         <!-- 본문 컨텐츠 -->
-            {% for item in stores %}
-                <div class="card mb-3" style="max-width: 540px;">
-                    <div class="row g-0">
-                        <div class="col-md-4">
-                            <a href="{% url 'stores:detail' item.pk %}"><img src="{% static 'images/alt.png' %}" class="img-fluid rounded-start" alt="..."></a>
-                        </div>
-                        <div class="col-md-8">
-                            <div class="card-body">
-                                <h5 class="card-title"><a href="{% url 'stores:detail' item.pk %}">{{ item.store_name }}</a>
-                                </h5>
-                                <p class="card-text">{{ item.store_address }}</p>
-                            </div>
+        {% for item in stores %}
+            <div class="card mb-3" style="max-width: 540px;">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <a href="{% url 'stores:detail' item.pk %}"><img src="{% static 'images/alt.png' %}"
+                                                                         class="img-fluid rounded-start" alt="..."></a>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title"><a href="{% url 'stores:detail' item.pk %}">{{ item.store_name }}</a>
+                            </h5>
+                            <p class="card-text">{{ item.store_address }}</p>
                         </div>
                     </div>
                 </div>
-                {% endfor %}
-        </div>
-
-        <!-- script -->
-        <script>
-            const buttonArr = document.querySelector("#getMyPositionBtn")
-
-            buttonArr.addEventListener('click', function(e) {
-                e.preventDefault();
-                document.querySelector('.getMyPositionBtn').scrollIntoView(true);
-            });
-        </script>
+            </div>
+        {% endfor %}
+    </div>
 
 <div id="map" style="width:500px;height:400px;"></div>
 <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f67a00458fad2dd649d99395a35661d1&libraries=services"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
-<script>
-    var mapContainer = document.getElementById('map'), // 지도를 표시할 div
-        mapOption = {
-            center: new kakao.maps.LatLng(37.56646, 126.98121), // 지도의 중심좌표
-            level: 4, // 지도의 확대 레벨
-            mapTypeId: kakao.maps.MapTypeId.ROADMAP // 지도종류
-        };
+    <script>
+        var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+            mapOption = {
+                center: new kakao.maps.LatLng(37.56646, 126.98121), // 지도의 중심좌표
+                level: 4, // 지도의 확대 레벨
+                mapTypeId: kakao.maps.MapTypeId.ROADMAP // 지도종류
+            };
 
-    // 지도를 생성한다
-    var map = new kakao.maps.Map(mapContainer, mapOption);
-    var final
+        // 지도를 생성한다
+        var map = new kakao.maps.Map(mapContainer, mapOption);
+        var final
 
-    function locationLoadSuccess(pos) {
-        // 현재 위치 받아오기
-        var currentPos = new kakao.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
+        function locationLoadSuccess(pos) {
+            // 현재 위치 받아오기
+            var currentPos = new kakao.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
 
-        // 지도 이동(기존 위치와 가깝다면 부드럽게 이동)
-        map.panTo(currentPos);
+            // 지도 이동(기존 위치와 가깝다면 부드럽게 이동)
+            map.panTo(currentPos);
 
-        // 마커 생성
-        var marker = new kakao.maps.Marker({
-            position: currentPos
-        });
+            // 마커 생성
+            var marker = new kakao.maps.Marker({
+                position: currentPos
+            });
 
-        // 기존에 마커가 있다면 제거
-        marker.setMap(null);
-        marker.setMap(map);
-    }
-
-    function locationLoadError(pos) {
-        alert('위치 정보를 가져오는데 실패했습니다.');
-    }
-
-    // 위치 가져오기 버튼 클릭시
-    function getCurrentPosBtn() {
-        navigator.geolocation.getCurrentPosition(locationLoadSuccess, locationLoadError);
-        setTimeout(locationSearch, 3000)
-
-
-        // kakao.maps.load(function () {
-        // });
-        // var bounds = map.getBounds();
-        // var swLatLng = bounds.getSouthWest();
-        // var neLatLng = bounds.getNorthEast();
-        // console.log(swLatLng, neLatLng);
-
-    }
-
-    function getAddr(lat, lng) {
-
-
-        $.ajax({
-            url: 'https://dapi.kakao.com/v2/local/geo/coord2address.json?',
-            type: 'GET',
-            data: {x: lng, y: lat},
-            headers: {'Authorization': 'KakaoAK 0f23477b2b3262f820c688ff81fdf916'},
-            success: function (data) {
-                let result = data.documents
-                final = result[0].address.region_3depth_name;
-
-            },
-            error: function (e) {
-                console.log(e);
-            }
-        });
-
-    }
-
-    function locationSearch() {
-
-
-        var infowindow = new kakao.maps.InfoWindow({zIndex: 1});
-
-
-        var position = map.getCenter().toString();
-
-        var result = position.split(/[(, )]/)
-        let lat = result[1];
-        let lng = result[3];
-
-        getAddr(lat, lng);
-
-        let list = [];
-        const test = async () => {
-
-            try {
-                for (let i = 1; i < 46; i++) {
-                    data = {
-                        params: {category_group_code: 'FD6', x: lng, y: lat, page: i},
-                        headers: {
-                            'Authorization': 'KakaoAK 0f23477b2b3262f820c688ff81fdf916'
-                        }
-                    }
-                    const response = await axios.get('https://dapi.kakao.com/v2/local/search/category.json?', data)
-                        .then(response => {
-                            axios({
-                                url:{% url 'stores:index' %},
-                                method: 'POST',
-                                headers: {
-                                    'X-CSRFTOKEN': '{{ csrf_token }}'
-                                },
-                                data: response.data.documents
-                            }).then(response => {
-                                console.log("성공")
-                            })
-                            list.push(response.data.documents)
-
-                        })
-                }
-            } catch (e) {
-                console.error(e)
-            }
-            console.log(list)
+            // 기존에 마커가 있다면 제거
+            marker.setMap(null);
+            marker.setMap(map);
         }
 
-        // 통신 시작
-        test()
+        function locationLoadError(pos) {
+            alert('위치 정보를 가져오는데 실패했습니다.');
+        }
+
+        // 위치 가져오기 버튼 클릭시
+        function getCurrentPosBtn() {
+            navigator.geolocation.getCurrentPosition(locationLoadSuccess, locationLoadError);
+            setTimeout(locationSearch, 3000)
+
+
+            // kakao.maps.load(function () {
+            // });
+            // var bounds = map.getBounds();
+            // var swLatLng = bounds.getSouthWest();
+            // var neLatLng = bounds.getNorthEast();
+            // console.log(swLatLng, neLatLng);
+
+        }
+
+        function getAddr(lat, lng) {
+
+
+            $.ajax({
+                url: 'https://dapi.kakao.com/v2/local/geo/coord2address.json?',
+                type: 'GET',
+                data: {x: lng, y: lat},
+                headers: {'Authorization': 'KakaoAK 0f23477b2b3262f820c688ff81fdf916'},
+                success: function (data) {
+                    let result = data.documents
+                    final = result[0].address.region_3depth_name;
+
+                },
+                error: function (e) {
+                    console.log(e);
+                }
+            });
+
+        }
+
+        function locationSearch() {
+
+
+            var infowindow = new kakao.maps.InfoWindow({zIndex: 1});
+
+
+            var position = map.getCenter().toString();
+
+            var result = position.split(/[(, )]/)
+            let lat = result[1];
+            let lng = result[3];
+
+            getAddr(lat, lng);
+
+            let list = [];
+            const test = async () => {
+
+                try {
+                    for (let i = 1; i < 46; i++) {
+                        data = {
+                            params: {category_group_code: 'FD6', x: lng, y: lat, page: i},
+                            headers: {
+                                'Authorization': 'KakaoAK 0f23477b2b3262f820c688ff81fdf916'
+                            }
+                        }
+                        const response = await axios.get('https://dapi.kakao.com/v2/local/search/category.json?', data)
+                            .then(response => {
+                                axios({
+                                    url:{% url 'stores:index' %},
+                                    method: 'POST',
+                                    headers: {
+                                        'X-CSRFTOKEN': '{{ csrf_token }}'
+                                    },
+                                    data: response.data.documents
+                                }).then(response => {
+                                    console.log("성공")
+                                })
+                                list.push(response.data.documents)
+
+                            })
+                    }
+                } catch (e) {
+                    console.error(e)
+                }
+                console.log(list)
+            }
+
+            // 통신 시작
+            test()
 
 
 // 카테고리로 은행을 검색합니다
 //     ps.categorySearch('FD6', placesSearchCB, {useMapBounds: true});
 //
 // 키워드 검색 완료 시 호출되는 콜백함수 입니다
-        function placesSearchCB(data, status, pagination) {
-            if (status === kakao.maps.services.Status.OK) {
-                for (var i = 0; i < data.length; i++) {
-                    displayMarker(data[i]);
+            function placesSearchCB(data, status, pagination) {
+                if (status === kakao.maps.services.Status.OK) {
+                    for (var i = 0; i < data.length; i++) {
+                        displayMarker(data[i]);
+                    }
                 }
             }
-        }
 
 // 지도에 마커를 표시하는 함수입니다
-        function displayMarker(place) {
-            // 마커를 생성하고 지도에 표시합니다
-            var marker = new kakao.maps.Marker({
-                map: map,
-                position: new kakao.maps.LatLng(place.y, place.x)
-            });
+            function displayMarker(place) {
+                // 마커를 생성하고 지도에 표시합니다
+                var marker = new kakao.maps.Marker({
+                    map: map,
+                    position: new kakao.maps.LatLng(place.y, place.x)
+                });
 
-            // 마커에 클릭이벤트를 등록합니다
-            kakao.maps.event.addListener(marker, 'click', function () {
-                // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
-                infowindow.setContent('<div style="padding:5px;font-size:12px;">' + place.place_name + '</div>');
-                infowindow.open(map, marker);
-            });
+                // 마커에 클릭이벤트를 등록합니다
+                kakao.maps.event.addListener(marker, 'click', function () {
+                    // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
+                    infowindow.setContent('<div style="padding:5px;font-size:12px;">' + place.place_name + '</div>');
+                    infowindow.open(map, marker);
+                });
+            }
+
         }
+    </script>
+    <!-- <script type="text/javascript" defer src="{% static 'javascript/style.js' %}"></script> -->
+    <script>
+        window.addEventListener("scroll", function () {
+            let nav = document.querySelector("nav");
+            nav.classList.toggle("position-sticky", this.window.scrollY > 0);
+            const navSticky = document.querySelector("#nav-sticky");
+            nav.classList.toggle("navbar-dark", this.window.scrollY === 0);
+            const dropMenu = document.querySelector("#drop-menu");
+            const search = document.querySelector("i");
+            // dropMenu.classList.toggle("bg-dark", this.window.scrollY === 0);
 
-    }
-</script>
-<!-- <script type="text/javascript" defer src="{% static 'javascript/style.js' %}"></script> -->
-<script>
-    window.addEventListener("scroll", function () {
-        let nav = document.querySelector("nav");
-        nav.classList.toggle("position-sticky", this.window.scrollY > 0);
-        const navSticky = document.querySelector("#nav-sticky");
-        nav.classList.toggle("navbar-dark", this.window.scrollY === 0);
-        const dropMenu = document.querySelector("#drop-menu");
-        const search = document.querySelector("i");
-        // dropMenu.classList.toggle("bg-dark", this.window.scrollY === 0);
-
-        if (window.scrollY > 0) {
-            navSticky.style.backgroundColor = "white";
-            navSticky.style.height = "60px";
-            dropMenu.style.backgroundColor = "white";
-            search.style.color = "black"
-        } else {
-            navSticky.style.backgroundColor = "rgba(0,0,0,0)";
-            navSticky.style.height = "90px";
-            dropMenu.style.backgroundColor = "rgba(0,0,0,0)";
-            search.style.color = "white"
-        }
-    })
-</script>
-<script src="https://cdn.lordicon.com/qjzruarw.js"></script>
-{% bootstrap_javascript %}
+            if (window.scrollY > 0) {
+                navSticky.style.backgroundColor = "white";
+                navSticky.style.height = "60px";
+                dropMenu.style.backgroundColor = "white";
+                search.style.color = "black"
+            } else {
+                navSticky.style.backgroundColor = "rgba(0,0,0,0)";
+                navSticky.style.height = "90px";
+                dropMenu.style.backgroundColor = "rgba(0,0,0,0)";
+                search.style.color = "white"
+            }
+        })
+    </script>
+    <script src="https://cdn.lordicon.com/qjzruarw.js"></script>
+    {% bootstrap_javascript %}
 </body>
 </html> 

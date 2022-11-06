@@ -11,6 +11,8 @@ from stores.models import Store
 
 Store.objects.all().delete()
 
+
+
 #
 # for i in range(1,46):
 #     searching = '스타벅스'
