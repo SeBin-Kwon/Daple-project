@@ -24,9 +24,10 @@
     </style>
 </head>
 
-<body class="position-relative bg-light">
+<body class="position-relative bg-light h-100">
+
 <!-- 네브바 -->
-<nav class="nav navbar navbar-dark navbar-expand-lg shadow-sm" id="nav-sticky" style="height: 90px; z-index: 100;">
+<!-- <nav class="nav navbar navbar-dark navbar-expand-lg shadow-sm" id="nav-sticky" style="height: 90px; z-index: 100;">
     <div class="container">
         <a href="{% url 'stores:index' %}">
 
@@ -38,26 +39,20 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <!-- <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="{% url 'stores:index' %}">Store</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'reviews:index' %}">Review</a>
-                    </li> -->
-            </ul>
+            </ul> -->
 
             <!-- 검색창 -->
-            <br>
+            <!-- <br>
             <form class="d-flex" method="POST" action="{% url 'stores:search' %}">
                 {% csrf_token %}
                 <input class="form-control me-1" name="store_search" type="search" placeholder="맛집 검색하기"
                        aria-label="Search" style="border-radius: 104.375rem; width: 30rem;">
                 <a class="search-btn btn" type="submit"><i class="bi bi-search" style="color: white;"></i></a>
             </form>
-            <br>
+            <br> -->
 
             <!-- 유저이름 -->
-            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+            <!-- <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                        data-bs-toggle="dropdown" aria-expanded="false">
@@ -86,7 +81,66 @@
 
         </div>
     </div>
+</nav> -->
+
+<nav class="nav navbar navbar-expand-lg shadow-sm bg-white" id="nav-sticky" style="height: 90px; z-index: 100;">
+    <div class="container bg-white">
+        <a href="{% url 'stores:index' %}">
+        <img class="navbar-brand" src="{% static 'images/logo.png' %}" style="width: 100px;">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <!-- <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="{% url 'stores:index' %}">Store</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'reviews:index' %}">Review</a>
+                </li> -->
+            </ul>
+
+            <!-- 검색창 -->
+            <br>
+            <form class="d-flex">
+                <input class="form-control me-1" type="search" placeholder="맛집 검색하기" aria-label="Search" style="border-radius: 104.375rem; width: 30rem;">
+                <a class="search-btn btn" type="submit"><i class="bi bi-search"></i></a>
+            </form>
+            <br>
+
+            <!-- 유저이름 -->
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    {% if request.user.is_authenticated %}
+                    {{ request.user }}
+                    {% else %}
+                    로그인
+                    {% endif %}
+                    </a>
+                    <ul class="dropdown-menu" id="drop-menu" aria-labelledby="navbarDropdown">
+                        {% if request.user.is_authenticated %}
+                            <li><a class="nav-link ms-1" href="{% url 'accounts:mypage' request.user.pk %}">마이페이지</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="nav-link ms-1" href="{% url 'accounts:logout' %}">로그아웃하기</a>
+                        {% else %}
+                            <a class="nav-link ms-1" href="{% url 'accounts:signup' %}">회원가입하기</a>
+                            <a class="nav-link ms-1" href="{% url 'accounts:login' %}">로그인하기</a>
+                        {% endif %}
+                    </li>
+                  </ul>
+                </li>
+            </ul>
+
+        </div>
+    </div>
 </nav>
+
 
 
 <!-- <a href="{% url 'stores:create' %}">생성</a>
@@ -94,7 +148,7 @@
         <div class="col-md-12">
     </div> -->
 
-<div class="content position-absolute top-0">
+<!-- <div class="content position-absolute top-0"> -->
     <!-- 캐러쉘 -->
     <div id="carouselExampleSlidesOnly" class="position-relative mb-5 carousel slide carousel-fade"
          data-bs-ride="carousel">
@@ -149,7 +203,30 @@
         {% endfor %}
     </div> -->
 
-<div class="container getMyPositionBtn">
+    <!-- 지도 -->
+    <div id="map" style="width:500px;height:400px;"></div>
+
+
+    <div class="container getMyPositionBtn mt-5">
+        <div class="row">
+    {% for item in posts.object_list %}
+    <div class="col-4">
+            <a class="text-decoration-none text-black" href="{% url 'stores:detail' item.pk %}">
+        <div class="card mb-3">
+            <img src="{% static 'images/alt.png' %}" class="card-img-top" alt="...">
+            <div class="card-body">
+            <h5 class="card-title">{{ item.store_name }}</h5>
+            <p class="card-text">{{ item.store_grade }}</p>
+            </div>
+        </div>
+    </a>
+        </div>
+        {% endfor %}
+    </div>
+    </div>
+
+      
+<!-- <div class="container getMyPositionBtn mt-5">
     {% for item in posts.object_list %}
     <div class="card mb-3" style="max-width: 540px;">
         <div class="row g-0">
@@ -166,8 +243,9 @@
         </div>
     </div>
     {% endfor %}
-</div>
+</div> -->
 
+<!-- 페이지네이션 -->
     <div class="d-flex justify-content-center">
         <ul class="pagination mb-3" style="text-align: center">
           {% if posts.has_previous %}
@@ -193,7 +271,9 @@
           {% endif %}
         </ul>
       </div>
+    <!-- </div> -->
 
+    
     <!-- script -->
     <script>
         const buttonArr = document.querySelector('#getMyPositionBtn');
@@ -204,7 +284,7 @@
         });
     </script>
 
-    <div id="map" style="width:500px;height:400px;"></div>
+   
     <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f67a00458fad2dd649d99395a35661d1&libraries=services"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
@@ -357,29 +437,29 @@
 
         }
     </script>
-    <!-- <script type="text/javascript" defer src="{% static 'javascript/style.js' %}"></script> -->
+    <script type="text/javascript" defer src="{% static 'javascript/style.js' %}"></script>
     <script>
-        window.addEventListener("scroll", function () {
-            let nav = document.querySelector("nav");
-            nav.classList.toggle("sticky-top", this.window.scrollY > 0);
-            const navSticky = document.querySelector("#nav-sticky");
-            nav.classList.toggle("navbar-dark", this.window.scrollY === 0);
-            const dropMenu = document.querySelector("#drop-menu");
-            const search = document.querySelector("i");
-            // dropMenu.classList.toggle("bg-dark", this.window.scrollY === 0);
+    //    window.addEventListener("scroll", function () {
+    //     let nav = document.querySelector("nav");
+    //     nav.classList.toggle("sticky-top", this.window.scrollY > 0);
+    //     const navSticky = document.querySelector("#nav-sticky");
+    //     nav.classList.toggle("navbar-dark", this.window.scrollY === 0);
+    //     const dropMenu = document.querySelector("#drop-menu");
+    //     const search = document.querySelector("i");
+    //     // dropMenu.classList.toggle("bg-dark", this.window.scrollY === 0);
 
-            if (window.scrollY > 0) {
-                navSticky.style.backgroundColor = "white";
-                navSticky.style.height = "60px";
-                dropMenu.style.backgroundColor = "white";
-                search.style.color = "black"
-            } else {
-                navSticky.style.backgroundColor = "rgba(0,0,0,0)";
-                navSticky.style.height = "90px";
-                dropMenu.style.backgroundColor = "rgba(0,0,0,0)";
-                search.style.color = "white"
-            }
-        })
+    //     if (window.scrollY > 0) {
+    //         navSticky.style.backgroundColor = "white";
+    //         navSticky.style.height = "60px";
+    //         dropMenu.style.backgroundColor = "white";
+    //         search.style.color = "black"
+    //     } else {
+    //         navSticky.style.backgroundColor = "rgba(0,0,0,0)";
+    //         navSticky.style.height = "90px";
+    //         dropMenu.style.backgroundColor = "rgba(0,0,0,0)";
+    //         search.style.color = "white"
+    //     }
+    // })
     </script>
     <script src="https://cdn.lordicon.com/qjzruarw.js"></script>
     {% bootstrap_javascript %}
