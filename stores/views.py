@@ -40,7 +40,7 @@ def index(request):
 
         page = request.GET.get("page")
         data_all = Store.objects.all()
-        paginator = Paginator(data_all, 5)
+        paginator = Paginator(data_all, 6)
         posts = paginator.get_page(page)
         context = {
             'stores': data,

@@ -21,12 +21,21 @@
             <p><span class="fw-bold">닉네임 : </span>{{ user.nickname }}</p>
             <p><span class="fw-bold">이름 : </span>{{ user.username }}</p>
             <p><span class="fw-bold">이메일 : </span>{{ user.email }}</p>
-            <p><span class="fw-bold">핸드폰 번호 : </span>{{ user.phone }}</p>
+            <span class="fw-bold mb-0">핸드폰 번호 : </span>{{ user.phone }}
         </div>
 
-        <div class="d-flex justify-content-center" style="text-align: center;">
-            <div class="mx-3">Followings <br> <a id="followings-cnt" data-bs-toggle="modal" data-bs-target="#Modal1" style="text-decoration: underline;cursor:pointer;">{{ user.followings.count }}</a></div>
-            <div class="mx-3">Followers <br> <a id="followers-cnt" data-bs-toggle="modal" data-bs-target="#Modal2" style="text-decoration: underline;cursor:pointer;">{{ user.followers.count }}</a></div>      
+        <div class="d-flex justify-content-center my-3">
+          <div class="mx-3"><span>작성 리뷰</span>
+            {{ reviews.count }}
+          </div>
+          <div class="mx-3"><span>작성 댓글</span>
+            {{ comments.count }}
+          </div>      
+        </div>
+
+        <div class="d-flex justify-content-center mb-4" style="text-align: center;">
+            <div class="mx-3"><span class="fw-bold">Followings </span><a id="followings-cnt" data-bs-toggle="modal" data-bs-target="#Modal1" style="cursor:pointer;">{{ user.followings.count }}</a></div>
+            <div class="mx-3"><span class="fw-bold">Followers </span><a id="followers-cnt" data-bs-toggle="modal" data-bs-target="#Modal2" style="cursor:pointer;">{{ user.followers.count }}</a></div>      
         </div>
         {% if request.user.is_authenticated %}
         {% if request.user.pk != user.pk%}
@@ -72,22 +81,14 @@
     </div>
   </div>
 
-        {% if request.user.pk == user.pk%}
-        <div class="d-flex mt-4">
-            <a class="btn me-3 text-white" href="{% url 'accounts:mypage-update' user.pk %}" style="background-color: #f08724;">내 정보 수정하기</a>
-            <a class="btn btn-outline-danger" href="{% url 'accounts:mypage-delete' user.pk %}">회원 탈퇴하기</a>
-        </div>
-        {% endif %}
-
-        <div class="d-flex justify-content-center mt-4" style="text-align: center;">
-            <div class="mx-3">작성 리뷰 <br>
-                {{ reviews.count }}
-            </div>
-            <div class="mx-3">작성 댓글 <br>
-                {{ comments.count }}
-            </div>      
-        </div>
-
+  
+  {% if request.user.pk == user.pk%}
+  <div class="d-flex mt-4">
+      <a class="btn me-3 text-white" href="{% url 'accounts:mypage-update' user.pk %}" style="background-color: #f08724;">내 정보 수정하기</a>
+      <a class="btn btn-outline-danger" href="{% url 'accounts:mypage-delete' user.pk %}">회원 탈퇴하기</a>
+  </div>
+  {% endif %}
+  
     {% else %}
 
         <h1><a href="{% url 'accounts:signup' %}">회원가입하기</a></h1>

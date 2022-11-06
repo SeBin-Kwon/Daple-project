@@ -76,8 +76,8 @@
             {% if review.review_image %}
                 <img src="{{ review.review_image.url }}" style="border-radius:9px;">
             {% endif %}
-            <p>{{ review.user.username }} ( {{ review.user.review_set.all.count }}곳 작성, <span
-                    id="like-btn-{{ review.pk }}-gonggam">{{ review.user.like_count }}</span>개 공감받음
+            <p><a href="{% url 'accounts:mypage' review.user.pk%}">{{ review.user.username }}</a> ( {{ review.user.review_set.all.count }}곳 작성, 
+                <span id="like-btn-{{ review.pk }}-gonggam">{{ review.user.like_count }}</span>개 공감받음
                 ) {{ review.created_at | date:"Y-m-d" }}</p>
             <p>총평 <span id="review-{{ review.pk }}-star" class="star-rate"><i
                     style="width:{{ review.review_rating|mul:20 }}%;"></i></span></p>

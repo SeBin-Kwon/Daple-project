@@ -204,10 +204,45 @@
     </div> -->
 
     <!-- 지도 -->
-    <div id="map" style="width:500px;height:400px;"></div>
+    <div class="map-box">
+        <h2 class="fw-light mb-4">나의 현재 위치</h2>
+        <div class="m-auto" id="map" style="width:500px;height:400px;"></div>
+    </div>
 
 
-    <div class="container getMyPositionBtn mt-5">
+    <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            
+            <div class="container getMyPositionBtn mt-5">
+            {% for item in posts.object_list %}
+            <div class="carousel-item active">
+                <a class="text-decoration-none text-black" href="{% url 'stores:detail' item.pk %}">
+                    <div class="card mb-3">
+                        <img src="{% static 'images/alt.png' %}" class="card-img-top" alt="...">
+                        <div class="card-body">
+                        <h5 class="card-title">{{ item.store_name }}</h5>
+                        <p class="card-text">{{ item.store_grade }}</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+                {% endfor %}
+            </div>
+
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+
+
+
+    <!-- <div class="container getMyPositionBtn mt-5">
         <div class="row">
     {% for item in posts.object_list %}
     <div class="col-4">
@@ -223,7 +258,7 @@
         </div>
         {% endfor %}
     </div>
-    </div>
+    </div> -->
 
       
 <!-- <div class="container getMyPositionBtn mt-5">
