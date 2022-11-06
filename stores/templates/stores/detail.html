@@ -6,22 +6,20 @@
 
     <div class="div-cont d-flex flex-row align-items-center bg-white">
         <div class="col-md-4">
-            <div id="detail_map" style="width:250px;height:250px;"></div>
+            <div class="m-auto" id="detail_map" style="width:250px;height:250px;"></div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-8 text-center">
             <div><img src="https://via.placeholder.com/500x300" alt="임시이미지"></div>
         </div>
     </div>
-    <div class="div-cont d-flex flex-column align-items-center bg-white">
-        <br>
-        가게정보 : {{ store_data.store_name }}
-        <br>
+    <div class="div-cont d-flex flex-column bg-white py-4" style="padding:0 5rem;">
+        <p class="fs-1" style="font-weight: 500;">{{ store_data.store_name }}</p>
         가게주소 : {{ store_data.store_address }}
         <br>
         가게번호 : {{ store_data.store_number }}
         <br>
         <div>{{ people_num }}명의 평가 {{ avg_rating }}점 <span id="store-star" class="star-rate"><i
-                style="width:{{ avg_rating|mul:20 }}%;"></i></span></div>
+                style="width:{{ avg_rating|mul:20 }};"></i></span></div>
         <br>
         <div class="d-flex flex-column align-items-center">
             {% if request.user.is_authenticated %}
