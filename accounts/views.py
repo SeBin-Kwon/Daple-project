@@ -192,15 +192,13 @@ def follow(request, pk):
         # return redirect('accounts:mypage', pk)
     if request.user in user.followers.all():
         user.followers.remove(request.user)
-        followings_count = user.followings.count()
-        followers_count = user.followers.count()
         is_followings = False
     else:
         user.followers.add(request.user)
-        followings_count = user.followings.count()
-        followers_count = user.followers.count()
         is_followings = True
-    
+
+    followings_count = user.followings.count()
+    followers_count = user.followers.count()
     context = {
         'is_followings': is_followings,
         'followings_count': followings_count,
