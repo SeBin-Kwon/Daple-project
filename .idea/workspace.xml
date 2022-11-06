@@ -2,10 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4641825b-3417-4d9d-87b4-84b135cdd87d" name="변경" comment="map api complete">
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/1839cb49-e1f7-4d02-9fc2-5c2e302a93d0.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/1839cb49-e1f7-4d02-9fc2-5c2e302a93d0.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/stores/templates/stores/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/stores/templates/stores/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stores/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/stores/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/stores/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/stores/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -108,7 +109,9 @@
       <workItem from="1667487825441" duration="45000" />
       <workItem from="1667487893693" duration="704000" />
       <workItem from="1667488634658" duration="1854000" />
-      <workItem from="1667521484008" duration="18387000" />
+      <workItem from="1667521484008" duration="21545000" />
+      <workItem from="1667662366204" duration="7436000" />
+      <workItem from="1667694915391" duration="1172000" />
     </task>
     <task id="LOCAL-00001" summary="map api complete">
       <created>1667465408051</created>

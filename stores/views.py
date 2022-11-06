@@ -18,11 +18,6 @@ from accounts.models import User
 
 
 def index(request):
-    data = Store.objects.all()
-
-    context = {
-        'stores': data
-    }
 
     if request.method == 'POST':
         jsonObject = json.loads(request.body)
@@ -37,7 +32,13 @@ def index(request):
                     store_y=jsonObject[i]['y'],
                     kakao_id=jsonObject[i]['id'])
                 db.save()
+        return render(request, 'stores/index.html',)
+    else:
+        data = Store.objects.all()
 
+        context = {
+            'stores': data
+        }
 
     return render(request, 'stores/index.html', context)
 
@@ -56,7 +57,7 @@ def detail(request, pk):
         avg_rating = sum_rating / people_num
     else:
         avg_rating = 0
-    
+
     comments = Comment.objects.all().order_by('-pk')
     comment_form = CommentForm()
     context = {
@@ -116,6 +117,7 @@ def edit(request, pk):
 
         return redirect("stores:detail", data.pk)
 
+
 @login_required
 def delete(request, pk):
     data = Store.objects.get(pk=pk)
@@ -149,26 +151,30 @@ def store_like(request, pk):
 
 
 def db_save(request):
-
     return redirect('stores:index')
 
 
 def search(request):
-
     for i in range(1, 46):
         searching = '스타벅스'
+
         num = i
-        url = 'https://dapi.kakao.com/v2/local/search/keyword.json?page={}&query={}'.format(i, searching)
+        url = 'https://dapi.kakao.com/v2/local/search/keyword.json?page={}&query={}'.format(num, searching)
         headers = {
             "Authorization": "KakaoAK 0f23477b2b3262f820c688ff81fdf916"
         }
         print(url)
         places = requests.get(url, headers=headers).json()
+        page = places.meta['is_end']
         places = places['documents']
-        for i in range(len(places)):
-            db_save = Store(store_name=places[i]["place_name"], store_address=places[i]["address_name"],
-                            store_x=places[i]["x"],
-                            store_y=places[i]["y"], kakao_id=places[i]["id"])
-            db_save.save()
+        if page == True:
+            break
+        elif (page == False and (
+                places[i]['category_group_code'] == "FD6" or places[i]['category_group_code'] == 'CE7')):
+            for i in range(len(places)):
+                db_save = Store(store_name=places[i]["place_name"], store_address=places[i]["address_name"],
+                                store_x=places[i]["x"],
+                                store_y=places[i]["y"], kakao_id=places[i]["id"])
+                db_save.save()
 
     return None
