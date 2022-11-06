@@ -28,11 +28,13 @@
             <div class="mx-3">Followings <br> <span id="followings-cnt">{{ user.followings.count }}</span></div>
             <div class="mx-3">Followers <br> <span id="followers-cnt">{{ user.followers.count }}</span></div>      
         </div>
+        {% if request.user.is_authenticated %}
         {% if request.user.pk != user.pk%}
         {% if request.user in user.followers.all %}
         <button id=follow-btn class="btn btn-info mt-3" onclick="follow(this.id)"> 팔로우 취소 </button>
         {% else %}
         <button id=follow-btn class="btn btn-info mt-3" onclick="follow(this.id)"> 팔로우 하기 </button>
+        {% endif %}
         {% endif %}
         {% endif %}
 
