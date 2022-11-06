@@ -25,10 +25,10 @@
 </head>
 
 <body class="position-relative bg-light">
-<!-- 네브바 -->
-<nav class="nav navbar navbar-dark navbar-expand-lg shadow-sm" id="nav-sticky" style="height: 90px; z-index: 100;">
-    <div class="container">
-        <a href="{% url 'stores:index' %}">
+    <!-- 네브바 -->
+    <nav class="nav navbar navbar-dark navbar-expand-lg shadow-sm" id="nav-sticky" style="height: 90px; z-index: 100;">
+        <div class="container">
+            <a href="{% url 'stores:index' %}">
 
             <img class="navbar-brand" src="{% static 'images/logo.png' %}" style="width: 100px;">
         </a>
@@ -90,10 +90,28 @@
         <div class="col-md-12">
     </div> -->
 
-<div class="content position-absolute top-0">
+    <div class="content position-absolute top-0">
     <!-- 캐러쉘 -->
-    <div id="carouselExampleSlidesOnly" class="position-relative mb-5 carousel slide carousel-fade"
-         data-bs-ride="carousel">
+        <div id="carouselExampleSlidesOnly" class="position-relative mb-5 carousel slide carousel-fade" data-bs-ride="carousel">
+            <div class="car-overlay">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="{% static 'images/c1.jpg' %}" class="d-block w-100" alt="..." style="width: 100vw !important;">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="{% static 'images/c2.jpg' %}" class="d-block w-100" alt="..." style="width: 100vw !important;">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="{% static 'images/c3.jpg' %}" class="d-block w-100" alt="..." style="width: 100vw !important;">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="{% static 'images/c4.jpg' %}" class="d-block w-100" alt="..." style="width: 100vw !important;">
+
+                    </div>
+                </div>
+
+        </div>
+
         <div class="main-title text-center">
             <h1 class="mb-4">{{ user }}<span class="sub-title">님을 위한 맛집 추천</span></h1>
             <!-- 내위치버튼1 -->
@@ -102,29 +120,6 @@
                     style="border-radius: 30px; width: 15rem; background-color: #f08724; font-size: 18px; font-weight: 500;">
                 내 위치 가져오기
             </button>
-        </div>
-        <div class="car-overlay">
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img src="{% static 'images/c1.jpg' %}" class="d-block w-100" alt="..."
-                         style="width: 100vw !important;">
-                </div>
-                <div class="carousel-item">
-                    <img src="{% static 'images/c2.jpg' %}" class="d-block w-100" alt="..."
-                         style="width: 100vw !important;">
-                </div>
-                <div class="carousel-item">
-                    <img src="{% static 'images/c3.jpg' %}" class="d-block w-100" alt="..."
-                         style="width: 100vw !important;">
-                </div>
-                <div class="carousel-item">
-                    <img src="{% static 'images/c4.jpg' %}" class="d-block w-100" alt="..."
-                         style="width: 100vw !important;">
-
-                </div>
-            </div>
-
-
         </div>
     </div>
 
