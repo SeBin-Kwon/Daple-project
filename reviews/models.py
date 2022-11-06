@@ -26,6 +26,7 @@ class Review(models.Model):
     processors=[ResizeToFill(400,300)],
     format='JPEG',
     options={'quality':100})
+    like_count = models.IntegerField(default=0)
 
 class Comment(models.Model):
     review = models.ForeignKey(Review, on_delete=models.CASCADE)

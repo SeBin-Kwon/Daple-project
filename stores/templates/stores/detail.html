@@ -34,9 +34,15 @@
                        onclick="storeLike(this.id)"> {{ store_data.store_liked.count }}</i>
                 {% endif %}
                 <br>
+                {% if is_write == False %}
                 <a href="{% url 'stores:reviews_create' store_data.pk %}" class="appra">
                     <span>평가하기</span>
                 </a>
+                {% else %}
+                <a class="appra">
+                    <span>평가완료</span>
+                </a>
+                {% endif %}
             {% endif %}
         </div>
         <br>
@@ -50,7 +56,7 @@
                 <img src="{{ review.review_image.url }}" style="border-radius:9px;">
             {% endif %}
             <p>{{ review.user.username }} ( {{ review.user.review_set.all.count }}곳 작성, <span
-                    id="like-btn-{{ review.pk }}-gonggam">{{ review.user.like_reviews.all.count }}</span>개 공감받음
+                    id="like-btn-{{ review.pk }}-gonggam">{{ review.user.like_count }}</span>개 공감받음
                 ) {{ review.created_at | date:"Y-m-d" }}</p>
             <p>총평 <span id="review-{{ review.pk }}-star" class="star-rate"><i
                     style="width:{{ review.review_rating|mul:20 }}%;"></i></span></p>
@@ -60,11 +66,11 @@
             <p>내용 : {{ review.review_content }}</p>
             {% if request.user.is_authenticated %}
                 {% if request.user in review.review_liked.all %}
-                    <i id="like-btn-{{ review.pk }}" data-review-id="{{ review.pk }}"
+                    <i id="like-btn-{{ review.pk }}" data-review-id="{{ review.pk }}" data-reviewuser-id="{{ review.user.pk }}" data-requestuser-id="{{ request.user.pk }}"
                        class="text-danger bi bi-heart-fill"
                        onclick="like(this.id)"> {{ review.review_liked.count }}</i>
                 {% else %}
-                    <i id="like-btn-{{ review.pk }}" data-review-id="{{ review.pk }}"
+                    <i id="like-btn-{{ review.pk }}" data-review-id="{{ review.pk }}" data-reviewuser-id="{{ review.user.pk }}" data-requestuser-id="{{ request.user.pk }}"
                        class="text-danger bi bi-heart"
                        onclick="like(this.id)"> {{ review.review_liked.count }}</i>
                 {% endif %}
@@ -170,6 +176,7 @@
     </script>
 
     <script>
+
         const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value
 
         const getComment = function (e) {
@@ -292,23 +299,29 @@
             const heart = document.querySelector(`#${e}`)
             const gonggam = document.querySelector(`#${e}-gonggam`)
 
-            axios({
+            console.log(event.target.dataset.requestuserId)
+            console.log(event.target.dataset.reviewuserId)
+            if (event.target.dataset.requestuserId === event.target.dataset.reviewuserId ) {
+                window.confirm("본인이 작성하신 리뷰에는 좋아요를 할 수 없습니다!")
+            } else {
+                axios({
                 method: 'get',
                 url: `/reviews/${event.target.dataset.reviewId}/like/`
-            })
+                })
                 .then(response => {
                     if (response.data.isLiked === true) {
                         heart.classList.add('bi-heart-fill')
                         heart.classList.remove('bi-heart')
-                        gonggam.innerText = parseInt(gonggam.innerText) + 1
                     } else {
                         heart.classList.add('bi-heart')
                         heart.classList.remove('bi-heart-fill')
-                        gonggam.innerText = parseInt(gonggam.innerText) - 1
                     }
-
                     heart.textContent = " " + response.data.likeCount
+                    gonggam.innerText = " " + response.data.gonggam_cnt
                 })
+
+            }
+            
         }
 
         const storeLike = function (e) {

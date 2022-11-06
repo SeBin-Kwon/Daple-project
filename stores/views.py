@@ -58,6 +58,13 @@ def detail(request, pk):
 
     comments = Comment.objects.all().order_by('-pk')
     comment_form = CommentForm()
+    
+    
+    if Review.objects.filter(store_id=pk).filter(user_id=request.user.pk):
+        is_write = True
+    else:
+        is_write = False
+
     context = {
         'store_data': data,
         'reviews': reviews,
@@ -65,6 +72,7 @@ def detail(request, pk):
         'comments': comments,
         'avg_rating': avg_rating,
         'people_num': people_num,
+        'is_write': is_write
     }
 
     return render(request, 'stores/detail.html', context)

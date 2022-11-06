@@ -8,3 +8,4 @@ class User(AbstractUser):
     Is_owner = models.BooleanField(default=False)
     profile_image = models.ImageField(upload_to='images/', blank=True)
     followings = models.ManyToManyField('self', symmetrical=False, related_name='followers', default=0)
+    like_count = models.IntegerField(default=0)

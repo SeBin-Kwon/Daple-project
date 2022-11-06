@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from .models import Review, Comment
 from stores.models import Store
+from accounts.models import User
 from .forms import ReviewForm, CommentForm
 from django.http import JsonResponse
 import json
@@ -148,9 +149,24 @@ def like(request, pk):
     if review.review_liked.filter(id=request.user.id).exists():
     # if request.user in review.review_liked.all(): 
         review.review_liked.remove(request.user)
+        review.like_count -= 1
+        review.save()
+        user = User.objects.get(pk=review.user_id)
+        user.like_count -= 1
+        user.save()
         is_liked = False
     else:
         review.review_liked.add(request.user)
+        review.like_count += 1
+        review.save()
+        user = User.objects.get(pk=review.user_id)
+        user.like_count += 1
+        user.save()
         is_liked = True
-    context = {'isLiked': is_liked, 'likeCount': review.review_liked.count()}
+
+    context = {
+        'isLiked': is_liked, 
+        'likeCount': review.review_liked.count(), 
+        'gonggam_cnt': review.user.like_count
+    }
     return JsonResponse(context)
