@@ -61,7 +61,11 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                        data-bs-toggle="dropdown" aria-expanded="false">
-                        로그인하기
+                       {% if user.is_authenticated %}
+                       {{ user }} 
+                       {% else %}
+                       로그인하기
+                       {% endif %}
                     </a>
                     <ul class="dropdown-menu" id="drop-menu" aria-labelledby="navbarDropdown">
                         {% if user.is_authenticated %}

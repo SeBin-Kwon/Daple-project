@@ -1,5 +1,4 @@
 from django.db import models
-# from djongo import models
 from imagekit.models import ProcessedImageField
 from imagekit.processors import ResizeToFill
 from django.conf import settings
