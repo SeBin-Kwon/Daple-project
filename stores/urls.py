@@ -17,5 +17,8 @@ urlpatterns = [
     # path('detail/<int:pk>/reviews/<int:pk>/like/', reviews.like, name='reviews_like'),
     path('detail/<int:pk>/like/', views.store_like, name='store_like'),
     path('search', views.search, name='search'),
+    path('name-sort/', views.name_sort, name='name_sort'),
+    path('like-sort', views.like_sort, name='like_sort'),
+    path('score-sort', views.score_sort, name='score_sort'),
 ]
 

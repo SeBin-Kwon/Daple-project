@@ -193,3 +193,51 @@ def search(request):
             'results': results
         }
         return render(request, 'stores/search.html', context)
+
+def name_sort(request):
+    jsonObject = json.loads(request.body)
+    search = jsonObject.get('search')
+    
+    temp_results = Store.objects.all().filter(Q(store_name__contains=search)).order_by('store_name')
+    results = []
+    for result in temp_results:
+        results.append({'store_pk': result.pk, 'store_name': result.store_name, 'store_address': result.store_address})
+    print(results)
+
+    return JsonResponse({'results': results})
+
+# def like_sort(request):
+#     jsonObject = json.loads(request.body)
+#     search = jsonObject.get('search')
+    
+#     temp_results = Store.objects.all().filter(Q(store_name__contains=search)).order_by('store_liked')
+#     results = []
+#     for result in temp_results:
+#         results.append({'store_pk': result.pk, 'store_name': result.store_name, 'store_address': result.store_address})
+#     print(results)
+
+#     return JsonResponse({'results': results})
+
+def like_sort(request):
+    jsonObject = json.loads(request.body)
+    search = jsonObject.get('search')
+    
+    temp_results = Store.objects.all().filter(Q(store_name__contains=search)).order_by('store_liked')
+    results = []
+    for result in temp_results:
+        results.append({'store_pk': result.pk, 'store_name': result.store_name, 'store_address': result.store_address})
+    print(results)
+
+    return JsonResponse({'results': results})
+
+def score_sort(request):
+    jsonObject = json.loads(request.body)
+    search = jsonObject.get('search')
+    
+    temp_results = Store.objects.all().filter(Q(store_name__contains=search)).order_by('store_grade')
+    results = []
+    for result in temp_results:
+        results.append({'store_pk': result.pk, 'store_name': result.store_name, 'store_address': result.store_address})
+    print(results)
+
+    return JsonResponse({'results': results})
