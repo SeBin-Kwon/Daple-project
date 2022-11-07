@@ -6,7 +6,7 @@ from urllib import parse
 from urllib import request
 from urllib.parse import urlparse
 from urllib.request import urlopen
-from .models import Store
+from .models import Store , Thematag, Foodtag
 from .forms import StoreForm
 from reviews.models import Review, Comment
 from reviews.forms import ReviewForm, CommentForm
@@ -31,6 +31,8 @@ def index(request):
         jsonObject = jsonObject["documents"]
         lastpage = False
         for i in range(len(jsonObject)):
+            if not Foodtag.objects.filter(foodtag_name=jsonObject[i]['category_group_name']).exists():
+                Foodtag.objects.create(foodtag_name=jsonObject[i]['category_group_name'])
             if page == True:
                 if lastpage == False:
                     lastpage = True
@@ -55,6 +57,7 @@ def index(request):
                 soup = html.select("#main_search > div > article:nth-child(1) > section > div > div > ul > li:nth-child(1) > figure > a > img:nth-child(1)")
                 img = soup[0]['src']
                 db = Store.objects.create(
+
                     store_image=img,
                     store_address=jsonObject[i]['address_name'],
                     store_tel=jsonObject[i]['phone'],
@@ -63,11 +66,11 @@ def index(request):
                     store_x=jsonObject[i]['x'],
                     store_y=jsonObject[i]['y'],
                     kakao_id=jsonObject[i]['id'])
+
                 db.save()
 
-
-
         return render(request, 'stores/index.html',)
+
     else:
         data = Store.objects.all()
 

@@ -36,6 +36,8 @@ def index(request):
     Foodtag.objects.create(foodtag_name='일식')
     Foodtag.objects.create(foodtag_name='아시안')
     Foodtag.objects.create(foodtag_name='패스트푸드')
+    Foodtag.objects.create(foodtag_name='카페,디저트')
+    Foodtag.objects.create(foodtag_name='기타')
     list_ = Store.objects.all()[:22]
     for i in list_:
         i.thematag_id = Thematag.objects.get(id=2)
