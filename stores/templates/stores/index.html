@@ -24,7 +24,8 @@
     </style>
 </head>
 
-<body class="position-relative bg-light h-100" >
+<body class="position-relative bg-light h-100" style="width: 100vw;">
+
 
 <!-- 네브바 -->
 <nav class="nav navbar navbar-dark navbar-expand-lg shadow-sm" id="nav-sticky" style="height: 90px; z-index: 100; background-color: #f08724;">
@@ -246,10 +247,22 @@
     </div>  {% endcomment %}
 
 <!-- 지도 -->
-<div class="map-box getMyPositionBtn">
+
+<div class="map-box">
+    <div class="d-flex align-items-center mb-4">
+        <h2 class="fw-light m-0">나의 현재 위치</h2> <lord-icon
+        src="https://cdn.lordicon.com/oaflahpk.json"
+        trigger="loop-on-hover"
+        delay="2000"
+        colors="primary:#e86830"
+        style="width:50px;height:50px;">
+        </lord-icon>
+    </div>
+
+{% comment %} <div class="map-box getMyPositionBtn">
     <h2 class="fw-light mb-4">나의 현재 위치</h2>
     <div class="m-auto" id="map" style="width:500px;height:400px;"></div>
-</div>
+</div> {% endcomment %}
 
 {% comment %} 
     <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
@@ -283,17 +296,49 @@
 
 {% comment %} 가로 스크롤 {% endcomment %}
 <div>
-    <div class="wrap-vertical mt-5"  style="margin-bottom: 4rem;">
-        <h2 class="fw-light mb-2 pt-3 ps-4">나의 주변 맛집들</h2>
+    <div class="col-12 col-md-10 col-lg-8 wrap-vertical mt-5"  style="margin-bottom: 4rem;">
+        <h2 class="fw-light mb-2 pt-3 ps-4"><span class="fw-bold" style="color: #f08724;">#</span> 분위기 있는</h2>
         <div class="container getMyPositionBtn pt-4 pb-3 d-flex">
-        {% for item in posts.object_list %}
-        <div class="store-card col-3 mx-2">
+        {% for item in test1 %}
+        <div class="store-card col-6 col-md-4 col-lg-3 mx-2">
                 <a class="text-decoration-none text-black" href="{% url 'stores:detail' item.pk %}">
             <div class="card mb-3">
-                <img src="{% static 'images/alt.png' %}" class="card-img-top" alt="...">
+                <div class="wrapper position-relative">
+                    <img src="{% static 'images/alt.png' %}" class="card-img-top" alt="...">
+                    <div class="overlay">
+                        <div class="content">{{ item.store_name }}</div>
+                    </div>
+                </div>
+                <div class="card-body">
+                <h5 class="card-title" style="overflow: hidden;">{{ item.store_name }}</h5>
+                <p class="card-text" style="font-size: 13px;"><i class="bi bi-geo-alt"></i> {{ item.store_address }}</p>
+                </div>
+
+            </div>
+        </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<div>
+    <div class="col-12 col-md-10 col-lg-8 wrap-vertical mt-5"  style="margin-bottom: 4rem;">
+        <h2 class="fw-light mb-2 pt-3 ps-4"><span class="fw-bold" style="color: #f08724;">#</span> 지역주민이 찾는</h2>
+        <div class="container getMyPositionBtn pt-4 pb-3 d-flex">
+        {% for item in test2 %}
+        <div class="store-card col-6 col-md-4 col-lg-3 mx-2">
+                <a class="text-decoration-none text-black" href="{% url 'stores:detail' item.pk %}">
+            <div class="card mb-3">
+                <div class="wrapper position-relative">
+                    <img src="{% static 'images/alt.png' %}" class="card-img-top" alt="...">
+                    <div class="overlay">
+                        <div class="content">{{ item.store_name }}</div>
+                    </div>
+                </div>
                 <div class="card-body">
                 <h5 class="card-title">{{ item.store_name }}</h5>
-                <p class="card-text"><i class="bi bi-geo-alt"></i> {{ item.store_address }}</p>
+                <p class="card-text" style="font-size: 13px;"><i class="bi bi-geo-alt"></i> {{ item.store_address }}</p>
                 </div>
 
             </div>
@@ -361,7 +406,7 @@
 
 <!-- 페이지네이션 -->
 
-    <div class="d-flex justify-content-center">
+    {% comment %} <div class="d-flex justify-content-center">
         <ul class="pagination mb-3" style="text-align: center">
           {% if posts.has_previous %}
           <li class="page-item">
@@ -385,7 +430,7 @@
           </li>
           {% endif %}
         </ul>
-      </div> 
+      </div>  {% endcomment %}
     <!-- </div> -->
 
 

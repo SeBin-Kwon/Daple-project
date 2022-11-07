@@ -69,7 +69,7 @@ nav {
   top: 0;
   transition: 0.6s;
   padding: 50px;
-  width: 100%;
+  width: 100vw;
 }
 
 .bg-image {
@@ -152,7 +152,6 @@ nav {
 .btn-start:hover span {
   width: 100%;
 }
-
 
 .div-cont {
   max-width: 940px !important;
@@ -273,18 +272,25 @@ i {
 }
 
 #kakao-login-btn > img {
-  width: 100% !important;
-  height: 2.7rem !important;
+  display: none;
 }
 
-#kakao-login-btn {
+.logintext {
+  left: 50%;
+  transform: translate(-45%,40%);
+}
+/* #kakao-login-btn {
+  width: 100% !important;
+  height: 2.7rem !important;
+} */
+
+#naver_id_login {
   width: 100% !important;
   height: 2.7rem !important;
 }
 
 #naver_id_login > a > img {
-  width: 100% !important;
-  height: 2.7rem !important;
+  display: none;
 }
 
 .main-title {
@@ -341,7 +347,37 @@ i {
   transition: all 0.6s;
 }
 
+.overlay {
+  background: #00000056;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  z-index: 1;
+  transition: all 0.6s;
+  display: inline-block;
+  opacity: 0;
+}
+
+.content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  text-transform: uppercase;
+  font-size: 14px;
+  font-weight: 500;
+}
+
 .store-card:hover {
   transform : scale(1.07);
   transition: 0.6s;
+}
+
+.store-card:hover .overlay {
+  opacity: 1;
 }

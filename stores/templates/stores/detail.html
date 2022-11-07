@@ -17,7 +17,7 @@
         <p><i class="bi bi-geo-alt"></i> {{ store_data.store_address }}</p>
         <p><i class="bi bi-telephone"></i> {{ store_data.store_number }}</p>
         <div>{{ people_num }}명의 평가 {{ avg_rating }}점 <span id="store-star" class="star-rate"><i
-                style="width:{{ avg_rating|mul:20 }};"></i></span></div>
+                style="width:{{ avg_rating|mul:20 }}%;"></i></span></div>
         <br>
         <div class="d-flex justify-content-between align-items-center">
             <div class="d-flex">
@@ -70,8 +70,7 @@
             </div>
         </div>
         
-        <br>
-        <h2>
+        <h2 class="mt-4">
             {{ reviews.count }} 건의 방문자 평가
         </h2>
         <hr>
