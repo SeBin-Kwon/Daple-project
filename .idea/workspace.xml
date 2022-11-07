@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="4641825b-3417-4d9d-87b4-84b135cdd87d" name="변경" comment="map api complete">
       <change afterPath="$PROJECT_DIR$/static/images/logo_w.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/accounts/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/accounts/migrations/0001_initial.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/accounts/templates/accounts/change_password.html" beforeDir="false" afterPath="$PROJECT_DIR$/accounts/templates/accounts/change_password.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/reviews/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/reviews/migrations/0001_initial.py" afterDir="false" />
