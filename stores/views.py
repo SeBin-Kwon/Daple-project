@@ -66,11 +66,6 @@ def index(request):
                 db.save()
 
 
-            # # soup = html.select("#mArticle > div.cont_photo > div.photo_area > ul > li.size_l > a")
-            # img = soup.find("img")["src"]
-            # print(img)
-            # photoViewer > div.layer_body > div.view_photo > div.view_image > img
-
 
         return render(request, 'stores/index.html',)
     else:
