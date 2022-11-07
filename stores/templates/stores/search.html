@@ -121,9 +121,20 @@
         </div>
     </div>
 
+    <!-- search text -->
+    <h1 style="font-weight:lighter;"><span id="search" style="font-weight:bold;">{{ search }}</span>(으)로 검색한 결과입니다.</h1>
 
+    <!-- plus search -->
+    <div>
+        <button id='name-sort'>가게이름 순</button>
+        <button id='like-sort'>좋아요 많은 순</button>
+        <button id='score-sort'>평점 높은 순</button>
+        <button id='review-sort'>리뷰 많은 순</button>
+    </div>
 
-    <div class="container">
+    
+
+    <div class="container" id="result-box">
         <!-- 본문 컨텐츠 -->
         {% for item in results %}
             <div class="card mb-3" style="max-width: 540px;">
@@ -143,6 +154,108 @@
             </div>
         {% endfor %}
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        // const result = '{{ results }}'
+        const search = document.querySelector('#search').innerHTML
+        const nameSort = document.querySelector('#name-sort')
+        const likeSort = document.querySelector('#like-sort')
+        const scoreSort = document.querySelector('#score-sort')
+        const reviewSort = document.querySelector('#review-sort')
+
+        // nameSort
+        nameSort.addEventListener('click', function() {
+            console.log(search)
+            axios({
+                method: 'post',
+                url: '/stores/name-sort/',
+                headers : {'X-CSRFTOKEN' : '{{ csrf_token }}'},
+                data: {'search': search}
+            }).then(response => {
+                const resultBox = document.querySelector('#result-box')
+                resultBox.textContent = ""
+                for (let i = 0; i < response.data.results.length; i++) {
+                    console.log(`${response.data.results[i].store_pk}`)
+
+                resultBox.insertAdjacentHTML('beforeend', `
+
+                    <div class="card mb-3" style="max-width: 540px;">
+                        <div class="row g-0">
+                            <div class="col-md-4">
+                                <a href="detail/${response.data.results[i].store_pk}/"><img src="{% static 'images/alt.png' %}"
+                                                                                class="img-fluid rounded-start" alt="..."></a>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title"><a href="detail/${response.data.results[i].store_pk}/">${response.data.results[i].store_name}</a>
+                                    </h5>
+                                    <p class="card-text">${response.data.results[i].store_address}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                `)
+            }
+
+                console.log(response.data)
+            })
+        })
+
+        // likeSort
+        scoreSort.addEventListener('click', function() {
+            console.log(search)
+            axios({
+                method: 'post',
+                url: '/stores/name-sort/',
+                headers : {'X-CSRFTOKEN' : '{{ csrf_token }}'},
+                data: {'search': search}
+            }).then(response => {
+                const resultBox = document.querySelector('#result-box')
+                resultBox.textContent = ""
+                for (let i = 0; i < response.data.results.length; i++) {
+                    console.log(`${response.data.results[i].store_pk}`)
+
+                resultBox.insertAdjacentHTML('beforeend', `
+
+                    <div class="card mb-3" style="max-width: 540px;">
+                        <div class="row g-0">
+                            <div class="col-md-4">
+                                <a href="detail/${response.data.results[i].store_pk}/"><img src="{% static 'images/alt.png' %}"
+                                                                                class="img-fluid rounded-start" alt="..."></a>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title"><a href="detail/${response.data.results[i].store_pk}/">${response.data.results[i].store_name}</a>
+                                    </h5>
+                                    <p class="card-text">${response.data.results[i].store_address}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                `)
+            }
+
+                console.log(response.data)
+            })
+        })
+
+    </script>
+
+
+<!-- axios({
+    method: 'post',
+    url: `/accounts/database/`,
+    headers: {'X-CSRFToken': csrftoken},
+    data: {'username': id, 'email': email}
+    }).then(response => {
+    location.reload();
+    // window.location.href = 'http://localhost:8000/reviews/'; // 이동할 url
+    }) -->
+
 
 
     {% bootstrap_javascript %}
