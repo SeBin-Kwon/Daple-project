@@ -201,77 +201,187 @@ def db_save(request):
     return redirect('stores:index')
 
 
+# def search(request):
+#     if request.method == 'POST':
+#         store_search = request.POST['store_search']
+#         for i in range(1, 46):
+#             count = 0
+#             searching = store_search
+#             num = i
+#             url = 'https://dapi.kakao.com/v2/local/search/keyword.json?page={}&query={}'.format(num, searching)
+#             headers = {
+#                 "Authorization": "KakaoAK 0f23477b2b3262f820c688ff81fdf916"
+#             }
+#             places = requests.get(url, headers=headers).json()
+#             page = places['meta']['is_end']
+#             places = places['documents']
+
+#             Ttag = [2, 13]
+#             tagnum = random.choice(Ttag)
+
+
+
+#             if page == True:
+#                 if count == 0:
+#                     count = 1
+#                     continue
+#                 else:
+#                     break
+#             elif (page == False and (
+#                     places[i]['category_group_code'] == "FD6" or places[i]['category_group_code'] == 'CE7')
+#                   and Store.objects.filter(kakao_id=places[i]['id']).exists() == False):
+#                 tag = places[i]['category_name'].split('>')
+#                 print(tag)
+#                 tag = tag[1].replace(' ', '')
+#                 if not Foodtag.objects.filter(foodtag_name=tag).exists():
+#                     Foodtag.objects.create(foodtag_name=tag)
+
+#                 base_url = 'https://www.siksinhot.com/search?keywords='
+#                 storename = places[i]['place_name']
+#                 urlstore = storename.replace(' ', '%20')
+
+#                 url = base_url + urlstore
+
+#                 ua = generate_user_agent(device_type='desktop')
+#                 headers = {
+#                     'User-Agent': ua}
+#                 r = requests.get(url, headers=headers)
+
+#                 # html 파싱
+#                 html = BeautifulSoup(r.text, 'html.parser')
+
+#                 soup = html.select(
+#                     "#main_search > div > article:nth-child(1) > section > div > div > ul > li:nth-child(1) > figure > a > img:nth-child(1)")
+#                 img = soup[0]['src']
+
+#                 for i in range(len(places)):
+#                     db_save = Store(store_name=places[i]["place_name"], store_address=places[i]["address_name"],
+#                                     store_x=places[i]["x"],
+#                                     store_y=places[i]["y"],
+#                                     store_url=places[i]['place_url'],
+#                                     store_tel=places[i]['phone'],
+#                                     store_image=img,
+#                                     kakao_id=places[i]["id"],
+#                                     thematag_id=Thematag.objects.get(id=tagnum),
+#                                     foodtag_id=Foodtag.objects.filter(foodtag_name=tag)[0],
+#                                     )
+#                     db_save.save()
+#         results = Store.objects.filter(Q(store_name__contains=store_search) | Q(store_address__contains=store_search))
+#         ########################################
+#         # data = Store.objects.all()
+
+#         page = request.GET.get("page")
+#         # data_all = Store.objects.all()
+#         paginator = Paginator(results, 5)
+#         posts = paginator.get_page(page)
+
+#         # test1 = Store.objects.filter(thematag_id=2)
+#         # test2 = Store.objects.filter(thematag_id=13)
+
+#         # context = {
+#         #     'stores': data,
+#         #     'posts': posts,
+#         #     'test1': test1,
+#         #     'test2': test2,
+#         # }
+#         ########################################
+#         context = {
+#             'search': store_search,
+#             'results': results,
+#             'posts': posts
+#         }
+#         return render(request, 'stores/search.html', context)
 def search(request):
-    if request.method == 'POST':
-        store_search = request.POST['store_search']
-        for i in range(1, 46):
-            count = 0
-            searching = store_search
-            num = i
-            url = 'https://dapi.kakao.com/v2/local/search/keyword.json?page={}&query={}'.format(num, searching)
-            headers = {
-                "Authorization": "KakaoAK 0f23477b2b3262f820c688ff81fdf916"
-            }
-            places = requests.get(url, headers=headers).json()
-            page = places['meta']['is_end']
-            places = places['documents']
+    # if request.method == 'POST':
+    store_search = request.GET.get("store_search")
 
-            Ttag = [2, 13]
-            tagnum = random.choice(Ttag)
-
-
-
-            if page == True:
-                if count == 0:
-                    count = 1
-                    continue
-                else:
-                    break
-            elif (page == False and (
-                    places[i]['category_group_code'] == "FD6" or places[i]['category_group_code'] == 'CE7')
-                  and Store.objects.filter(kakao_id=places[i]['id']).exists() == False):
-                tag = places[i]['category_name'].split('>')
-                print(tag)
-                tag = tag[1].replace(' ', '')
-                if not Foodtag.objects.filter(foodtag_name=tag).exists():
-                    Foodtag.objects.create(foodtag_name=tag)
-
-                base_url = 'https://www.siksinhot.com/search?keywords='
-                storename = places[i]['place_name']
-                urlstore = storename.replace(' ', '%20')
-
-                url = base_url + urlstore
-
-                ua = generate_user_agent(device_type='desktop')
-                headers = {
-                    'User-Agent': ua}
-                r = requests.get(url, headers=headers)
-
-                # html 파싱
-                html = BeautifulSoup(r.text, 'html.parser')
-
-                soup = html.select(
-                    "#main_search > div > article:nth-child(1) > section > div > div > ul > li:nth-child(1) > figure > a > img:nth-child(1)")
-                img = soup[0]['src']
-
-                for i in range(len(places)):
-                    db_save = Store(store_name=places[i]["place_name"], store_address=places[i]["address_name"],
-                                    store_x=places[i]["x"],
-                                    store_y=places[i]["y"],
-                                    store_url=places[i]['place_url'],
-                                    store_tel=places[i]['phone'],
-                                    store_image=img,
-                                    kakao_id=places[i]["id"],
-                                    thematag_id=Thematag.objects.get(id=tagnum),
-                                    foodtag_id=Foodtag.objects.filter(foodtag_name=tag)[0],
-                                    )
-                    db_save.save()
-        results = Store.objects.filter(Q(store_name__contains=store_search) | Q(store_address__contains=store_search))
-        context = {
-            'search': store_search,
-            'results': results
+    for i in range(1, 46):
+        count = 0
+        searching = store_search
+        num = i
+        url = 'https://dapi.kakao.com/v2/local/search/keyword.json?page={}&query={}'.format(num, searching)
+        headers = {
+            "Authorization": "KakaoAK 0f23477b2b3262f820c688ff81fdf916"
         }
-        return render(request, 'stores/search.html', context)
+        places = requests.get(url, headers=headers).json()
+        page = places['meta']['is_end']
+        places = places['documents']
+
+        Ttag = [2, 13]
+        tagnum = random.choice(Ttag)
+
+
+
+        if page == True:
+            if count == 0:
+                count = 1
+                continue
+            else:
+                break
+        elif (page == False and (
+                places[i]['category_group_code'] == "FD6" or places[i]['category_group_code'] == 'CE7')
+                and Store.objects.filter(kakao_id=places[i]['id']).exists() == False):
+            tag = places[i]['category_name'].split('>')
+            print(tag)
+            tag = tag[1].replace(' ', '')
+            if not Foodtag.objects.filter(foodtag_name=tag).exists():
+                Foodtag.objects.create(foodtag_name=tag)
+
+            base_url = 'https://www.siksinhot.com/search?keywords='
+            storename = places[i]['place_name']
+            urlstore = storename.replace(' ', '%20')
+
+            url = base_url + urlstore
+
+            ua = generate_user_agent(device_type='desktop')
+            headers = {
+                'User-Agent': ua}
+            r = requests.get(url, headers=headers)
+
+            # html 파싱
+            html = BeautifulSoup(r.text, 'html.parser')
+
+            soup = html.select(
+                "#main_search > div > article:nth-child(1) > section > div > div > ul > li:nth-child(1) > figure > a > img:nth-child(1)")
+            img = soup[0]['src']
+
+            for i in range(len(places)):
+                db_save = Store(store_name=places[i]["place_name"], store_address=places[i]["address_name"],
+                                store_x=places[i]["x"],
+                                store_y=places[i]["y"],
+                                store_url=places[i]['place_url'],
+                                store_tel=places[i]['phone'],
+                                store_image=img,
+                                kakao_id=places[i]["id"],
+                                thematag_id=Thematag.objects.get(id=tagnum),
+                                foodtag_id=Foodtag.objects.filter(foodtag_name=tag)[0],
+                                )
+                db_save.save()
+    results = Store.objects.filter(Q(store_name__contains=store_search) | Q(store_address__contains=store_search))
+    ########################################
+    # data = Store.objects.all()
+
+    page = request.GET.get("page")
+    # data_all = Store.objects.all()
+    paginator = Paginator(results, 5)
+    posts = paginator.get_page(page)
+
+    # test1 = Store.objects.filter(thematag_id=2)
+    # test2 = Store.objects.filter(thematag_id=13)
+
+    # context = {
+    #     'stores': data,
+    #     'posts': posts,
+    #     'test1': test1,
+    #     'test2': test2,
+    # }
+    ########################################
+    context = {
+        'search': store_search,
+        'results': results,
+        'posts': posts
+    }
+    return render(request, 'stores/search.html', context)
 
 
 def name_sort(request):

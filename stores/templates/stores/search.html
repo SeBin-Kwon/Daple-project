@@ -19,6 +19,7 @@
 
 <body class="position-relative bg-light">
 <!-- 네브바 -->
+
 <nav class="nav navbar navbar-dark navbar-expand-lg shadow-sm" id="nav-sticky" style="height: 90px; z-index: 100;">
     <div class="container">
         <a href="{% url 'stores:index' %}">
@@ -41,8 +42,8 @@
 
             <!-- 검색창 -->
             <br>
-            <form class="d-flex" method="POST" action="{% url 'stores:search' %}">
-                {% csrf_token %}
+            <form class="d-flex" method="get" action="{% url 'stores:search' %}">
+                <!-- {% csrf_token %} -->
                 <input class="form-control me-1" name="store_search" type="search" placeholder="맛집 검색하기"
                        aria-label="Search" style="border-radius: 104.375rem; width: 30rem;">
                 <a class="search-btn btn" type="submit"><i class="bi bi-search"></i></a>
@@ -53,10 +54,72 @@
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                       data-bs-toggle="dropdown" aria-expanded="false">
+                       data-bs-toggle="dropdown" aria-expanded="false" style="color:#ff7c00;">
                         {{ user }}
                     </a>
                     <ul class="dropdown-menu" id="drop-menu" aria-labelledby="navbarDropdown">
+                        {% if user.is_authenticated %}
+                            <li><a class="nav-link ms-1" href="{% url 'accounts:mypage' user.pk %}" style="color:#ff7c00;">마이페이지</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="nav-link ms-1" href="{% url 'accounts:logout' %}" style="color:#ff7c00;">로그아웃하기</a>
+                        {% else %}
+                            <a class="nav-link ms-1" href="{% url 'accounts:signup' %}" style="color:#ff7c00;">회원가입하기</a>
+                            <a class="nav-link ms-1" href="{% url 'accounts:login' %}" style="color:#ff7c00;">로그인하기</a>
+                        {% endif %}
+
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+</nav>
+
+
+
+
+
+<!-- 네브바 -->
+{% comment %}
+<nav class="nav navbar navbar-dark navbar-expand-lg shadow-sm" id="nav-sticky" style="height: 90px; z-index: 100; background-color: #f08724;">
+    <div class="container">
+        <a href="{% url 'stores:index' %}">
+
+            <img id="logo" class="navbar-brand" src="{% static 'images/logo_w.png' %}" style="width: 100px;">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse px-3" id="navbarSupportedContent" style="background-color: #f08724;">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            </ul> 
+
+            <!-- 검색창 -->
+            <br>
+            <form class="d-flex" method="get" action="{% url 'stores:search' %}">
+                <!-- {% csrf_token %} -->
+                <input class="form-control me-1" name="store_search" type="search" placeholder="맛집 검색하기"
+                       aria-label="Search" style="border-radius: 104.375rem; width: 30rem;">
+                <button class="search-btn btn" type="submit"><i class="bi bi-search" style="color: white;"></i></button>
+            </form>
+            <br>
+
+            <!-- 유저이름 -->
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                    {% if request.user.is_authenticated %}
+                    {{ request.user }}
+                    {% else %}
+                    로그인
+                    {% endif %}
+                    </a>
+                    <ul class="dropdown-menu" id="drop-menu" aria-labelledby="navbarDropdown" style="background-color: #f08724;">
                         {% if user.is_authenticated %}
                             <li><a class="nav-link ms-1" href="{% url 'accounts:mypage' user.pk %}">마이페이지</a></li>
                             <li>
@@ -76,6 +139,7 @@
         </div>
     </div>
 </nav>
+{% endcomment %}
 
 
 <!-- <a href="{% url 'stores:create' %}">생성</a>
@@ -136,7 +200,7 @@
 
         
 
-        <div class="container" id="result-box">
+        {% comment %}<div class="container" id="result-box">
             <!-- 본문 컨텐츠 -->
             {% for item in results %}
                 <div class="card m-auto mb-3" style="max-width: 540px;">
@@ -155,9 +219,79 @@
                     </div>
                 </div>
             {% endfor %}
-        </div>
+        </div>{% endcomment %}
     {% comment %} </div> {% endcomment %}
     </div>
+
+
+
+
+
+
+    <!-- 페이지네이션 -->
+    <div class="container" id="result-box">
+        <!-- 본문 컨텐츠 -->
+        {% for item in posts.object_list %}
+            <div class="card m-auto mb-3" style="max-width: 540px;">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <a href="{% url 'stores:detail' item.pk %}"><img src="{{ item.store_image }}"
+                                                                        class="img-fluid rounded-start" alt="..."></a>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title"><a href="{% url 'stores:detail' item.pk %}">{{ item.store_name }}</a>
+                            </h5>
+                            <p class="card-text">{{ item.store_address }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <!-- 페이지네이션 버튼 -->
+    <div class="d-flex justify-content-center">
+        <ul class="pagination mb-3" style="text-align: center">
+          {% if posts.has_previous %}
+          <li class="page-item">
+            <a class="page-link" href="?store_search={{search}}?page={{posts.previous_page_number}}">이전</a>
+          </li>
+          {% endif %} {% for p in posts.paginator.page_range %}
+          <span></span
+          ><span></span
+          ><span></span>
+          {% if p == posts.number %}
+          <li class="page-item active" aria-current="page">
+            <a class="page-link" href="?store_search={{search}}&page={{ page_number }}">{{p}}</a>
+          </li>
+          {% else %}
+          <li class="page-item">
+            <a class="page-link" href="?store_search={{search}}&page={{p}}" class="mx-1">{{p}}</a>
+          </li>
+          {% endif %}{% endfor %}{% if posts.has_next %}
+          <li class="page-item">
+            <a class="page-link" href="?store_search={{search}}&page={{posts.next_page_number}}">다음</a>
+          </li>
+          {% endif %}
+        </ul>
+      </div>
+
+
+    <div class="top-button" style="z-index: 99;">
+        <a href="#"><img class="top-button-image" src="https://dcicons.s3.ap-northeast-1.amazonaws.com/new/images/web/react_components/indexPage/recom_move_top_default.png" alt="up-arrow"></a>
+    </div>
+    <footer class="sc-ckEbSK Pltty Bottom__Content d-flex justify-content-between p-5">
+        <div class="">
+            (주)다이닝플레이트<br>
+            대표이사 : 권세빈<br>
+            소재지 : 서울특별시 강남구 KDT로 0704 12층<br>
+            이메일 문의 : contact@diningplate.com<br>
+            전화 문의 : 02-123-4567 (평일 : 10:00 ~ 19:00, 주말/공휴일 제외)<br>
+        </div>
+        <div>
+            Copyright Ⓒ 2022 DiningPlate 
+        </div>
+    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>

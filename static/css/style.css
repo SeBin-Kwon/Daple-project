@@ -381,3 +381,47 @@ i {
 .store-card:hover .overlay {
   opacity: 1;
 }
+
+.Bottom__Content {
+  background-color: #fff;
+  border-top: 1px solid #f1f1f1;
+  bottom: 0;
+  color: #202020;
+  font-family: Noto Sans KR,sans-serif;
+  height: 168px;
+  letter-spacing: -.7px;
+  position: relative;
+  width: 100vw;
+}
+
+.Pltty {
+  display: flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+  width: 100%;
+  min-width: 1070px;
+  height: 168px;
+  padding: 40px 0px;
+}
+
+.top-button {
+  width: 50px;
+  height: 50px;
+  position: fixed;
+  bottom: 65px;
+  right: 60px;
+  background-color: white;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 10px rgb(88, 88, 88);
+}
+
+.top-button-image {
+  height: 60px;
+  opacity: 1;
+  border-radius: 20px;
+}

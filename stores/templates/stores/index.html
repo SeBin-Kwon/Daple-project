@@ -46,11 +46,11 @@
             <!-- 검색창 -->
             <br>
 
-            <form class="d-flex" method="POST" action="{% url 'stores:search' %}">
-                {% csrf_token %}
+            <form class="d-flex" method="get" action="{% url 'stores:search' %}">
+                <!-- {% csrf_token %} -->
                 <input class="form-control me-1" name="store_search" type="search" placeholder="맛집 검색하기"
                        aria-label="Search" style="border-radius: 104.375rem; width: 30rem;">
-                <a class="search-btn btn" type="submit"><i class="bi bi-search" style="color: white;"></i></a>
+                <button class="search-btn btn" type="submit"><i class="bi bi-search" style="color: white;"></i></button>
             </form>
             <br>
 
@@ -109,8 +109,8 @@
 
             <!-- 검색창 -->
             <br>
-            <form class="d-flex" method="POST" action="{% url 'stores:search' %}">
-                {% csrf_token %}
+            <form class="d-flex" method="get" action="{% url 'stores:search' %}">
+                <!-- {% csrf_token %} -->
                 <input class="form-control me-1" name="store_search" type="search" placeholder="맛집 검색하기"
                        aria-label="Search" style="border-radius: 104.375rem; width: 30rem;">
                 <button class="search-btn btn" onclick="send_data()" type="submit"><i class="bi bi-search"></i>
@@ -162,7 +162,11 @@
 <div id="carouselExampleSlidesOnly" class="position-relative mb-5 carousel slide carousel-fade"
      data-bs-ride="carousel">
     <div class="main-title text-center" style="z-index:4;">
+        {% if request.user.is_authenticated %}
         <h1 class="mb-4">{{ user }}<span class="sub-title">님을 위한 맛집 추천</span></h1>
+        {% else %}
+        <h1 class="mb-4">방문자<span class="sub-title">님을 위한 맛집 추천</span></h1>
+        {% endif %}
         <!-- 내위치버튼1 -->
         <button type="button" onclick="getCurrentPosBtn()" class="btn-start m-auto" id="getMyPositionBtn"><span
                 class="cover"></span>내 주변 맛집 찾기
@@ -666,5 +670,20 @@
     <script src="https://cdn.lordicon.com/qjzruarw.js"></script>
     {% bootstrap_javascript %}
 
+    <div class="top-button" style="z-index: 99;">
+    <a href="#"><img class="top-button-image" src="https://dcicons.s3.ap-northeast-1.amazonaws.com/new/images/web/react_components/indexPage/recom_move_top_default.png" alt="up-arrow"></a>
+    </div>
+    <footer class="sc-ckEbSK Pltty Bottom__Content d-flex justify-content-between p-5">
+    <div class="">
+        (주)다이닝플레이트<br>
+        대표이사 : 권세빈<br>
+        소재지 : 서울특별시 강남구 KDT로 0704 12층<br>
+        이메일 문의 : contact@diningplate.com<br>
+        전화 문의 : 02-123-4567 (평일 : 10:00 ~ 19:00, 주말/공휴일 제외)<br>
+    </div>
+    <div>
+        Copyright Ⓒ 2022 DiningPlate 
+    </div>
+</footer>
 </body>
 </html> 

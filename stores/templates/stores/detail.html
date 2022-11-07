@@ -4,16 +4,17 @@
 {% load mathfilters %}
 {% block content %}
 
-    <div class="div-cont d-flex flex-row align-items-center bg-white">
+    <div class="div-cont d-flex flex-row align-items-center bg-white" style="border-radius:5px;">
         <div class="col-md-4">
-            <div class="m-auto" id="detail_map" style="width:250px;height:250px;"></div>
+            <div class="m-auto" id="detail_map" style="width:250px;height:250px;border-radius:7px;"></div>
         </div>
         <div class="col-md-8 text-center">
-            <div><img src="{{ store_data.store_image}}" alt="임시이미지" ></div>
+            <div><img src="{{ store_data.store_image}}" alt="가게이미지" style="width:500px;height:350px;border-radius: 7px;"></div>
         </div>
     </div>
     <div class="div-cont d-flex flex-column bg-white py-4" style="padding:0 5rem;">
-        <p class="fs-1" style="font-weight: 500;">{{ store_data.store_name }} sadf</p>
+        
+        <p class="fs-1" style="font-weight: 500;">{{ store_data.store_name }}</p>
         <p><i class="bi bi-geo-alt"></i> {{ store_data.store_address }}</p>
         <p><i class="bi bi-telephone"></i> {{ store_data.store_number }}</p>
         <div>{{ people_num }}명의 평가 {{ avg_rating }}점 <span id="store-star" class="star-rate"><i
@@ -70,14 +71,20 @@
             </div>
         </div>
         
+        {% if request.user.is_authenticated %}
         <h2 class="mt-4">
             {{ reviews.count }} 건의 방문자 평가
         </h2>
+        {% else %}
+        <h2 class="mt-4">
+            {{ reviews.count }} 건의 방문자 평가,  <h5>후기를 남기시려면 <a href="{% url 'accounts:login' %}" style="text-decoration: underline;">로그인</a>을 해주세요.</h5>
+        </h2>
+        {% endif %}
         <hr>
         <br>
         {% for review in reviews %}
             {% if review.review_image %}
-                <img src="{{ review.review_image.url }}" style="border-radius:9px;">
+                <img src="{{ review.review_image.url }}" style="border-radius:9px;width: 420px;height: 315px;">
             {% endif %}
             <p><a href="{% url 'accounts:mypage' review.user.pk%}">{{ review.user.username }}</a> ( {{ review.user.review_set.all.count }}곳 작성, 
                 <span id="like-btn-{{ review.pk }}-gonggam">{{ review.user.like_count }}</span>개 공감받음
@@ -248,6 +255,10 @@
 
                     }
                     commentForm.reset()
+
+                    //코멘트 작성 후 코멘트리스트 보여주기
+                    commentsList.classList.remove('display-none');
+
                 })
 
         }

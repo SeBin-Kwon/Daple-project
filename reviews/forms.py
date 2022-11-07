@@ -15,10 +15,10 @@ class ReviewForm(forms.ModelForm):
         }
         widgets = {
             'review_content': forms.Textarea(attrs={'placeholder': '리뷰 내용을 작성해주세요.'}),
-            'review_rating': forms.TextInput(attrs={'placeholder': '1~5', 'style': 'width:55px;'}),
-            'review_taste': forms.TextInput(attrs={'placeholder': '1~5', 'style': 'width:55px;'}),
-            'review_price': forms.TextInput(attrs={'placeholder': '1~5', 'style': 'width:55px;'}),
-            'review_service': forms.TextInput(attrs={'placeholder': '1~5', 'style': 'width:55px;'}),
+            # 'review_rating': forms.TextInput(attrs={'placeholder': '1~5', 'style': 'width:55px;'}),
+            # 'review_taste': forms.TextInput(attrs={'placeholder': '1~5', 'style': 'width:55px;'}),
+            # 'review_price': forms.TextInput(attrs={'placeholder': '1~5', 'style': 'width:55px;'}),
+            # 'review_service': forms.TextInput(attrs={'placeholder': '1~5', 'style': 'width:55px;'}),
         }
         help_texts = {
             'review_rating': '1~5점 사이로 입력해주세요',

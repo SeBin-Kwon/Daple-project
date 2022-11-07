@@ -16,36 +16,36 @@ from reviews.models import Review, Comment
 
 # Create your views here.
 def index(request):
-    # Thematag.objects.create(thematag_name='가성비좋은')
-    # Thematag.objects.create(thematag_name='분위기좋은')
-    # Thematag.objects.create(thematag_name='푸짐한')
-    # Thematag.objects.create(thematag_name='격식있는')
-    # Thematag.objects.create(thematag_name='고급스러운')
-    # Thematag.objects.create(thematag_name='서민적인')
-    # Thematag.objects.create(thematag_name='시끌벅적한')
-    # Thematag.objects.create(thematag_name='조용한')
-    # Thematag.objects.create(thematag_name='깔끔한')
-    # Thematag.objects.create(thematag_name='이색적인')
-    # Thematag.objects.create(thematag_name='뷰가좋은')
-    # Thematag.objects.create(thematag_name='예쁜')
-    # Thematag.objects.create(thematag_name='지역주민이찾는')
-    #
-    # Foodtag.objects.create(foodtag_name='한식')
-    # Foodtag.objects.create(foodtag_name='중식')
-    # Foodtag.objects.create(foodtag_name='양식')
-    # Foodtag.objects.create(foodtag_name='일식')
-    # Foodtag.objects.create(foodtag_name='아시안')
-    # Foodtag.objects.create(foodtag_name='패스트푸드')
-    # Foodtag.objects.create(foodtag_name='기타')
-    # list_ = Store.objects.all()[:22]
-    # for i in list_:
-    #     i.thematag_id = Thematag.objects.get(id=2)
-    #     i.save()
-    #
-    # list_ = Store.objects.all()[22:]
-    # for i in list_:
-    #     i.thematag_id = Thematag.objects.get(id=12)
-    #     i.save()
+    Thematag.objects.create(thematag_name='가성비좋은')
+    Thematag.objects.create(thematag_name='분위기좋은')
+    Thematag.objects.create(thematag_name='푸짐한')
+    Thematag.objects.create(thematag_name='격식있는')
+    Thematag.objects.create(thematag_name='고급스러운')
+    Thematag.objects.create(thematag_name='서민적인')
+    Thematag.objects.create(thematag_name='시끌벅적한')
+    Thematag.objects.create(thematag_name='조용한')
+    Thematag.objects.create(thematag_name='깔끔한')
+    Thematag.objects.create(thematag_name='이색적인')
+    Thematag.objects.create(thematag_name='뷰가좋은')
+    Thematag.objects.create(thematag_name='예쁜')
+    Thematag.objects.create(thematag_name='지역주민이찾는')
+    
+    Foodtag.objects.create(foodtag_name='한식')
+    Foodtag.objects.create(foodtag_name='중식')
+    Foodtag.objects.create(foodtag_name='양식')
+    Foodtag.objects.create(foodtag_name='일식')
+    Foodtag.objects.create(foodtag_name='아시안')
+    Foodtag.objects.create(foodtag_name='패스트푸드')
+    Foodtag.objects.create(foodtag_name='기타')
+    list_ = Store.objects.all()[:22]
+    for i in list_:
+        i.thematag_id = Thematag.objects.get(id=2)
+        i.save()
+    
+    list_ = Store.objects.all()[22:]
+    for i in list_:
+        i.thematag_id = Thematag.objects.get(id=13)
+        i.save()
     return render(request, 'accounts/index.html')
 
 def signup(request):
@@ -54,7 +54,7 @@ def signup(request):
         if form.is_valid():
             user = form.save()
             auth_login(request, user)
-            return redirect('accounts:index')
+            return redirect('stores:index')
     else:
         form = CustomUserCreationForm()
     context = {
@@ -87,8 +87,6 @@ def mypage(request, pk):
 
     followings_list = user.followings.all()
     followers_list = user.followers.all()
-
-    print(followings_list)
 
     reviews = Review.objects.filter(user=user)
     comments = Comment.objects.filter(user=user)
@@ -135,17 +133,16 @@ def change_password(request):
 def mypage_delete(request, pk):
     user = User.objects.get(pk=pk)
     user.delete()
-    return redirect('accounts:index')
+    return redirect('stores:index')
 
 def temp(request, pk):
-    print(pk)
     return render('accounts:index')
 
 def database(request):
     jsonObject = json.loads(request.body)
     username = jsonObject.get('username')
     users = User.objects.filter(username=username)
-    print(users)
+
     if users:
         user = User.objects.get(username=username)
         auth_login(request, user)
@@ -161,16 +158,16 @@ def database(request):
 def database_naver(request):
     jsonObject = json.loads(request.body)
     username = jsonObject.get('id')
-    print(username)
+
     users = User.objects.filter(username=username)
     if users:
         user = User.objects.get(username=username)
         auth_login(request, user)
-        print('complete!')
+
     else:
         user = User()
         user.username = jsonObject.get('id')
-        print(jsonObject.get('id'))
+
         user.nickname = jsonObject.get('name')
         user.email = jsonObject.get('email')
         # user.phone = jsonObject.get('mobile')
@@ -213,12 +210,23 @@ def follow(request, pk):
         user.followers.add(request.user)
         is_followings = True
 
+    temp_followings = user.followings.all()
+    temp_followers = user.followers.all()
+    followings = []
+    for f in temp_followings:
+        followings.append({'f_pk':f.pk, 'f_username':f.username})
+    followers = []
+    for f in temp_followers:
+        followers.append({'f_pk':f.pk, 'f_username':f.username})
+
     followings_count = user.followings.count()
     followers_count = user.followers.count()
     context = {
         'is_followings': is_followings,
         'followings_count': followings_count,
-        'followers_count': followers_count
+        'followers_count': followers_count,
+        'followings': followings,
+        'followers': followers
     }
     # return redirect('accounts:mypage', pk)
     return JsonResponse(context)

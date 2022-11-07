@@ -54,7 +54,7 @@
           <h5 class="modal-title" id="exampleModalLabel">Followings list</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-body">
+        <div class="modal-body" id = followings-list>
           {% for follow in followings_list %}
           <a href="{% url 'accounts:mypage' follow.pk %}">{{ follow.username }}</a>
           {% endfor %}
@@ -71,7 +71,7 @@
           <h5 class="modal-title" id="exampleModalLabel">Followers list</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-body">
+        <div class="modal-body" id = followers-list>
             {% for follow in followers_list %}
             <a href="{% url 'accounts:mypage' follow.pk %}">{{ follow.username }}</a>
             {% endfor %}
@@ -106,7 +106,6 @@
                 method: 'get',
                 url: `/accounts/mypage/{{ user.pk }}/follow/`
             }).then(response => {
-                console.log(response.data.is_followings)
                 if (response.data.is_followings === true) {
                     followBtn.innerText = "팔로우 취소"
                     followingsCnt.innerText = response.data.followings_count
@@ -115,6 +114,18 @@
                     followBtn.innerText = "팔로우 하기"
                     followingsCnt.innerText = response.data.followings_count
                     followersCnt.innerText = response.data.followers_count
+                }
+                const followingsList = document.querySelector('#followings-list')
+                for (let i=0; i < response.data.followings.length; i++){
+                  followingsList.insertAdjacentHTML('beforeend',`<a href="accounts/mapage/${response.data.followings[i].f_pk}">${response.data.followings[i].f_username}</a><br>`)
+                }
+                const followersList = document.querySelector('#followers-list')
+                console.log(followersList)
+                followersList.textContent=""
+                for (let i=0; i < response.data.followers.length; i++){
+                  followersList.insertAdjacentHTML('beforeend',`<a href="accounts/mapage/${response.data.followers[i].f_pk}">${response.data.followers[i].f_username}</a><br>`)
+                  console.log(response.data.followers[i].f_pk)
+                  console.log(response.data.followers[i].f_username)
                 }
             })
     }
