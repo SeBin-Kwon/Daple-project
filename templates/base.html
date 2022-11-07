@@ -16,8 +16,66 @@
     {% block css %}{% endblock css %}
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
-<body class="bg-light" style="height: 2000px;">
-<nav class="nav navbar navbar-expand-lg shadow-sm bg-white" id="nav-sticky" style="height: 90px; z-index: 100;">
+<body class="bg-light">
+
+  <nav class="nav navbar navbar-dark navbar-expand-lg shadow-sm" id="nav-sticky" style="height: 90px; z-index: 100; background-color: #f08724;">
+    <div class="container">
+        <a href="{% url 'stores:index' %}">
+
+            <img id="logo" class="navbar-brand" src="{% static 'images/logo_w.png' %}" style="width: 100px;">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse px-3" id="navbarSupportedContent" style="background-color: #f08724;">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            </ul> 
+
+            <!-- 검색창 -->
+            <br>
+            <form class="d-flex" method="POST" action="{% url 'stores:search' %}">
+                {% csrf_token %}
+                <input class="form-control me-1" name="store_search" type="search" placeholder="맛집 검색하기"
+                       aria-label="Search" style="border-radius: 104.375rem; width: 30rem;">
+                <a class="search-btn btn" type="submit"><i class="bi bi-search" style="color: white;"></i></a>
+            </form>
+            <br>
+
+            <!-- 유저이름 -->
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                       {% if user.is_authenticated %}
+                       {{ user }} 
+                       {% else %}
+                       로그인하기
+                       {% endif %}
+                    </a>
+                    <ul class="dropdown-menu" id="drop-menu" aria-labelledby="navbarDropdown" style="background-color: #f08724;">
+                        {% if user.is_authenticated %}
+                            <li><a class="nav-link ms-1" href="{% url 'accounts:mypage' user.pk %}">마이페이지</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="nav-link ms-1" href="{% url 'accounts:logout' %}">로그아웃하기</a>
+                        {% else %}
+                            <a class="nav-link ms-1" href="{% url 'accounts:signup' %}">회원가입하기</a>
+                            <a class="nav-link ms-1" href="{% url 'accounts:login' %}">로그인하기</a>
+                        {% endif %}
+
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+</nav>
+
+
+{% comment %} <nav class="nav navbar navbar-expand-lg shadow-sm bg-white" id="nav-sticky" style="height: 90px; z-index: 100;">
     <div class="container bg-white">
         <a href="{% url 'stores:index' %}">
         <img class="navbar-brand" src="{% static 'images/logo.png' %}" style="width: 100px;">
@@ -73,7 +131,7 @@
 
         </div>
     </div>
-</nav>
+</nav> {% endcomment %}
 
 <!-- <nav class="nav sticky-top navbar navbar-expand-lg shadow-sm bg-light">
     <div class="container">
@@ -108,7 +166,35 @@
 
 <div class="container my-5">
     {% block content %}{% endblock content %}
-    <script type="text/javascript" defer src="{% static 'javascript/style.js' %}"></script>
+    {% comment %} <script type="text/javascript" defer src="{% static 'javascript/style.js' %}"></script> {% endcomment %}
+    <script>
+      window.addEventListener("scroll", function () {
+        let nav = document.querySelector("nav");
+        nav.classList.toggle("sticky-top", this.window.scrollY > 0);
+        const navSticky = document.querySelector("#nav-sticky");
+        nav.classList.toggle("navbar-dark", this.window.scrollY === 0);
+        const dropMenu = document.querySelector("#drop-menu");
+        const search = document.querySelector("i");
+        const logo = document.querySelector("#logo");
+        const navCol = document.querySelector("#navbarSupportedContent");
+
+        if (window.scrollY > 0) {
+            navSticky.style.backgroundColor = "white";
+            navSticky.style.height = "60px";
+            dropMenu.style.backgroundColor = "white";
+            navCol.style.backgroundColor = "white";
+            search.style.color = "black";
+            logo.src = "{% static 'images/logo.png' %}";
+        } else {
+            navSticky.style.backgroundColor = "#f08724";
+            navSticky.style.height = "90px";
+            dropMenu.style.backgroundColor = "#f08724";
+            navCol.style.backgroundColor = "#f08724";
+            search.style.color = "white";
+            logo.src = "{% static 'images/logo_w.png' %}";
+        }
+    })
+    </script>
     <script src="https://cdn.lordicon.com/qjzruarw.js"></script>
     {% bootstrap_javascript %}
 </div>
