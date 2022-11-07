@@ -1,0 +1,150 @@
+{% load django_bootstrap5 %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DAPLE</title>
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"
+            integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+    {% bootstrap_css %}
+</head>
+
+<body class="position-relative bg-light">
+<!-- 네브바 -->
+<nav class="nav navbar navbar-dark navbar-expand-lg shadow-sm" id="nav-sticky" style="height: 90px; z-index: 100;">
+    <div class="container">
+        <a href="{% url 'stores:index' %}">
+
+            <img class="navbar-brand" src="{% static 'images/logo.png' %}" style="width: 100px;">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <!-- <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="{% url 'stores:index' %}">Store</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'reviews:index' %}">Review</a>
+                    </li> -->
+            </ul>
+
+            <!-- 검색창 -->
+            <br>
+            <form class="d-flex" method="POST" action="{% url 'stores:search' %}">
+                {% csrf_token %}
+                <input class="form-control me-1" name="store_search" type="search" placeholder="맛집 검색하기"
+                       aria-label="Search" style="border-radius: 104.375rem; width: 30rem;">
+                <a class="search-btn btn" type="submit"><i class="bi bi-search"></i></a>
+            </form>
+            <br>
+
+            <!-- 유저이름 -->
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        {{ user }}
+                    </a>
+                    <ul class="dropdown-menu" id="drop-menu" aria-labelledby="navbarDropdown">
+                        {% if user.is_authenticated %}
+                            <li><a class="nav-link ms-1" href="{% url 'accounts:mypage' user.pk %}">마이페이지</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="nav-link ms-1" href="{% url 'accounts:logout' %}">로그아웃하기</a>
+                        {% else %}
+                            <a class="nav-link ms-1" href="{% url 'accounts:signup' %}">회원가입하기</a>
+                            <a class="nav-link ms-1" href="{% url 'accounts:login' %}">로그인하기</a>
+                        {% endif %}
+
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+</nav>
+
+
+<!-- <a href="{% url 'stores:create' %}">생성</a>
+    <div class="row">
+        <div class="col-md-12">
+    </div> -->
+
+<div class="content position-absolute top-0">
+    <!-- 캐러쉘 -->
+    <div id="carouselExampleSlidesOnly" class="position-relative mb-5 carousel slide carousel-fade"
+         data-bs-ride="carousel">
+        <div class="car-overlay">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="{% static 'images/c1.jpg' %}" class="d-block w-100" alt="..."
+                         style="width: 100vw !important;">
+                </div>
+                <div class="carousel-item">
+                    <img src="{% static 'images/c2.jpg' %}" class="d-block w-100" alt="..."
+                         style="width: 100vw !important;">
+                </div>
+                <div class="carousel-item">
+                    <img src="{% static 'images/c3.jpg' %}" class="d-block w-100" alt="..."
+                         style="width: 100vw !important;">
+                </div>
+                <div class="carousel-item">
+                    <img src="{% static 'images/c4.jpg' %}" class="d-block w-100" alt="..."
+                         style="width: 100vw !important;">
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="main-title text-center">
+            <h1 class="mb-4">{{ user }}<span class="sub-title">님을 위한 맛집 추천</span></h1>
+            <!-- 내위치버튼1 -->
+            <button type="button" onclick="getCurrentPosBtn()" class="map-btn shadow btn btn-lg text-white"
+                    id="getMyPositionBtn"
+                    style="border-radius: 30px; width: 15rem; background-color: #f08724; font-size: 18px; font-weight: 500;">
+                내 위치 가져오기
+            </button>
+        </div>
+    </div>
+
+
+
+    <div class="container">
+        <!-- 본문 컨텐츠 -->
+        {% for item in results %}
+            <div class="card mb-3" style="max-width: 540px;">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <a href="{% url 'stores:detail' item.pk %}"><img src="{% static 'images/alt.png' %}"
+                                                                         class="img-fluid rounded-start" alt="..."></a>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title"><a href="{% url 'stores:detail' item.pk %}">{{ item.store_name }}</a>
+                            </h5>
+                            <p class="card-text">{{ item.store_address }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+
+    {% bootstrap_javascript %}
+</body>
+</html> 
