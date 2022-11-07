@@ -278,7 +278,7 @@ def name_sort(request):
     temp_results = Store.objects.all().filter(Q(store_name__contains=search)).order_by('store_name')
     results = []
     for result in temp_results:
-        results.append({'store_pk': result.pk, 'store_name': result.store_name, 'store_address': result.store_address})
+        results.append({'store_pk': result.pk, 'store_name': result.store_name, 'store_address': result.store_address, 'store_image': result.store_image})
     print(results)
 
     return JsonResponse({'results': results})
@@ -293,7 +293,7 @@ def like_sort(request):
 
     results = []
     for result in stores:
-        results.append({'store_pk': result.pk, 'store_name': result.store_name, 'store_address': result.store_address})
+        results.append({'store_pk': result.pk, 'store_name': result.store_name, 'store_address': result.store_address, 'store_image': result.store_image})
     print(results)
 
     return JsonResponse({'results': results})
@@ -306,7 +306,7 @@ def score_sort(request):
     temp_results = Store.objects.all().filter(Q(store_name__contains=search)).order_by('-store_grade')
     results = []
     for result in temp_results:
-        results.append({'store_pk': result.pk, 'store_name': result.store_name, 'store_address': result.store_address})
+        results.append({'store_pk': result.pk, 'store_name': result.store_name, 'store_address': result.store_address, 'store_image': result.store_image})
     print(results)
 
     return JsonResponse({'results': results})
@@ -320,7 +320,7 @@ def review_sort(request):
 
     results = []
     for result in stores:
-        results.append({'store_pk': result.pk, 'store_name': result.store_name, 'store_address': result.store_address})
+        results.append({'store_pk': result.pk, 'store_name': result.store_name, 'store_address': result.store_address, 'store_image': result.store_image})
     print(results)
 
     return JsonResponse({'results': results})

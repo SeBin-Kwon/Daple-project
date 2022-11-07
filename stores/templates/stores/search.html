@@ -121,40 +121,43 @@
         </div>
     </div> {% endcomment %}
 
-    <!-- search text -->
-    <h1 style="font-weight:lighter;"><span id="search" style="font-weight:bold;">{{ search }}</span>(으)로 검색한 결과입니다.</h1>
+    <div style="display:flex; flex-direction:column; justify-content:center; align-items:center;">
 
-    <!-- plus search -->
-    <div>
-        <button id='name-sort'>가게이름 순</button>
-        <button id='like-sort'>좋아요 많은 순</button>
-        <button id='score-sort'>평점 높은 순</button>
-        <button id='review-sort'>리뷰 많은 순</button>
-    </div>
+        <!-- search text -->
+        <h1 style="font-weight:lighter; padding:2rem;"><span id="search" style="font-weight:bold;">{{ search }}</span>(으)로 검색한 결과입니다.</h1>
 
-    
+        <!-- plus search -->
+        <div style="padding:0 0 2rem 0;">
+            <button type="btn" class="btn btn-outline-dark" id='name-sort'>가게이름 순</button>
+            <button type="btn" class="btn btn-outline-dark" id='like-sort'>좋아요 많은 순</button>
+            <button type="btn" class="btn btn-outline-dark" id='score-sort'>평점 높은 순</button>
+            <button type="btn" class="btn btn-outline-dark" id='review-sort'>리뷰 많은 순</button>
+        </div>
 
-    <div class="container" id="result-box">
-        <!-- 본문 컨텐츠 -->
-        {% for item in results %}
-            <div class="card mb-3" style="max-width: 540px;">
-                <div class="row g-0">
-                    <div class="col-md-4">
-                        <a href="{% url 'stores:detail' item.pk %}"><img src="{{ item.store_image }}"
-                                                                         class="img-fluid rounded-start" alt="..."></a>
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card-body">
-                            <h5 class="card-title"><a href="{% url 'stores:detail' item.pk %}">{{ item.store_name }}</a>
-                            </h5>
-                            <p class="card-text">{{ item.store_address }}</p>
+        
+
+        <div class="container" id="result-box">
+            <!-- 본문 컨텐츠 -->
+            {% for item in results %}
+                <div class="card m-auto mb-3" style="max-width: 540px;">
+                    <div class="row g-0">
+                        <div class="col-md-4">
+                            <a href="{% url 'stores:detail' item.pk %}"><img src="{{ item.store_image }}"
+                                                                            class="img-fluid rounded-start" alt="..."></a>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title"><a href="{% url 'stores:detail' item.pk %}">{{ item.store_name }}</a>
+                                </h5>
+                                <p class="card-text">{{ item.store_address }}</p>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        {% endfor %}
+            {% endfor %}
+        </div>
+    {% comment %} </div> {% endcomment %}
     </div>
-{% comment %} </div> {% endcomment %}
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
@@ -182,10 +185,10 @@
 
                 resultBox.insertAdjacentHTML('beforeend', `
 
-                    <div class="card mb-3" style="max-width: 540px;">
+                    <div class="card m-auto mb-3" style="max-width: 540px;">
                         <div class="row g-0">
                             <div class="col-md-4">
-                                <a href="detail/${response.data.results[i].store_pk}/"><img src="{% static 'images/alt.png' %}"
+                                <a href="detail/${response.data.results[i].store_pk}/"><img src="${response.data.results[i].store_image}"
                                                                                 class="img-fluid rounded-start" alt="..."></a>
                             </div>
                             <div class="col-md-8">
@@ -221,10 +224,10 @@
 
                 resultBox.insertAdjacentHTML('beforeend', `
 
-                    <div class="card mb-3" style="max-width: 540px;">
+                    <div class="card m-auto mb-3" style="max-width: 540px;">
                         <div class="row g-0">
                             <div class="col-md-4">
-                                <a href="detail/${response.data.results[i].store_pk}/"><img src="{% static 'images/alt.png' %}"
+                                <a href="detail/${response.data.results[i].store_pk}/"><img src="${response.data.results[i].store_image}"
                                                                                 class="img-fluid rounded-start" alt="..."></a>
                             </div>
                             <div class="col-md-8">
@@ -260,10 +263,10 @@
 
                 resultBox.insertAdjacentHTML('beforeend', `
 
-                    <div class="card mb-3" style="max-width: 540px;">
+                    <div class="card m-auto mb-3" style="max-width: 540px;">
                         <div class="row g-0">
                             <div class="col-md-4">
-                                <a href="detail/${response.data.results[i].store_pk}/"><img src="{% static 'images/alt.png' %}"
+                                <a href="detail/${response.data.results[i].store_pk}/"><img src="${response.data.results[i].store_image}"
                                                                                 class="img-fluid rounded-start" alt="..."></a>
                             </div>
                             <div class="col-md-8">
@@ -299,10 +302,10 @@
 
                 resultBox.insertAdjacentHTML('beforeend', `
 
-                    <div class="card mb-3" style="max-width: 540px;">
+                    <div class="card m-auto mb-3" style="max-width: 540px;">
                         <div class="row g-0">
                             <div class="col-md-4">
-                                <a href="detail/${response.data.results[i].store_pk}/"><img src="{% static 'images/alt.png' %}"
+                                <a href="detail/${response.data.results[i].store_pk}/"><img src="${response.data.results[i].store_image}"
                                                                                 class="img-fluid rounded-start" alt="..."></a>
                             </div>
                             <div class="col-md-8">
