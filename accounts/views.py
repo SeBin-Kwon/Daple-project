@@ -11,32 +11,40 @@ from django.contrib.auth import update_session_auth_hash
 from django.http import JsonResponse
 import json
 from django.views.decorators.csrf import csrf_exempt
-from stores.models import Thematag, Foodtag
+from stores.models import Thematag, Foodtag, Store
 from reviews.models import Review, Comment
 
 # Create your views here.
 def index(request):
-    Thematag.objects.create(thematag_name='가성비좋은')
-    Thematag.objects.create(thematag_name='분위기좋은')
-    Thematag.objects.create(thematag_name='푸짐한')
-    Thematag.objects.create(thematag_name='격식있는')
-    Thematag.objects.create(thematag_name='고급스러운')
-    Thematag.objects.create(thematag_name='서민적인')
-    Thematag.objects.create(thematag_name='시끌벅적한')
-    Thematag.objects.create(thematag_name='조용한')
-    Thematag.objects.create(thematag_name='깔끔한')
-    Thematag.objects.create(thematag_name='이색적인')
-    Thematag.objects.create(thematag_name='뷰가좋은')
-    Thematag.objects.create(thematag_name='예쁜')
-    Thematag.objects.create(thematag_name='지역주민이찾는')
+    # Thematag.objects.create(thematag_name='가성비좋은')
+    # Thematag.objects.create(thematag_name='분위기좋은')
+    # Thematag.objects.create(thematag_name='푸짐한')
+    # Thematag.objects.create(thematag_name='격식있는')
+    # Thematag.objects.create(thematag_name='고급스러운')
+    # Thematag.objects.create(thematag_name='서민적인')
+    # Thematag.objects.create(thematag_name='시끌벅적한')
+    # Thematag.objects.create(thematag_name='조용한')
+    # Thematag.objects.create(thematag_name='깔끔한')
+    # Thematag.objects.create(thematag_name='이색적인')
+    # Thematag.objects.create(thematag_name='뷰가좋은')
+    # Thematag.objects.create(thematag_name='예쁜')
+    # Thematag.objects.create(thematag_name='지역주민이찾는')
 
-    Foodtag.objects.create(foodtag_name='한식')
-    Foodtag.objects.create(foodtag_name='중식')
-    Foodtag.objects.create(foodtag_name='양식')
-    Foodtag.objects.create(foodtag_name='일식')
-    Foodtag.objects.create(foodtag_name='아시안')
-    Foodtag.objects.create(foodtag_name='패스트푸드')
-
+    # Foodtag.objects.create(foodtag_name='한식')
+    # Foodtag.objects.create(foodtag_name='중식')
+    # Foodtag.objects.create(foodtag_name='양식')
+    # Foodtag.objects.create(foodtag_name='일식')
+    # Foodtag.objects.create(foodtag_name='아시안')
+    # Foodtag.objects.create(foodtag_name='패스트푸드')
+    list_ = Store.objects.all()[:22]
+    for i in list_:
+        i.thematag_id = Thematag.objects.get(id=2)
+        i.save()
+    
+    list_ = Store.objects.all()[22:]
+    for i in list_:
+        i.thematag_id = Thematag.objects.get(id=9)
+        i.save()
     return render(request, 'accounts/index.html')
 
 def signup(request):

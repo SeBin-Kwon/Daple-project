@@ -42,9 +42,15 @@ def index(request):
         data_all = Store.objects.all()
         paginator = Paginator(data_all, 20)
         posts = paginator.get_page(page)
+
+        test1 = Store.objects.filter(thematag_id=2)
+        test2 = Store.objects.filter(thematag_id=9)
+
         context = {
             'stores': data,
-            'posts': posts
+            'posts': posts,
+            'test1': test1,
+            'test2': test2,
         }
 
     return render(request, 'stores/index.html', context)

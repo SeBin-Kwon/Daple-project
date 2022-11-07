@@ -31,15 +31,20 @@
     <!-- <a class="btn btn-primary" href="{% url 'accounts:logout' %}">로그아웃하기</a> -->
     
     <!-- 새로운 kakao -->
-    <a class="mb-2" id="kakao-login-btn"></a>
+    <div class="relative">
+      <a class="mb-2 btn btn-warning" id="kakao-login-btn"></a>
+      <span class="logintext position-absolute"><i class="bi bi-chat-fill"></i> &nbsp;카카오톡 로그인</span>
+    </div>
     <!-- <button class="api-btn" onclick="unlinkApp()">앱 탈퇴하기</button>
       <div id="result"></div> -->
       
       <!-- 새로운 naver -->
       
       <!-- 네이버아이디로로그인 버튼 노출 영역 -->
-      <div class="mb-2" id="naver_id_login"></div>
-
+      <div class="relative">
+        <div class="mb-2 btn btn-success" id="naver_id_login"></div>
+        <span class="logintext position-absolute text-white"><span class="fw-bold">N</span> &nbsp;네이버 로그인</span>
+      </div>
       <a class="btn btn-outline-secondary" href="{% url 'stores:index' %}">뒤로가기</a>
       <!-- //네이버아이디로로그인 버튼 노출 영역 -->
       <script type="text/javascript">
