@@ -81,6 +81,15 @@
     </div>
   </div>
 
+  <div id="matzip-btn" style="cursor : pointer;" onclick="matzipToggle()">찜한 맛집 목록 열기</div>
+  <br>
+  <div id="matzip-list" class="display-none">
+    {% for i in stores_list %}
+    <a href="{% url 'stores:detail' i.store_pk %}">{{ i.store_name }}</a>
+    <br>
+    {% endfor %}
+  </div>
+
   
   {% if request.user.pk == user.pk%}
   <div class="d-flex mt-4">
@@ -128,6 +137,19 @@
                   console.log(response.data.followers[i].f_username)
                 }
             })
+    }
+
+    const matzipToggle = function (e) {
+      const matzipList = document.querySelector('#matzip-list')
+      const matzipBtn = document.querySelector('#matzip-btn')
+      if(matzipList.classList.contains('display-none')){
+        matzipList.classList.remove('display-none')
+        matzipBtn.innerText = "맛집 리스트 닫기"
+      }else{
+        matzipList.classList.add('display-none')
+        matzipBtn.innerText = "맛집 리스트 열기"
+      }
+      
     }
 </script>
 {% endblock %}

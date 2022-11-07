@@ -90,13 +90,24 @@ def mypage(request, pk):
 
     reviews = Review.objects.filter(user=user)
     comments = Comment.objects.filter(user=user)
-    
+    stores = Store.objects.all()
+    stores_list = []
+
+    for store in stores:
+        temp=store.store_liked.all()
+        for t in temp:
+            if t.pk == pk:
+                stores_list.append({'store_name':store.store_name, 'store_pk':store.pk})
+        # if store.store_liked.all().user.pk  == pk:
+        #     stores_list.append({'store_name':store.store_name, 'store_pk':store.pk})
+
     context = {
         'user': user,
         'reviews': reviews,
         'comments': comments,
         'followings_list': followings_list,
         'followers_list': followers_list,
+        'stores_list':stores_list
     }
     return render(request, 'accounts/mypage.html', context)
 
