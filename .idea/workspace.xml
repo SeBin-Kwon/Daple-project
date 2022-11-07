@@ -3,7 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="4641825b-3417-4d9d-87b4-84b135cdd87d" name="변경" comment="bakcup">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accounts/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/accounts/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/accounts/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/accounts/migrations/0001_initial.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stores/templates/stores/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/stores/templates/stores/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stores/templates/stores/search.html" beforeDir="false" afterPath="$PROJECT_DIR$/stores/templates/stores/search.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/stores/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/stores/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -117,7 +119,7 @@
       <workItem from="1667694915391" duration="5114000" />
       <workItem from="1667815019408" duration="291000" />
       <workItem from="1667816266478" duration="12000" />
-      <workItem from="1667816301171" duration="4186000" />
+      <workItem from="1667816301171" duration="7406000" />
     </task>
     <task id="LOCAL-00001" summary="map api complete">
       <created>1667465408051</created>
