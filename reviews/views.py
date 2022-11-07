@@ -29,6 +29,19 @@ def create(request, pk):
             review.user = request.user
             review.store = store
             review_form.save()
+
+            grades = Review.objects.filter(store_id=pk)
+            grade_sum = 0
+            for i in range(len(grades)):
+                grade_sum += grades[i].review_rating
+
+            grade_avg = round(grade_sum / len(grades), 1)
+            store.store_grade = grade_avg
+            store.save()
+
+            store.review_count = grades.count()
+            store.save()
+
             return redirect('stores:detail', pk)
     else:
         review_form = ReviewForm()

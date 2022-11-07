@@ -20,18 +20,8 @@ from django.core.paginator import Paginator
 from bs4 import BeautifulSoup
 import re
 from user_agent import generate_user_agent,generate_navigator
+from django.db.models import Count
 from accounts.models import User
-
-def urlmake(url):
-    ua = generate_user_agent(device_type='desktop')
-
-    headers = {
-        'User-Agent': ua}
-    res = requests.get(url,headers=headers)
-    soup = BeautifulSoup(res.text,"lxml")
-
-    src_url = "https://place.map.kakao.com/" + soup.iframe["src"]
-
 
 def index(request):
 
@@ -53,7 +43,6 @@ def index(request):
                 urlstore = storename.replace(' ', '%20')
 
                 url = base_url + urlstore
-                print(url)
 
                 ua=generate_user_agent(device_type='desktop')
                 headers = {
@@ -89,7 +78,7 @@ def index(request):
 
         page = request.GET.get("page")
         data_all = Store.objects.all()
-        paginator = Paginator(data_all, 6)
+        paginator = Paginator(data_all, 20)
         posts = paginator.get_page(page)
         context = {
             'stores': data,
@@ -267,3 +256,54 @@ def search(request):
             'results': results
         }
         return render(request, 'stores/search.html', context)
+
+def name_sort(request):
+    jsonObject = json.loads(request.body)
+    search = jsonObject.get('search')
+    
+    temp_results = Store.objects.all().filter(Q(store_name__contains=search)).order_by('store_name')
+    results = []
+    for result in temp_results:
+        results.append({'store_pk': result.pk, 'store_name': result.store_name, 'store_address': result.store_address})
+    print(results)
+
+    return JsonResponse({'results': results})
+
+def like_sort(request):
+    jsonObject = json.loads(request.body)
+    search = jsonObject.get('search')
+
+    stores = Store.objects.all().filter(Q(store_name__contains=search))
+    stores = stores.annotate(like_count=Count('store_liked')).order_by('-like_count')
+
+    results = []
+    for result in stores:
+        results.append({'store_pk': result.pk, 'store_name': result.store_name, 'store_address': result.store_address})
+    print(results)
+
+    return JsonResponse({'results': results})
+
+def score_sort(request):
+    jsonObject = json.loads(request.body)
+    search = jsonObject.get('search')
+    
+    temp_results = Store.objects.all().filter(Q(store_name__contains=search)).order_by('-store_grade')
+    results = []
+    for result in temp_results:
+        results.append({'store_pk': result.pk, 'store_name': result.store_name, 'store_address': result.store_address})
+    print(results)
+
+    return JsonResponse({'results': results})
+
+def review_sort(request):
+    jsonObject = json.loads(request.body)
+    search = jsonObject.get('search')
+
+    stores = Store.objects.all().filter(Q(store_name__contains=search)).order_by('-review_count')
+
+    results = []
+    for result in stores:
+        results.append({'store_pk': result.pk, 'store_name': result.store_name, 'store_address': result.store_address})
+    print(results)
+
+    return JsonResponse({'results': results})

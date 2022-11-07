@@ -27,32 +27,34 @@
 <body class="position-relative bg-light h-100" >
 
 <!-- 네브바 -->
-<!-- <nav class="nav navbar navbar-dark navbar-expand-lg shadow-sm" id="nav-sticky" style="height: 90px; z-index: 100;">
+<nav class="nav navbar navbar-dark navbar-expand-lg shadow-sm" id="nav-sticky" style="height: 90px; z-index: 100; background-color: #f08724;">
     <div class="container">
         <a href="{% url 'stores:index' %}">
 
-            <img class="navbar-brand" src="{% static 'images/logo.png' %}" style="width: 100px;">
+            <img id="logo" class="navbar-brand" src="{% static 'images/logo_w.png' %}" style="width: 100px;">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="collapse navbar-collapse px-3" id="navbarSupportedContent" style="background-color: #f08724;">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            </ul> -->
+            </ul> 
 
-<!-- 검색창 -->
-<!-- <br>
+            <!-- 검색창 -->
+            <br>
+
             <form class="d-flex" method="POST" action="{% url 'stores:search' %}">
                 {% csrf_token %}
                 <input class="form-control me-1" name="store_search" type="search" placeholder="맛집 검색하기"
                        aria-label="Search" style="border-radius: 104.375rem; width: 30rem;">
                 <a class="search-btn btn" type="submit"><i class="bi bi-search" style="color: white;"></i></a>
             </form>
-            <br> -->
+            <br>
 
-<!-- 유저이름 -->
-<!-- <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+            <!-- 유저이름 -->
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                        data-bs-toggle="dropdown" aria-expanded="false">
@@ -62,7 +64,7 @@
                        로그인하기
                        {% endif %}
                     </a>
-                    <ul class="dropdown-menu" id="drop-menu" aria-labelledby="navbarDropdown" style="background-color: rgba(0,0,0,0);">
+                    <ul class="dropdown-menu" id="drop-menu" aria-labelledby="navbarDropdown" style="background-color: #f08724;">
                         {% if user.is_authenticated %}
                             <li><a class="nav-link ms-1" href="{% url 'accounts:mypage' user.pk %}">마이페이지</a></li>
                             <li>
@@ -81,9 +83,9 @@
 
         </div>
     </div>
-</nav> -->
+</nav>
 
-<nav class="nav navbar navbar-expand-lg shadow-sm bg-white" id="nav-sticky" style="height: 90px; z-index: 100;">
+{% comment %} <nav class="nav navbar navbar-expand-lg shadow-sm bg-white" id="nav-sticky" style="height: 90px; z-index: 100;">
     <div class="container bg-white">
         <a href="{% url 'stores:index' %}">
             <img class="navbar-brand" src="{% static 'images/logo.png' %}" style="width: 100px;">
@@ -143,7 +145,7 @@
 
         </div>
     </div>
-</nav>
+</nav> {% endcomment %}
 
 
 <!-- <a href="{% url 'stores:create' %}">생성</a>
@@ -152,46 +154,79 @@
     </div> -->
 
 <!-- <div class="content position-absolute top-0"> -->
-<!-- 캐러쉘 -->
-<div id="carouselExampleSlidesOnly" class="position-relative mb-5 carousel slide carousel-fade"
-     data-bs-ride="carousel">
-    <div class="main-title text-center" style="z-index:4;">
-        <h1 class="mb-4">{{ user }}<span class="sub-title">님을 위한 맛집 추천</span></h1>
-        <!-- 내위치버튼1 -->
-        <button type="button" onclick="getCurrentPosBtn()" class="map-btn shadow btn btn-lg text-white"
-                id="getMyPositionBtn"
-                style="border-radius: 30px; width: 15rem; background-color: #f08724; font-size: 18px; font-weight: 500;">
-            내 주변 맛집 찾기
-        </button>
-    </div>
-    <div class="car-overlay">
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img src="{% static 'images/c1.jpg' %}" class="d-block w-100" alt="..."
-                     style="width: 100vw !important;">
-            </div>
-            <div class="carousel-item">
-                <img src="{% static 'images/c2.jpg' %}" class="d-block w-100" alt="..."
-                     style="width: 100vw !important;">
-            </div>
-            <div class="carousel-item">
-                <img src="{% static 'images/c3.jpg' %}" class="d-block w-100" alt="..."
-                     style="width: 100vw !important;">
-            </div>
-            <div class="carousel-item">
-                <img src="{% static 'images/c4.jpg' %}" class="d-block w-100" alt="..."
-                     style="width: 100vw !important;">
 
+    <!-- 캐러쉘 -->
+    <div id="carouselExampleSlidesOnly" class="position-relative mb-5 carousel slide carousel-fade"
+         data-bs-ride="carousel">
+        <div class="main-title text-center" style="z-index:4;">
+            <h1 class="mb-4">{{ user }}<span class="sub-title">님을 위한 맛집 추천</span></h1>
+            <!-- 내위치버튼1 -->
+            <button type="button" onclick="getCurrentPosBtn()" class="btn-start m-auto" id="getMyPositionBtn"><span class="cover"></span>내 주변 맛집 찾기</button>
+        </div>
+        <div class="car-overlay">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="{% static 'images/c1.jpg' %}" class="d-block w-100" alt="..."
+                         style="width: 100vw !important;">
+                </div>
+                <div class="carousel-item">
+                    <img src="{% static 'images/c2.jpg' %}" class="d-block w-100" alt="..."
+                         style="width: 100vw !important;">
+                </div>
+                <div class="carousel-item">
+                    <img src="{% static 'images/c3.jpg' %}" class="d-block w-100" alt="..."
+                         style="width: 100vw !important;">
+                </div>
+                <div class="carousel-item">
+                    <img src="{% static 'images/c4.jpg' %}" class="d-block w-100" alt="..."
+                         style="width: 100vw !important;">
+
+                </div>
             </div>
+
+
         </div>
 
-
     </div>
-</div>
 
-<!-- 본문 컨텐츠 -->
+    {% comment %} <div class="row">
+        <!-- Swiper -->
+        <div class="swiper-container">
+          <div class="swiper-wrapper d-flex justify-content-center">
+            {% for item in stores %}
+            <div class="swiper-slide">
+              <div class="row">
+                <div class="p-0 col col-lg-4">
+                  <div class="card">
+                    <div class="card-img">
+                      {% if restaurant.image1 %}
+                      <img src="{{ restaurant.image1.url }}" style="height: 200px;" class="card-img-top">
+                      {% else %}
+                      <img src="https://dummyimage.com/310x310/000000/c4c4c4" style="height: 200px;" class="card-img-top">
+                      {% endif %}
+                    </div>
+                    <div class="card-body">
+                      <h5>{{ item.store_address }}</h5>
+                      <h4 class="pt-1 pb-2">{{ item.store_name }}</h4>         
+                      <a href="{% url 'stores:detail' item.pk %}" type= "button" class="btn btn-outline-danger btn-block btn-sm">더보기</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+          <div class="swiper-pagination"></div>
+          <div class="swiper-button-next"></div>
+          <div class="swiper-button-prev"></div>
+        </div>
+      </div>  {% endcomment %}
 
-<!-- <div class="container getMyPositionBtn">
+
+    <!-- 본문 컨텐츠 -->
+
+{% comment %} <div class="container">
+
         {% for item in stores %}
             <div class="card mb-3" style="max-width: 540px;">
                 <div class="row g-0">
@@ -208,19 +243,20 @@
                 </div>
             </div>
         {% endfor %}
-    </div> -->
+    </div>  {% endcomment %}
 
 <!-- 지도 -->
-<div class="map-box">
+<div class="map-box getMyPositionBtn">
     <h2 class="fw-light mb-4">나의 현재 위치</h2>
     <div class="m-auto" id="map" style="width:500px;height:400px;"></div>
 </div>
 
+{% comment %} 
+    <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            
+            <div class="container getMyPositionBtn mt-5">
 
-<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-    <div class="carousel-inner">
-
-        <div class="container getMyPositionBtn mt-5">
             {% for item in posts.object_list %}
                 <div class="carousel-item active">
                     <a class="text-decoration-none text-black" href="{% url 'stores:detail' item.pk %}">
@@ -235,37 +271,40 @@
                 </div>
             {% endfor %}
         </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div> {% endcomment %}
 
+{% comment %} 가로 스크롤 {% endcomment %}
+<div>
+    <div class="wrap-vertical mt-5"  style="margin-bottom: 4rem;">
+        <h2 class="fw-light mb-2 pt-3 ps-4">나의 주변 맛집들</h2>
+        <div class="container getMyPositionBtn pt-4 pb-3 d-flex">
+        {% for item in posts.object_list %}
+        <div class="store-card col-3 mx-2">
+                <a class="text-decoration-none text-black" href="{% url 'stores:detail' item.pk %}">
+            <div class="card mb-3">
+                <img src="{% static 'images/alt.png' %}" class="card-img-top" alt="...">
+                <div class="card-body">
+                <h5 class="card-title">{{ item.store_name }}</h5>
+                <p class="card-text"><i class="bi bi-geo-alt"></i> {{ item.store_address }}</p>
+                </div>
+
+            </div>
+        </a>
+            </div>
+            {% endfor %}
+        </div>
     </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-    </button>
 </div>
 
-
-<!-- <div class="container getMyPositionBtn mt-5">
-        <div class="row">
-    {% for item in posts.object_list %}
-    <div class="col-4">
-            <a class="text-decoration-none text-black" href="{% url 'stores:detail' item.pk %}">
-        <div class="card mb-3">
-            <img src="{% static 'images/alt.png' %}" class="card-img-top" alt="...">
-            <div class="card-body">
-            <h5 class="card-title">{{ item.store_name }}</h5>
-            <p class="card-text">{{ item.store_grade }}</p>
-            </div>
-        </div>
-    </a>
-        </div>
-        {% endfor %}
-    </div>
-    </div> -->
-
+      {% comment %} 그냥 카드들 {% endcomment %}
 
 <!-- <div class="container getMyPositionBtn mt-5">
     {% for item in posts.object_list %}
@@ -286,33 +325,69 @@
     {% endfor %}
 </div> -->
 
+{% comment %} <div class="row">
+    <!-- Swiper -->
+    <div class="swiper-container">
+      <div class="swiper-wrapper d-flex justify-content-center">
+        {% for item in posts.object_list %}
+        <div class="swiper-slide">
+          <div class="row">
+            <div class="p-0 col col-lg-4">
+              <div class="card">
+                <div class="card-img">
+                  {% if restaurant.image1 %}
+                  <img src="{{ restaurant.image1.url }}" style="height: 200px;" class="card-img-top">
+                  {% else %}
+                  <img src="https://dummyimage.com/310x310/000000/c4c4c4" style="height: 200px;" class="card-img-top">
+                  {% endif %}
+                </div>
+                <div class="card-body">
+                  <h5>{{ item.store_address }}</h5>
+                  <h4 class="pt-1 pb-2">{{ item.store_name }}</h4>         
+                  <a href="{% url 'stores:detail' item.pk %}" type= "button" class="btn btn-outline-danger btn-block btn-sm">더보기</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      <div class="swiper-pagination"></div>
+      <div class="swiper-button-next"></div>
+      <div class="swiper-button-prev"></div>
+    </div>
+  </div> {% endcomment %}
+
+
 <!-- 페이지네이션 -->
-<div class="d-flex justify-content-center">
-    <ul class="pagination mb-3" style="text-align: center">
-        {% if posts.has_previous %}
-            <li class="page-item">
-                <a class="page-link" href="?page={{ posts.previous_page_number }}">이전</a>
-            </li>
-        {% endif %} {% for p in posts.paginator.page_range %}
-        <span></span
-        ><span></span
-        ><span></span>
-        {% if p == posts.number %}
-            <li class="page-item active" aria-current="page">
-                <a class="page-link" href="?&page={{ page_number }}">{{ p }}</a>
-            </li>
-        {% else %}
-            <li class="page-item">
-                <a class="page-link" href="?page={{ p }}" class="mx-1">{{ p }}</a>
-            </li>
-        {% endif %}{% endfor %}{% if posts.has_next %}
-        <li class="page-item">
-            <a class="page-link" href="?page={{ posts.next_page_number }}">다음</a>
-        </li>
-    {% endif %}
-    </ul>
-</div>
-<!-- </div> -->
+
+    <div class="d-flex justify-content-center">
+        <ul class="pagination mb-3" style="text-align: center">
+          {% if posts.has_previous %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{posts.previous_page_number}}">이전</a>
+          </li>
+          {% endif %} {% for p in posts.paginator.page_range %}
+          <span></span
+          ><span></span
+          ><span></span>
+          {% if p == posts.number %}
+          <li class="page-item active" aria-current="page">
+            <a class="page-link" href="?&page={{ page_number }}">{{p}}</a>
+          </li>
+          {% else %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{p}}" class="mx-1">{{p}}</a>
+          </li>
+          {% endif %}{% endfor %}{% if posts.has_next %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{posts.next_page_number}}">다음</a>
+          </li>
+          {% endif %}
+        </ul>
+      </div> 
+    <!-- </div> -->
+
 
 
 <!-- script -->
@@ -510,31 +585,38 @@
 
     }
 </script>
-<script type="text/javascript" defer src="{% static 'javascript/style.js' %}"></script>
-<script>
-    //    window.addEventListener("scroll", function () {
-    //     let nav = document.querySelector("nav");
-    //     nav.classList.toggle("sticky-top", this.window.scrollY > 0);
-    //     const navSticky = document.querySelector("#nav-sticky");
-    //     nav.classList.toggle("navbar-dark", this.window.scrollY === 0);
-    //     const dropMenu = document.querySelector("#drop-menu");
-    //     const search = document.querySelector("i");
-    //     // dropMenu.classList.toggle("bg-dark", this.window.scrollY === 0);
+    {% comment %} <script type="text/javascript" defer src="{% static 'javascript/style.js' %}"></script> {% endcomment %}
+    <script>
+       window.addEventListener("scroll", function () {
+        let nav = document.querySelector("nav");
+        nav.classList.toggle("sticky-top", this.window.scrollY > 0);
+        const navSticky = document.querySelector("#nav-sticky");
+        nav.classList.toggle("navbar-dark", this.window.scrollY === 0);
+        const dropMenu = document.querySelector("#drop-menu");
+        const search = document.querySelector("i");
+        const logo = document.querySelector("#logo");
+        const navCol = document.querySelector("#navbarSupportedContent");
 
-    //     if (window.scrollY > 0) {
-    //         navSticky.style.backgroundColor = "white";
-    //         navSticky.style.height = "60px";
-    //         dropMenu.style.backgroundColor = "white";
-    //         search.style.color = "black"
-    //     } else {
-    //         navSticky.style.backgroundColor = "rgba(0,0,0,0)";
-    //         navSticky.style.height = "90px";
-    //         dropMenu.style.backgroundColor = "rgba(0,0,0,0)";
-    //         search.style.color = "white"
-    //     }
-    // })
-</script>
-<script src="https://cdn.lordicon.com/qjzruarw.js"></script>
-{% bootstrap_javascript %}
+        if (window.scrollY > 0) {
+            navSticky.style.backgroundColor = "white";
+            navSticky.style.height = "60px";
+            dropMenu.style.backgroundColor = "white";
+            navCol.style.backgroundColor = "white";
+            search.style.color = "black";
+            logo.src = "{% static 'images/logo.png' %}";
+        } else {
+            navSticky.style.backgroundColor = "#f08724";
+            navSticky.style.height = "90px";
+            dropMenu.style.backgroundColor = "#f08724";
+            navCol.style.backgroundColor = "#f08724";
+            search.style.color = "white";
+            logo.src = "{% static 'images/logo_w.png' %}";
+        }
+    })
+    </script>
+    
+    <script src="https://cdn.lordicon.com/qjzruarw.js"></script>
+    {% bootstrap_javascript %}
+
 </body>
 </html> 

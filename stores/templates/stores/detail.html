@@ -14,22 +14,25 @@
     </div>
     <div class="div-cont d-flex flex-column bg-white py-4" style="padding:0 5rem;">
         <p class="fs-1" style="font-weight: 500;">{{ store_data.store_name }}</p>
-        <p> {{ store_data.store_address }}</p>
-        <br>
-        가게번호 : {{ store_data.store_number }}
-        <br>
+        <p><i class="bi bi-geo-alt"></i> {{ store_data.store_address }}</p>
+        <p><i class="bi bi-telephone"></i> {{ store_data.store_number }}</p>
         <div>{{ people_num }}명의 평가 {{ avg_rating }}점 <span id="store-star" class="star-rate"><i
                 style="width:{{ avg_rating|mul:20 }};"></i></span></div>
         <br>
-        <div class="d-flex flex-column align-items-center">
+        <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex">
             {% if request.user.is_authenticated %}
                 {% if request.user in store_data.store_liked.all %}
-                    <i id="store-like-btn" data-store-id="{{ store_data.pk }}"
+                <div class="like">
+                    <span>좋아요 </span><i id="store-like-btn" data-store-id="{{ store_data.pk }}"
                        class="text-danger bi bi-heart-fill"
                        onclick="storeLike(this.id)"> {{ store_data.store_liked.count }}</i>
+                    </div>
                 {% else %}
-                    <i id="store-like-btn" data-store-id="{{ store_data.pk }}" class="text-danger bi bi-heart"
+                <div class="like">
+                <span>좋아요 </span><i id="store-like-btn" data-store-id="{{ store_data.pk }}" class="text-danger bi bi-heart"
                        onclick="storeLike(this.id)"> {{ store_data.store_liked.count }}</i>
+                </div>
                 {% endif %}
                 <br>
                 {% if is_write == False %}
@@ -42,30 +45,31 @@
                 </a>
                 {% endif %}
             {% endif %}
+            </div>
+            <div>
+                <span class="sociallink ml-1">
+                    <a href="javascript:sendLinkFacebook()" title="페이스북으로 공유">
+                      <img src="https://windybay.net/static/images/facebook.png" width=36 alt="Facebook">
+                    </a>
+                  </span>
+                  <span class="sociallink ml-1">
+                    <a href="javascript:sendLinkTwitter()" title="트위터로 공유">
+                      <img src="https://windybay.net/static/images/twitter.png" width=36 alt="Twitter">
+                    </a>
+                  </span>
+                  <span class="sociallink ml-1">
+                    <a href="javascript:sendLinkNaver()" title="네이버로 공유">
+                      <img src="https://windybay.net/static/images/naver.png" width=36 alt="Naver">
+                    </a>
+                  </span>
+                  <span class="sociallink ml-1">
+                    <a href="javascript:sendLinkKakao()" id="kakao-link-btn" title="카카오톡으로 공유">
+                      <img src="https://windybay.net/static/images//kakaotalk.png" width=36 alt="Kakaotalk">
+                    </a>
+                  </span>
+            </div>
         </div>
-        <br>
-        <div>
-            <span class="sociallink ml-1">
-                <a href="javascript:sendLinkFacebook()" title="페이스북으로 공유">
-                  <img src="https://windybay.net/static/images/facebook.png" width=36 alt="Facebook">
-                </a>
-              </span>
-              <span class="sociallink ml-1">
-                <a href="javascript:sendLinkTwitter()" title="트위터로 공유">
-                  <img src="https://windybay.net/static/images/twitter.png" width=36 alt="Twitter">
-                </a>
-              </span>
-              <span class="sociallink ml-1">
-                <a href="javascript:sendLinkNaver()" title="네이버로 공유">
-                  <img src="https://windybay.net/static/images/naver.png" width=36 alt="Naver">
-                </a>
-              </span>
-              <span class="sociallink ml-1">
-                <a href="javascript:sendLinkKakao()" id="kakao-link-btn" title="카카오톡으로 공유">
-                  <img src="https://windybay.net/static/images//kakaotalk.png" width=36 alt="Kakaotalk">
-                </a>
-              </span>
-        </div>
+        
         <br>
         <h2>
             {{ reviews.count }} 건의 방문자 평가
