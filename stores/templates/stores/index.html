@@ -262,9 +262,8 @@
                 colors="primary:#e86830"
                 style="width:50px;height:50px;">
         </lord-icon>
-        <div class="m-auto" id="map" style="width:500px;height:400px;"></div>
     </div>
-    <div class="m-auto" id="map" style="width:500px;height:400px;"></div>
+        <div class="m-auto" id="map" style="width:500px;height:400px;"></div>
 </div>
 
     {% comment %} <div class="map-box getMyPositionBtn">
@@ -302,7 +301,6 @@
         </button>
       </div> {% endcomment %}
 
-<<<<<<< HEAD
 {% comment %} 가로 스크롤 {% endcomment %}
 <div>
     <div class="col-12 col-md-10 col-lg-8 wrap-vertical mt-5"  style="margin-bottom: 4rem;">
@@ -313,39 +311,15 @@
                 <a class="text-decoration-none text-black" href="{% url 'stores:detail' item.pk %}">
             <div class="card mb-3">
                 <div class="wrapper position-relative">
-                    <img src="{{ item.store_image.url }}" class="card-img-top" alt="...">
+                    <img src="{{ item.store_image}}" class="card-img-top" alt="...">
                     <div class="overlay">
-                        <div class="content">{{ item.store_name }}</div>
-                        {% comment %} <div><i
-                            style="width:{{ item.review_rating|mul:20 }}%;"></i></div> {% endcomment %}
+                        <div class="content">{{ item.store_name }} <i class="bi bi-star-fill"></i>{{ item.store_grade }}</div>
                     </div>
                 </div>
                 <div class="card-body">
                 <h5 class="card-title" style="overflow: hidden;">{{ item.store_name }}</h5>
-                <p class="card-text" style="font-size: 13px;"><i class="bi bi-geo-alt"></i> {{ item.store_address }}</p>
+                <p class="card-text" style="font-size: 13px; overflow:hidden;"><i class="bi bi-geo-alt"></i> {{ item.store_address }}</p>
                 </div>
-=======
-    {% comment %} 가로 스크롤 {% endcomment %}
-    <div>
-        <div class="col-12 col-md-10 col-lg-8 wrap-vertical mt-5" style="margin-bottom: 4rem;">
-            <h2 class="fw-light mb-2 pt-3 ps-4"><span class="fw-bold" style="color: #f08724;">#</span> 분위기 있는</h2>
-            <div class="container getMyPositionBtn pt-4 pb-3 d-flex">
-                {% for item in test1 %}
-                    <div class="store-card col-6 col-md-4 col-lg-3 mx-2">
-                        <a class="text-decoration-none text-black" href="{% url 'stores:detail' item.pk %}">
-                            <div class="card mb-3">
-                                <div class="wrapper position-relative">
-                                    <img src="{% static 'images/alt.png' %}" class="card-img-top" alt="...">
-                                    <div class="overlay">
-                                        <div class="content">{{ item.store_name }}</div>
-                                    </div>
-                                </div>
-                                <div class="card-body">
-                                    <h5 class="card-title" style="overflow: hidden;">{{ item.store_name }}</h5>
-                                    <p class="card-text" style="font-size: 13px;"><i
-                                            class="bi bi-geo-alt"></i> {{ item.store_address }}</p>
-                                </div>
->>>>>>> b27f40e516f4e21df2c8c5ab960e1167a2361212
 
                             </div>
                         </a>
@@ -356,32 +330,31 @@
     </div>
 
     <div>
-        <div class="col-12 col-md-10 col-lg-8 wrap-vertical mt-5" style="margin-bottom: 4rem;">
+        <div class="col-12 col-md-10 col-lg-8 wrap-vertical mt-5"  style="margin-bottom: 4rem;">
             <h2 class="fw-light mb-2 pt-3 ps-4"><span class="fw-bold" style="color: #f08724;">#</span> 지역주민이 찾는</h2>
             <div class="container getMyPositionBtn pt-4 pb-3 d-flex">
-                {% for item in test2 %}
-                    <div class="store-card col-6 col-md-4 col-lg-3 mx-2">
-                        <a class="text-decoration-none text-black" href="{% url 'stores:detail' item.pk %}">
-                            <div class="card mb-3">
-                                <div class="wrapper position-relative">
-                                    <img src="{% static 'images/alt.png' %}" class="card-img-top" alt="...">
-                                    <div class="overlay">
-                                        <div class="content">{{ item.store_name }}</div>
-                                    </div>
-                                </div>
-                                <div class="card-body">
-                                    <h5 class="card-title">{{ item.store_name }}</h5>
-                                    <p class="card-text" style="font-size: 13px;"><i
-                                            class="bi bi-geo-alt"></i> {{ item.store_address }}</p>
-                                </div>
-
-                            </div>
-                        </a>
+            {% for item in test2 %}
+            <div class="store-card col-6 col-md-4 col-lg-3 mx-2">
+                    <a class="text-decoration-none text-black" href="{% url 'stores:detail' item.pk %}">
+                <div class="card mb-3" style="height: 300px;">
+                    <div class="wrapper position-relative">
+                        <img src="{{ item.store_image}}" class="card-img-top" alt="...">
+                        <div class="overlay">
+                            <div class="content">{{ item.store_name }} <i class="bi bi-star-fill"></i>{{ item.store_grade }}</div>
+                        </div>
                     </div>
-                {% endfor %}
+                    <div class="card-body">
+                    <h5 class="card-title" style="overflow: hidden;">{{ item.store_name }}</h5>
+                    <p class="card-text" style="font-size: 13px; overflow:hidden;"><i class="bi bi-geo-alt"></i> {{ item.store_address }}</p>
+                    </div>
+    
+                                </div>
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
             </div>
         </div>
-    </div>
 
     {% comment %} 그냥 카드들 {% endcomment %}
 
