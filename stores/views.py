@@ -24,6 +24,7 @@ from django.db.models import Count
 from accounts.models import User
 import random
 
+
 def index(request):
     if request.method == 'POST':
         jsonObject = json.loads(request.body)
@@ -55,19 +56,18 @@ def index(request):
                 r = requests.get(url, headers=headers)
                 tag = jsonObject[i]['category_name'].split('>')
                 tag = tag[1].replace(' ', '')
-                Ttag=[2,13]
-                tagnum=random.choice(Ttag)
+                Ttag = [2, 13]
+                tagnum = random.choice(Ttag)
 
                 # html 파싱
                 html = BeautifulSoup(r.text, 'html.parser')
-
 
                 soup = html.select(
                     "#main_search > div > article:nth-child(1) > section > div > div > ul > li:nth-child(1) > figure > a > img:nth-child(1)")
                 img = soup[0]['src']
                 db = Store.objects.create(
                     thematag_id=Thematag.objects.get(id=tagnum),
-                    foodtag_id=Foodtag.objects.filter(foodtag_name = tag)[0],
+                    foodtag_id=Foodtag.objects.filter(foodtag_name=tag)[0],
                     store_image=img,
                     store_address=jsonObject[i]['address_name'],
                     store_tel=jsonObject[i]['phone'],
@@ -183,16 +183,6 @@ def delete(request, pk):
         return redirect('stores:index')
 
 
-def kakao_search():
-    searching = '합정 스타벅스'
-    url = 'https://dapi.kakao.com/v2/local/search/keyword.json?query={}'.format(searching)
-    headers = {
-        "Authorization": "KakaoAK 0f23477b2b3262f820c688ff81fdf916"
-    }
-    places = requests.get(url, headers=headers).json()['documents']
-    print(places)
-
-
 def store_like(request, pk):
     store = get_object_or_404(Store, pk=pk)
 
@@ -214,10 +204,8 @@ def db_save(request):
 def search(request):
     if request.method == 'POST':
         store_search = request.POST['store_search']
-        location = request.POST.get('data')
-        print(location)
-        count = 0
         for i in range(1, 46):
+            count = 0
             searching = store_search
             num = i
             url = 'https://dapi.kakao.com/v2/local/search/keyword.json?page={}&query={}'.format(num, searching)
@@ -227,6 +215,12 @@ def search(request):
             places = requests.get(url, headers=headers).json()
             page = places['meta']['is_end']
             places = places['documents']
+
+            Ttag = [2, 13]
+            tagnum = random.choice(Ttag)
+
+
+
             if page == True:
                 if count == 0:
                     count = 1
@@ -236,12 +230,17 @@ def search(request):
             elif (page == False and (
                     places[i]['category_group_code'] == "FD6" or places[i]['category_group_code'] == 'CE7')
                   and Store.objects.filter(kakao_id=places[i]['id']).exists() == False):
+                tag = places[i]['category_name'].split('>')
+                print(tag)
+                tag = tag[1].replace(' ', '')
+                if not Foodtag.objects.filter(foodtag_name=tag).exists():
+                    Foodtag.objects.create(foodtag_name=tag)
+
                 base_url = 'https://www.siksinhot.com/search?keywords='
                 storename = places[i]['place_name']
                 urlstore = storename.replace(' ', '%20')
 
                 url = base_url + urlstore
-                print(url)
 
                 ua = generate_user_agent(device_type='desktop')
                 headers = {
@@ -254,6 +253,7 @@ def search(request):
                 soup = html.select(
                     "#main_search > div > article:nth-child(1) > section > div > div > ul > li:nth-child(1) > figure > a > img:nth-child(1)")
                 img = soup[0]['src']
+
                 for i in range(len(places)):
                     db_save = Store(store_name=places[i]["place_name"], store_address=places[i]["address_name"],
                                     store_x=places[i]["x"],
@@ -261,7 +261,10 @@ def search(request):
                                     store_url=places[i]['place_url'],
                                     store_tel=places[i]['phone'],
                                     store_image=img,
-                                    kakao_id=places[i]["id"])
+                                    kakao_id=places[i]["id"],
+                                    thematag_id=Thematag.objects.get(id=tagnum),
+                                    foodtag_id=Foodtag.objects.filter(foodtag_name=tag)[0],
+                                    )
                     db_save.save()
         results = Store.objects.filter(Q(store_name__contains=store_search) | Q(store_address__contains=store_search))
         context = {
@@ -278,8 +281,8 @@ def name_sort(request):
     temp_results = Store.objects.all().filter(Q(store_name__contains=search)).order_by('store_name')
     results = []
     for result in temp_results:
-        results.append({'store_pk': result.pk, 'store_name': result.store_name, 'store_address': result.store_address, 'store_image': result.store_image})
-    print(results)
+        results.append({'store_pk': result.pk, 'store_name': result.store_name, 'store_address': result.store_address,
+                        'store_image': result.store_image})
 
     return JsonResponse({'results': results})
 
@@ -293,8 +296,8 @@ def like_sort(request):
 
     results = []
     for result in stores:
-        results.append({'store_pk': result.pk, 'store_name': result.store_name, 'store_address': result.store_address, 'store_image': result.store_image})
-    print(results)
+        results.append({'store_pk': result.pk, 'store_name': result.store_name, 'store_address': result.store_address,
+                        'store_image': result.store_image})
 
     return JsonResponse({'results': results})
 
@@ -306,8 +309,8 @@ def score_sort(request):
     temp_results = Store.objects.all().filter(Q(store_name__contains=search)).order_by('-store_grade')
     results = []
     for result in temp_results:
-        results.append({'store_pk': result.pk, 'store_name': result.store_name, 'store_address': result.store_address, 'store_image': result.store_image})
-    print(results)
+        results.append({'store_pk': result.pk, 'store_name': result.store_name, 'store_address': result.store_address,
+                        'store_image': result.store_image})
 
     return JsonResponse({'results': results})
 
@@ -320,7 +323,7 @@ def review_sort(request):
 
     results = []
     for result in stores:
-        results.append({'store_pk': result.pk, 'store_name': result.store_name, 'store_address': result.store_address, 'store_image': result.store_image})
-    print(results)
+        results.append({'store_pk': result.pk, 'store_name': result.store_name, 'store_address': result.store_address,
+                        'store_image': result.store_image})
 
     return JsonResponse({'results': results})

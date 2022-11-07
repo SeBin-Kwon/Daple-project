@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="db" uuid="1839cb49-e1f7-4d02-9fc2-5c2e302a93d0">
+    <data-source source="LOCAL" name="db" uuid="fc741c70-73b3-4fc1-a438-4c39d2882d8d">
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:C:\Users\runed\Desktop\semi_01\Daple\db.sqlite3</jdbc-url>
+      <jdbc-url>jdbc:sqlite:C:\Users\runed\Desktop\Daple\db.sqlite3</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
       <libraries>
         <library>

@@ -9,11 +9,11 @@
             <div class="m-auto" id="detail_map" style="width:250px;height:250px;"></div>
         </div>
         <div class="col-md-8 text-center">
-            <div><img src="https://via.placeholder.com/500x300" alt="임시이미지"></div>
+            <div><img src="{{ store_data.store_image}}" alt="임시이미지" ></div>
         </div>
     </div>
     <div class="div-cont d-flex flex-column bg-white py-4" style="padding:0 5rem;">
-        <p class="fs-1" style="font-weight: 500;">{{ store_data.store_name }}</p>
+        <p class="fs-1" style="font-weight: 500;">{{ store_data.store_name }} sadf</p>
         <p><i class="bi bi-geo-alt"></i> {{ store_data.store_address }}</p>
         <p><i class="bi bi-telephone"></i> {{ store_data.store_number }}</p>
         <div>{{ people_num }}명의 평가 {{ avg_rating }}점 <span id="store-star" class="star-rate"><i
