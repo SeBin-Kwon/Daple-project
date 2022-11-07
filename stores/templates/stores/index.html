@@ -336,7 +336,7 @@
             {% for item in test2 %}
             <div class="store-card col-6 col-md-4 col-lg-3 mx-2">
                     <a class="text-decoration-none text-black" href="{% url 'stores:detail' item.pk %}">
-                <div class="card mb-3" style="height: 300px;">
+                <div class="card mb-3">
                     <div class="wrapper position-relative">
                         <img src="{{ item.store_image}}" class="card-img-top" alt="...">
                         <div class="overlay">
