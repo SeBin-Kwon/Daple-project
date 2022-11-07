@@ -15,6 +15,7 @@ import requests
 import json
 from django.db.models import Q
 from django.core.paginator import Paginator
+from django.db.models import Count
 
 from accounts.models import User
 
@@ -206,25 +207,15 @@ def name_sort(request):
 
     return JsonResponse({'results': results})
 
-# def like_sort(request):
-#     jsonObject = json.loads(request.body)
-#     search = jsonObject.get('search')
-    
-#     temp_results = Store.objects.all().filter(Q(store_name__contains=search)).order_by('store_liked')
-#     results = []
-#     for result in temp_results:
-#         results.append({'store_pk': result.pk, 'store_name': result.store_name, 'store_address': result.store_address})
-#     print(results)
-
-#     return JsonResponse({'results': results})
-
 def like_sort(request):
     jsonObject = json.loads(request.body)
     search = jsonObject.get('search')
-    
-    temp_results = Store.objects.all().filter(Q(store_name__contains=search)).order_by('store_liked')
+
+    stores = Store.objects.all().filter(Q(store_name__contains=search))
+    stores = stores.annotate(like_count=Count('store_liked')).order_by('-like_count')
+
     results = []
-    for result in temp_results:
+    for result in stores:
         results.append({'store_pk': result.pk, 'store_name': result.store_name, 'store_address': result.store_address})
     print(results)
 
@@ -234,9 +225,22 @@ def score_sort(request):
     jsonObject = json.loads(request.body)
     search = jsonObject.get('search')
     
-    temp_results = Store.objects.all().filter(Q(store_name__contains=search)).order_by('store_grade')
+    temp_results = Store.objects.all().filter(Q(store_name__contains=search)).order_by('-store_grade')
     results = []
     for result in temp_results:
+        results.append({'store_pk': result.pk, 'store_name': result.store_name, 'store_address': result.store_address})
+    print(results)
+
+    return JsonResponse({'results': results})
+
+def review_sort(request):
+    jsonObject = json.loads(request.body)
+    search = jsonObject.get('search')
+
+    stores = Store.objects.all().filter(Q(store_name__contains=search)).order_by('-review_count')
+
+    results = []
+    for result in stores:
         results.append({'store_pk': result.pk, 'store_name': result.store_name, 'store_address': result.store_address})
     print(results)
 

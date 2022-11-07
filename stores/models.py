@@ -16,7 +16,8 @@ class Foodtag(models.Model):
 class Store(models.Model):
     store_name = models.CharField(max_length=100)
     store_address = models.CharField(max_length=100)
-    store_grade = models.IntegerField(default=0)
+    store_grade = models.FloatField(default=0)
+    review_count = models.IntegerField(default=0)
     store_tel = models.CharField(max_length=100)
     store_liked = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_stores')
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,blank=True, null=True)
