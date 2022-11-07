@@ -26,6 +26,7 @@
 
 <body class="position-relative bg-light h-100" style="width: 100vw;">
 
+
 <!-- 네브바 -->
 <nav class="nav navbar navbar-dark navbar-expand-lg shadow-sm" id="nav-sticky" style="height: 90px; z-index: 100; background-color: #f08724;">
     <div class="container">
@@ -110,7 +111,8 @@
                 {% csrf_token %}
                 <input class="form-control me-1" name="store_search" type="search" placeholder="맛집 검색하기"
                        aria-label="Search" style="border-radius: 104.375rem; width: 30rem;">
-                <a class="search-btn btn" type="submit"><i class="bi bi-search"></i></a>
+                <button class="search-btn btn" onclick="send_data()" type="submit"><i class="bi bi-search"></i>
+                </button>
             </form>
             <br>
 
@@ -224,7 +226,7 @@
 
     <!-- 본문 컨텐츠 -->
 
-{% comment %} <div class="container getMyPositionBtn">
+{% comment %} <div class="container">
 
         {% for item in stores %}
             <div class="card mb-3" style="max-width: 540px;">
@@ -245,6 +247,7 @@
     </div>  {% endcomment %}
 
 <!-- 지도 -->
+
 <div class="map-box">
     <div class="d-flex align-items-center mb-4">
         <h2 class="fw-light m-0">나의 현재 위치</h2> <lord-icon
@@ -255,8 +258,11 @@
         style="width:50px;height:50px;">
         </lord-icon>
     </div>
+
+{% comment %} <div class="map-box getMyPositionBtn">
+    <h2 class="fw-light mb-4">나의 현재 위치</h2>
     <div class="m-auto" id="map" style="width:500px;height:400px;"></div>
-</div>
+</div> {% endcomment %}
 
 {% comment %} 
     <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
@@ -444,6 +450,12 @@
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 <script>
+    var final
+    window.onload = findmap
+
+
+
+
     var mapContainer = document.getElementById('map'), // 지도를 표시할 div
         mapOption = {
             center: new kakao.maps.LatLng(37.56646, 126.98121), // 지도의 중심좌표
@@ -453,7 +465,7 @@
 
     // 지도를 생성한다
     var map = new kakao.maps.Map(mapContainer, mapOption);
-    var final
+
 
     function locationLoadSuccess(pos) {
         // 현재 위치 받아오기
@@ -476,10 +488,14 @@
         alert('위치 정보를 가져오는데 실패했습니다.');
     }
 
+    function findmap(){
+        navigator.geolocation.getCurrentPosition(locationLoadSuccess, locationLoadError);
+
+    }
+
     // 위치 가져오기 버튼 클릭시
     function getCurrentPosBtn() {
-        navigator.geolocation.getCurrentPosition(locationLoadSuccess, locationLoadError);
-        setTimeout(locationSearch, 3000)
+        locationSearch()
 
 
         // kakao.maps.load(function () {
@@ -491,8 +507,8 @@
 
     }
 
-    function getAddr(lat, lng) {
 
+    function getAddr(lat, lng) {
 
         $.ajax({
             url: 'https://dapi.kakao.com/v2/local/geo/coord2address.json?',
@@ -502,18 +518,41 @@
             success: function (data) {
                 let result = data.documents
                 final = result[0].address.region_3depth_name;
-
             },
             error: function (e) {
                 console.log(e);
             }
         });
-
     }
 
+    function send_data() {
+        console.log(final)
+
+        axios({
+            url: 'stores/search.html',
+            method: 'POST',
+            headers: {
+                'X-CSRFTOKEN': '{{ csrf_token }}'
+            },
+            data: final
+
+        }).then(response =>{
+
+
+        })
+        console.log(final)
+     }
+
+
+    {#async function searchbutton() {#}
+    {#    getAddr()#}
+    {#    setTimeout(send_data,3000 )#}
+    {##}
+    {##}
+    {# }#}
+
+
     function locationSearch() {
-
-
         var infowindow = new kakao.maps.InfoWindow({zIndex: 1});
 
 
@@ -544,9 +583,8 @@
                                 headers: {
                                     'X-CSRFTOKEN': '{{ csrf_token }}'
                                 },
-                                data: response.data.documents
+                                data: response.data
                             }).then(response => {
-                                console.log("성공")
                             })
                             list.push(response.data.documents)
 

@@ -205,11 +205,89 @@
         })
 
         // likeSort
+        likeSort.addEventListener('click', function() {
+            console.log(search)
+            axios({
+                method: 'post',
+                url: '/stores/like-sort/',
+                headers : {'X-CSRFTOKEN' : '{{ csrf_token }}'},
+                data: {'search': search}
+            }).then(response => {
+                const resultBox = document.querySelector('#result-box')
+                resultBox.textContent = ""
+                for (let i = 0; i < response.data.results.length; i++) {
+                    console.log(`${response.data.results[i].store_pk}`)
+
+                resultBox.insertAdjacentHTML('beforeend', `
+
+                    <div class="card mb-3" style="max-width: 540px;">
+                        <div class="row g-0">
+                            <div class="col-md-4">
+                                <a href="detail/${response.data.results[i].store_pk}/"><img src="{% static 'images/alt.png' %}"
+                                                                                class="img-fluid rounded-start" alt="..."></a>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title"><a href="detail/${response.data.results[i].store_pk}/">${response.data.results[i].store_name}</a>
+                                    </h5>
+                                    <p class="card-text">${response.data.results[i].store_address}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                `)
+            }
+
+                console.log(response.data)
+            })
+        })
+
+        // scoreSort
         scoreSort.addEventListener('click', function() {
             console.log(search)
             axios({
                 method: 'post',
-                url: '/stores/name-sort/',
+                url: '/stores/score-sort/',
+                headers : {'X-CSRFTOKEN' : '{{ csrf_token }}'},
+                data: {'search': search}
+            }).then(response => {
+                const resultBox = document.querySelector('#result-box')
+                resultBox.textContent = ""
+                for (let i = 0; i < response.data.results.length; i++) {
+                    console.log(`${response.data.results[i].store_pk}`)
+
+                resultBox.insertAdjacentHTML('beforeend', `
+
+                    <div class="card mb-3" style="max-width: 540px;">
+                        <div class="row g-0">
+                            <div class="col-md-4">
+                                <a href="detail/${response.data.results[i].store_pk}/"><img src="{% static 'images/alt.png' %}"
+                                                                                class="img-fluid rounded-start" alt="..."></a>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title"><a href="detail/${response.data.results[i].store_pk}/">${response.data.results[i].store_name}</a>
+                                    </h5>
+                                    <p class="card-text">${response.data.results[i].store_address}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                `)
+            }
+
+                console.log(response.data)
+            })
+        })
+
+        // reviewSort
+        reviewSort.addEventListener('click', function() {
+            console.log(search)
+            axios({
+                method: 'post',
+                url: '/stores/review-sort/',
                 headers : {'X-CSRFTOKEN' : '{{ csrf_token }}'},
                 data: {'search': search}
             }).then(response => {

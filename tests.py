@@ -1,5 +1,5 @@
 import json
-import urllib.error
+import urllib
 import urllib.parse
 import urllib.request
 import os
@@ -8,6 +8,8 @@ import django
 django.setup()
 import requests
 from stores.models import Store
+from bs4 import BeautifulSoup
+import re
 
 Store.objects.all().delete()
 
@@ -25,7 +27,17 @@ Store.objects.all().delete()
 #     for i in range(len(places)):
 #         db_save = Store(store_name=places[i]["place_name"], store_address=places[i]["address_name"], store_x=places[i]["x"],
 #                         store_y=places[i]["y"],kakao_id=places[i]["id"])
-#         db_save.save()
+#         db_save.save(commit=False)
+#
+#         url = places[i]['place_url']
+#         req = urlopen(url)
+#         byte_data = req.read()
+#
+#         # html 파싱
+#         text_data = byte_data.decode("utf-8")
+#         html = BeautifulSoup(text_data, 'html.parser')
+#         soup = html.find("# mArticle > div.cont_photo > div.photo_area > ul > li.size_l > a")
+#         img = soup.find("img")["src"]
 
 # client_id = "uCCiykUMH5IF4JADGgWL"
 # client_secret = "mD53NEgVgg"
