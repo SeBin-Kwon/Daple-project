@@ -54,6 +54,7 @@ def index(request):
 
                 soup = html.select("#main_search > div > article:nth-child(1) > section > div > div > ul > li:nth-child(1) > figure > a > img:nth-child(1)")
                 img = soup[0]['src']
+                print(img)
                 db = Store.objects.create(
                     store_image=img,
                     store_address=jsonObject[i]['address_name'],

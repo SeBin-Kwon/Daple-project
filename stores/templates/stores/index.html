@@ -248,7 +248,7 @@
 
 <!-- 지도 -->
 
-<div class="map-box">
+<div class="map-box getMyPositionBtn">
     <div class="d-flex align-items-center mb-4">
         <h2 class="fw-light m-0">나의 현재 위치</h2> <lord-icon
         src="https://cdn.lordicon.com/oaflahpk.json"
@@ -258,6 +258,8 @@
         style="width:50px;height:50px;">
         </lord-icon>
     </div>
+    <div class="m-auto" id="map" style="width:500px;height:400px;"></div>
+</div>
 
 {% comment %} <div class="map-box getMyPositionBtn">
     <h2 class="fw-light mb-4">나의 현재 위치</h2>
@@ -304,9 +306,11 @@
                 <a class="text-decoration-none text-black" href="{% url 'stores:detail' item.pk %}">
             <div class="card mb-3">
                 <div class="wrapper position-relative">
-                    <img src="{% static 'images/alt.png' %}" class="card-img-top" alt="...">
+                    <img src="{{ item.store_image.url }}" class="card-img-top" alt="...">
                     <div class="overlay">
                         <div class="content">{{ item.store_name }}</div>
+                        {% comment %} <div><i
+                            style="width:{{ item.review_rating|mul:20 }}%;"></i></div> {% endcomment %}
                     </div>
                 </div>
                 <div class="card-body">
