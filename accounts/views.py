@@ -43,7 +43,7 @@ def index(request):
     
     list_ = Store.objects.all()[22:]
     for i in list_:
-        i.thematag_id = Thematag.objects.get(id=9)
+        i.thematag_id = Thematag.objects.get(id=12)
         i.save()
     return render(request, 'accounts/index.html')
 

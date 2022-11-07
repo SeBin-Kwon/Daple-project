@@ -40,8 +40,4 @@ tzdata==2022.6
 ua-parser==0.16.1
 urllib3==1.26.12
 user-agent==0.1.10
-<<<<<<< HEAD
-user-agents==2.2.0
-=======
->>>>>>> b27f40e516f4e21df2c8c5ab960e1167a2361212
 whitenoise==6.2.0
