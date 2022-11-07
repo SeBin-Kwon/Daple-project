@@ -30,12 +30,18 @@ pymongo==3.12.3
 python-dotenv==0.21.0
 python3-openid==3.2.0
 pytz==2022.5
+PyYAML==6.0
 requests==2.28.1
 requests-oauthlib==1.3.1
 six==1.16.0
 soupsieve==2.3.2.post1
 sqlparse==0.2.4
 tzdata==2022.6
+ua-parser==0.16.1
 urllib3==1.26.12
 user-agent==0.1.10
+<<<<<<< HEAD
+user-agents==2.2.0
+=======
+>>>>>>> b27f40e516f4e21df2c8c5ab960e1167a2361212
 whitenoise==6.2.0
