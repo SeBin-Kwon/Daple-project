@@ -187,23 +187,6 @@
         </div>
 
     </div>
-    <div class="car-overlay">
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img src="{% static 'images/c1.jpg' %}" class="d-block w-100" alt="..."
-                     style="width: 100vw !important;">
-            </div>
-            <div class="carousel-item">
-                <img src="{% static 'images/c2.jpg' %}" class="d-block w-100" alt="..."
-                     style="width: 100vw !important;">
-            </div>
-            <div class="carousel-item">
-                <img src="{% static 'images/c3.jpg' %}" class="d-block w-100" alt="..."
-                     style="width: 100vw !important;">
-            </div>
-            <div class="carousel-item">
-                <img src="{% static 'images/c4.jpg' %}" class="d-block w-100" alt="..."
-                     style="width: 100vw !important;">
 
     {% comment %} <div class="row">
         <!-- Swiper -->
@@ -566,9 +549,10 @@
                 infowindow.open(map, marker);
             });
         }
-<<<<<<< HEAD
-    </script>
-    <script type="text/javascript" defer src="{% static 'javascript/style.js' %}"></script>
+
+    }
+</script>
+    {% comment %} <script type="text/javascript" defer src="{% static 'javascript/style.js' %}"></script> {% endcomment %}
     <script>
        window.addEventListener("scroll", function () {
         let nav = document.querySelector("nav");
@@ -597,38 +581,7 @@
         }
     })
     </script>
-    <script>
-        var swiper = new Swiper('.swiper-container', {
-            navigation: {
-              nextEl: '.swiper-button-next',
-              prevEl: '.swiper-button-prev',
-            },
-            slidesPerView: 1,  //초기값 설정 모바일값이 먼저!!
-            spaceBetween: 10,
-            pagination: {
-              el: ".swiper-pagination",
-              clickable: true,
-            },
-            breakpoints: {
-            
-              768: {
-                slidesPerView: 2,  //브라우저가 768보다 클 때
-                spaceBetween: 20,
-              },
-              1024: {
-                slidesPerView: 3,  //브라우저가 1024보다 클 때
-                spaceBetween: 30,
-              },
-              3000: {
-                slidesPerView: 4,  
-                spaceBetween: 0,
-              }
-            },
-            autoplay:{
-                delay: 10000,
-            }
-          });
-    </script>
+    
     <script src="https://cdn.lordicon.com/qjzruarw.js"></script>
     {% bootstrap_javascript %}
 
