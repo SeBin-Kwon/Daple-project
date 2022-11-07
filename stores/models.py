@@ -25,12 +25,13 @@ class Store(models.Model):
     store_url = models.CharField(max_length=100)
     kakao_id= models.IntegerField(blank=True)
     # review = models.ForeignKey('reviews.Review', on_delete=models.CASCADE, related_name='store_reviews', blank=True, null=True)
-    store_image = ProcessedImageField(
-        upload_to="stores/",
-        blank=True,
-        processors=[ResizeToFill(900, 1200)],
-        format="JPEG",
-        options={"quality": 90},
-    )
+    store_image = models.URLField(blank=True)
+    # ProcessedImageField(
+    #     upload_to="stores/",
+    #     blank=True,
+    #     processors=[ResizeToFill(900, 1200)],
+    #     format="JPEG",
+    #     options={"quality": 90},
+    # )
     foodtag_id = models.ForeignKey(Foodtag, on_delete=models.CASCADE,null=True,blank=True)
     thematag_id = models.ForeignKey(Thematag, on_delete=models.CASCADE,null=True,blank=True)

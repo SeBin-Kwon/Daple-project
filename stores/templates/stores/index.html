@@ -24,7 +24,7 @@
     </style>
 </head>
 
-<body class="position-relative bg-light h-100">
+<body class="position-relative bg-light h-100" >
 
 <!-- 네브바 -->
 <!-- <nav class="nav navbar navbar-dark navbar-expand-lg shadow-sm" id="nav-sticky" style="height: 90px; z-index: 100;">
@@ -108,7 +108,8 @@
                 {% csrf_token %}
                 <input class="form-control me-1" name="store_search" type="search" placeholder="맛집 검색하기"
                        aria-label="Search" style="border-radius: 104.375rem; width: 30rem;">
-                <a class="search-btn btn" type="submit"><i class="bi bi-search"></i></a>
+                <button class="search-btn btn" onclick="send_data()" type="submit"><i class="bi bi-search"></i>
+                </button>
             </form>
             <br>
 
@@ -329,6 +330,12 @@
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 <script>
+    var final
+    window.onload = findmap
+
+
+
+
     var mapContainer = document.getElementById('map'), // 지도를 표시할 div
         mapOption = {
             center: new kakao.maps.LatLng(37.56646, 126.98121), // 지도의 중심좌표
@@ -338,7 +345,7 @@
 
     // 지도를 생성한다
     var map = new kakao.maps.Map(mapContainer, mapOption);
-    var final
+
 
     function locationLoadSuccess(pos) {
         // 현재 위치 받아오기
@@ -361,10 +368,14 @@
         alert('위치 정보를 가져오는데 실패했습니다.');
     }
 
+    function findmap(){
+        navigator.geolocation.getCurrentPosition(locationLoadSuccess, locationLoadError);
+
+    }
+
     // 위치 가져오기 버튼 클릭시
     function getCurrentPosBtn() {
-        navigator.geolocation.getCurrentPosition(locationLoadSuccess, locationLoadError);
-        setTimeout(locationSearch, 3000)
+        locationSearch()
 
 
         // kakao.maps.load(function () {
@@ -376,8 +387,8 @@
 
     }
 
-    function getAddr(lat, lng) {
 
+    function getAddr(lat, lng) {
 
         $.ajax({
             url: 'https://dapi.kakao.com/v2/local/geo/coord2address.json?',
@@ -387,18 +398,41 @@
             success: function (data) {
                 let result = data.documents
                 final = result[0].address.region_3depth_name;
-
             },
             error: function (e) {
                 console.log(e);
             }
         });
-
     }
 
+    function send_data() {
+        console.log(final)
+
+        axios({
+            url: 'stores/search.html',
+            method: 'POST',
+            headers: {
+                'X-CSRFTOKEN': '{{ csrf_token }}'
+            },
+            data: final
+
+        }).then(response =>{
+
+
+        })
+        console.log(final)
+     }
+
+
+    {#async function searchbutton() {#}
+    {#    getAddr()#}
+    {#    setTimeout(send_data,3000 )#}
+    {##}
+    {##}
+    {# }#}
+
+
     function locationSearch() {
-
-
         var infowindow = new kakao.maps.InfoWindow({zIndex: 1});
 
 
@@ -429,9 +463,8 @@
                                 headers: {
                                     'X-CSRFTOKEN': '{{ csrf_token }}'
                                 },
-                                data: response.data.documents
+                                data: response.data
                             }).then(response => {
-                                console.log("성공")
                             })
                             list.push(response.data.documents)
 
