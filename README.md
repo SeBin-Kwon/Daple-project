@@ -1,14 +1,14 @@
-## 세빈이와 아이들🙋‍♀️
+# 세빈이와 아이들🙋🏻‍♀️
 
 <br>
 
-### 🍽 다플 : 다이닝 플레이트
+## 🍽 다플 : 다이닝 플레이트
 
 ![ezgif.com-gif-maker (1)](README.assets/1.gif)
 
 <br>
 
-### 🍽 다플의 주요기능
+## 🍽 다플의 주요기능
 
 #### **1.** **내 주변** **맛집** **소개 및 검색**
 
@@ -24,7 +24,7 @@
 
 <br>
 
-### 🍽 다플 사이트 소개
+## 🍽 다플 사이트 소개
 
 #### [ 웰컴페이지 ]
 
@@ -88,21 +88,19 @@
 
 <br>
 
-### 🍽 AWS를 통한 배포
+## 🍽 AWS를 통한 배포
 
 ![image-20221108153525089](README.assets/image-20221108153525089.png)
 
 <br>
 
-### 🍽 사용한 기술스택
-
 ## ⚙️ Stacks
 
-<img src="https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=Python&logoColor=ffffff"/> <img src="https://img.shields.io/badge/Django-092E20?style=flat-square&logo=Django&logoColor=ffffff"/> <img src="https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=HTML5&logoColor=ffffff"/> <img src="https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=CSS3&logoColor=ffffff"/> <img src="https://img.shields.io/badge/Bootstrap-7952B3?style=flat-square&logo=Bootstrap&logoColor=ffffff"/> <img src="https://img.shields.io/badge/Visual Studio Code-007ACC?style=flat-square&logo=Visual Studio Code&logoColor=ffffff"/> <img src="https://img.shields.io/badge/Git-F05032?style=flat-square&logo=Git&logoColor=ffffff"/> <img src="https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=GitHub&logoColor=ffffff"/>
+<img src="https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=Python&logoColor=ffffff"/> <img src="https://img.shields.io/badge/Django-092E20?style=flat-square&logo=Django&logoColor=ffffff"/> <img src="https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=HTML5&logoColor=ffffff"/> <img src="https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=CSS3&logoColor=ffffff"/> <img src="https://img.shields.io/badge/Bootstrap-7952B3?style=flat-square&logo=Bootstrap&logoColor=ffffff"/> <img src="https://img.shields.io/badge/Visual Studio Code-007ACC?style=flat-square&logo=Visual Studio Code&logoColor=ffffff"/><img src="https://img.shields.io/badge/Javascript-F7DF1E?style=flat-square&logo=Javascript&logoColor=ffffff"/> <img src="https://img.shields.io/badge/Git-F05032?style=flat-square&logo=Git&logoColor=ffffff"/> <img src="https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=GitHub&logoColor=ffffff"/>
 
 <br>
 
-### 🍽 프로젝트 참여자들
+## 🍽 프로젝트 참여자들
 
 <a href="https://github.com/wnsn8546/Daple/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=wnsn8546/Daple" />
@@ -110,7 +108,7 @@
 
 <br>
 
-### 🍽 프로젝트 후기
+## 🍽 프로젝트 후기
 
 **최준우** : 운이 좋아 좋은 팀원분들을 만나서 일주일동안 크게 어려움없이 재밌게 진행한것 같습니다. 감사합니다. 
 
