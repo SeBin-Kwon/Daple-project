@@ -1,16 +1,14 @@
 ## 세빈이와 아이들🙋‍♀️
 
-
+<br>
 
 ### 🍽 다플 : 다이닝 플레이트
 
-![ezgif.com-gif-maker (1)](README.assets/ezgif.com-gif-maker (1).gif)
+![ezgif.com-gif-maker (1)](README.assets/1.gif)
 
-
+<br>
 
 ### 🍽 다플의 주요기능
-
-
 
 #### **1.** **내 주변** **맛집** **소개 및 검색**
 
@@ -18,19 +16,15 @@
 
 👉 가게명, 지역을 통한 맛집 검색
 
-
-
 #### **2.** **리뷰를 통한** **커뮤니티 기능**
 
 👉 필터링을 통한 좋아요 순, 리뷰 많은 순으로 맛집 보기
 
 👉 리뷰 CRUD와 좋아요 기능, 팔로우 기능을 통한 정보 공유
 
-
+<br>
 
 ### 🍽 다플 사이트 소개
-
-
 
 #### [ 웰컴페이지 ]
 
@@ -39,7 +33,7 @@
 - 웹사이트를 들어가면 가장 먼저 나오는 페이지
 - 자바스크립트를 활용해 생동감 있게 구현
 
-
+<br>
 
 #### [ 메인페이지 ]
 
@@ -56,7 +50,7 @@
 
 - 네브바와 업버튼, 푸터, 카드 hover 이미지 등 css 부분도 구현함
 
-
+<br>
 
 #### [ 회원가입 / 로그인 ]
 
@@ -68,7 +62,7 @@
 - 소셜 로그인 기능도 추가로 구현 (네이버, 카카오)
   - all_auth를 사용하지 않고, 자바스크립트 API를 활용 후, 데이터베이스에 저장하는 로직을 짬
 
-
+<br>
 
 #### [ 마이페이지 ]
 
@@ -78,7 +72,7 @@
 - 기본적인 회원 정보와 작성한 리뷰, 댓글, 찜한 가게, 팔로워들을 볼 수 있음
 - 정보 수정 및 회원 탈퇴가 가능함
 
-
+<br>
 
 #### [ 검색기능 ]
 
@@ -92,21 +86,21 @@
 
   => 비동기 방식을 활용함
 
-
+<br>
 
 ### 🍽 AWS를 통한 배포
 
 ![image-20221108153525089](README.assets/image-20221108153525089.png)
 
-
-
-
+<br>
 
 ### 🍽 사용한 기술스택
 
+## ⚙️ Stacks
 
+<img src="https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=Python&logoColor=ffffff"/> <img src="https://img.shields.io/badge/Django-092E20?style=flat-square&logo=Django&logoColor=ffffff"/> <img src="https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=HTML5&logoColor=ffffff"/> <img src="https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=CSS3&logoColor=ffffff"/> <img src="https://img.shields.io/badge/Bootstrap-7952B3?style=flat-square&logo=Bootstrap&logoColor=ffffff"/> <img src="https://img.shields.io/badge/Visual Studio Code-007ACC?style=flat-square&logo=Visual Studio Code&logoColor=ffffff"/> <img src="https://img.shields.io/badge/Git-F05032?style=flat-square&logo=Git&logoColor=ffffff"/> <img src="https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=GitHub&logoColor=ffffff"/>
 
-
+<br>
 
 ### 🍽 프로젝트 참여자들
 
@@ -114,7 +108,7 @@
   <img src="https://contrib.rocks/image?repo=wnsn8546/Daple" />
 </a>
 
-
+<br>
 
 ### 🍽 프로젝트 후기
 
